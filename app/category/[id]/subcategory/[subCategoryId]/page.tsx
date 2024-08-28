@@ -26,8 +26,8 @@ export default async function SubCategoryPage({
     );
 
     return (
-      <div className="w-full flex flex-col align-middle justify-center px-1">
-        <ProductsShowcase products={products} />
+      <div className="w-full flex flex-col align-middle justify-center">
+        <ProductsShowcase products={products} className="px-3" />
       </div>
     );
   } catch (error) {
