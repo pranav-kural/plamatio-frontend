@@ -1,18 +1,42 @@
 import React from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import ClothingMenuItem from './clothing-nav-menu-item';
-import AccessoriesMenuItem from './accessories-nav-menu-item';
-import DrinkwareMenuItem from './drinkware-nav-menu-item';
+import {SAMPLE_DATA} from '@/app/(data)/sample-data';
+import {NavMenuItem, NavMenuSubItem} from './nav-menu-item';
 
 const NavMenu = () => {
+  const categories = SAMPLE_DATA.categoriesMap;
+
+  // prepare the menu items for categories
+  const categoryMenuItems: NavMenuItem[] = Array.from(categories.values()).map(
+    (category) => {
+      // prepare nav menu sub items for sub categories
+      const subCategoryMenuItems: NavMenuSubItem[] =
+        SAMPLE_DATA.getSubCategories(category.id).map((subCategory) => {
+          return {
+            id: subCategory.id,
+            name: subCategory.name,
+            description: subCategory.description,
+            link: `/category/${category.id}/subcategory/${subCategory.id}`,
+          };
+        });
+
+      return {
+        id: category.id,
+        name: category.name,
+        tagline: `Shop ${category.name}`,
+        description: category.description,
+        link: `/category/${category.id}`,
+        subItems: subCategoryMenuItems,
+      };
+    }
+  );
+
   return (
     <NavigationMenu.Root className="relative z-[1] flex w-screen justify-center">
       <NavigationMenu.List className="center m-0 flex list-none rounded-[6px] bg-white p-1">
-        <ClothingMenuItem />
-
-        <AccessoriesMenuItem />
-
-        <DrinkwareMenuItem />
+        {categoryMenuItems.map((item) => (
+          <NavMenuItem key={item.id} item={item} />
+        ))}
 
         <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
           <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-white" />
