@@ -1,9 +1,9 @@
 import {Box, Flex, Heading, Text} from '@radix-ui/themes';
 import Image from 'next/image';
 
-import {Product} from '@/app/types/product-types';
 import Link from 'next/link';
 import AddToCartButton from '../shop/addToCartButton';
+import {Product} from '@/app/types/backend-types';
 
 type ProductTileProps = {
   product: Product;
@@ -11,9 +11,10 @@ type ProductTileProps = {
 
 export const ProductTile = ({product}: ProductTileProps) => {
   return (
-    <Box className="opacity-80 w-full h-full transition animate-scaleIn hover:opacity-100">
+    <div className="opacity-80 w-full h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between">
       <Link
-        href={`/${product.category}/${product.subCategory}/products/${product.id}`}>
+        href={`/${product.category}/${product.subCategory}/products/${product.id}`}
+        className="p-0 m-0">
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -23,19 +24,21 @@ export const ProductTile = ({product}: ProductTileProps) => {
           className="rounded-lg w-full"
         />
       </Link>
-      <Flex direction="column" gap="2" p="3" bottom="0">
-        <Heading size="4">{product.name}</Heading>
+      <div className="flex flex-col gap-2">
+        <span className={`text-xl font-semibold`}>{product.name}</span>
         <Text>{product.description}</Text>
-        <Flex direction="row" gap="2" justify="between">
-          <Flex direction="row" gap="2" className="text-lg">
-            <span className="font-bold">${product.price}</span>
-            {product.previousPrice && (
-              <span className="line-through">${product.previousPrice}</span>
-            )}
-          </Flex>
-          <AddToCartButton id={product.id} />
-        </Flex>
-      </Flex>
-    </Box>
+      </div>
+      <div className="flex flex-row justify-between mt-3 mx-3">
+        <div className="flex flex-row gap-2">
+          <span className="font-bold text-lg">${product.price}</span>
+          {product.previousPrice && (
+            <span className="line-through text-lg">
+              ${product.previousPrice}
+            </span>
+          )}
+        </div>
+        <AddToCartButton id={product.id} />
+      </div>
+    </div>
   );
 };
