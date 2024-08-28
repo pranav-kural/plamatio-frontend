@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import {Work_Sans} from 'next/font/google';
 import '@radix-ui/themes/styles.css';
-import {Box, Container, Theme} from '@radix-ui/themes';
+import {Box, Theme} from '@radix-ui/themes';
 import './globals.css';
 import {Header} from './components/nav/header';
 
@@ -19,13 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={workSans.className}>
-        <Theme>
-          <Box>
-            <Container size="1">
-              <Header />
-              {children}
-            </Container>
+      <body className={`${workSans.className} w-full h-full`}>
+        <Theme accentColor="violet" grayColor="olive" hasBackground>
+          <Box width="100vw">
+            <Header />
+            {children}
           </Box>
         </Theme>
       </body>

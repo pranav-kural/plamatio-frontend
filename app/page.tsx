@@ -1,7 +1,9 @@
-import Image from "next/image";
+import LandingPageShowcase from './components/landing/showcase';
 
 export default function Home() {
   return (
-    <></>
+    <>
+      <LandingPageShowcase />
+    </>
   );
 }
