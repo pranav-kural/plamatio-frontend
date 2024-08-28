@@ -6,7 +6,8 @@ const categoriesMap = new Map<number, Category>([
     {
       id: 1,
       name: 'Clothing',
-      description: 'T-shirts, hoodies, and sweatshirts',
+      description:
+        'Llama inspired clothing that embraces all cultures and promotes well-being and self-love.',
     },
   ],
   [
@@ -14,7 +15,7 @@ const categoriesMap = new Map<number, Category>([
     {
       id: 2,
       name: 'Accessories',
-      description: 'Candles, desk mats, and notebooks',
+      description: 'Find the perfect gift for your loved ones. Or yourself.',
     },
   ],
   [
@@ -22,7 +23,8 @@ const categoriesMap = new Map<number, Category>([
     {
       id: 3,
       name: 'Drinkware',
-      description: 'Mugs and tumblers',
+      description:
+        'Llama inspired drinkware. Not just usable but also beautiful.',
     },
   ],
 ]);
@@ -33,7 +35,8 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 1,
       name: 'T-shirts',
-      description: 'T-shirts',
+      description:
+        'T-shirts like never before. Llama inspired, human approved.',
       heroProduct: 16,
     },
   ],
@@ -42,7 +45,8 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 2,
       name: 'Hoodies',
-      description: 'Hoodies',
+      description:
+        'Hoodies for days good and bad. Cool design to keep you warm.',
       heroProduct: 8,
     },
   ],
@@ -51,7 +55,7 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 3,
       name: 'Sweatshirts',
-      description: 'Sweatshirts',
+      description: 'Sweatshirts that make you sweat. In a good way.',
       heroProduct: 13,
     },
   ],
@@ -60,7 +64,7 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 4,
       name: 'Shorts',
-      description: 'Shorts',
+      description: 'Shorts for all occasions. Llama inspired.',
       heroProduct: 11,
     },
   ],
@@ -69,7 +73,7 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 5,
       name: 'Candles',
-      description: 'Candles',
+      description: 'Candles to suit every mood. Handmade with love.',
       heroProduct: 1,
     },
   ],
@@ -78,7 +82,7 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 6,
       name: 'Desk Mats',
-      description: 'Desk Mats',
+      description: 'Desk mats that make your desk look good. And feel good',
       heroProduct: 4,
     },
   ],
@@ -87,7 +91,7 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 7,
       name: 'Notebooks',
-      description: 'Notebooks',
+      description: 'Notebooks that inspire creativity. And productivity.',
       heroProduct: 6,
     },
   ],
@@ -96,7 +100,7 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 8,
       name: 'Bottles',
-      description: 'Bottles',
+      description: 'Bottles that fit your style. And your bag. And your life.',
       heroProduct: 21,
     },
   ],
@@ -105,7 +109,8 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 9,
       name: 'Mugs',
-      description: 'Mugs',
+      description:
+        'Mugs to empower your mornings. And your evenings. And your nights.',
       heroProduct: 23,
     },
   ],
@@ -114,7 +119,8 @@ const subCategoriesMap = new Map<number, SubCategory>([
     {
       id: 10,
       name: 'Tumblers',
-      description: 'Tumblers',
+      description:
+        'Tumblers that keep your drinks hot. Or cold. Or just right.',
       heroProduct: 19,
     },
   ],
