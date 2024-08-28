@@ -18,7 +18,7 @@ export default async function CategoryPage({params}: {params: {id: string}}) {
     const subCategoriesMap = SAMPLE_DATA.subCategoriesMap;
 
     return (
-      <div className="w-full flex flex-col align-middle justify-center px-1">
+      <div className="w-full flex flex-col align-middle justify-center px-3">
         <div
           className={`grid grid-cols-1 md:grid-cols-${heroProducts.length >= 3 ? 3 : heroProducts.length} lg:grid-cols-${heroProducts.length >= 4 ? 4 : heroProducts.length} gap-2 mx-2`}>
           {heroProducts.map((product) => (

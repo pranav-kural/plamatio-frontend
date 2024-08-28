@@ -1,6 +1,4 @@
-import {Box, Flex, Heading, Text} from '@radix-ui/themes';
 import Image from 'next/image';
-
 import Link from 'next/link';
 import AddToCartButton from '../shop/addToCartButton';
 import {Product} from '@/app/types/backend-types';
@@ -26,7 +24,7 @@ export const ProductTile = ({product}: ProductTileProps) => {
       </Link>
       <div className="flex flex-col gap-2">
         <span className={`text-xl font-semibold`}>{product.name}</span>
-        <Text>{product.description}</Text>
+        <span>{product.description}</span>
       </div>
       <div className="flex flex-row justify-between mt-3 mx-3">
         <div className="flex flex-row gap-2">

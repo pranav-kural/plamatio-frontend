@@ -14,10 +14,9 @@ export const ProductsShowcase: FC<ProductsShowcaseProps> = (
   return (
     <div
       className={classNames(
-        `grid grid-cols-1 md:grid-cols-${props.products.length >= 3 ? 3 : props.products.length} lg:grid-cols-${props.products.length >= 4 ? 4 : props.products.length} gap-4 mx-2`,
+        'grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 mx-2',
         props.className
       )}>
-      {}
       {props.products.map((product) => (
         <ProductTile key={product.id} product={product} />
       ))}
