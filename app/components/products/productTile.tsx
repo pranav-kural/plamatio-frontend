@@ -13,7 +13,7 @@ export const ProductTile = ({product}: ProductTileProps) => {
   return (
     <div className="opacity-80 w-full h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between">
       <Link
-        href={`/${product.category}/${product.subCategory}/products/${product.id}`}
+        href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
         className="p-0 m-0">
         <Image
           src={product.imageUrl}

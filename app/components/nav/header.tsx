@@ -1,25 +1,22 @@
 import {Box, Flex, Heading} from '@radix-ui/themes';
 import {Great_Vibes} from 'next/font/google';
 import NavMenu from './nav-menu';
+import Link from 'next/link';
 
 const greatVibes = Great_Vibes({weight: '400', subsets: ['latin']});
 
 export const Header = () => {
   return (
     <Box width="100%">
-      <Flex
-        direction="column"
-        gap="3"
-        align="center"
-        justify="center"
-        width="100%"
-        pt="7"
-        pb="7">
-        <Heading size="9" className={`${greatVibes.className} text-violet-900`}>
-          Plamatio
-        </Heading>
+      <div className="flex flex-col align-middle justify-center w-full my-5">
+        <Link href="/">
+          <div
+            className={`${greatVibes.className} text-violet-900 text-[3.5rem] text-center`}>
+            Plamatio
+          </div>
+        </Link>
         <NavMenu />
-      </Flex>
+      </div>
     </Box>
   );
 };

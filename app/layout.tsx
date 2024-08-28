@@ -21,8 +21,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.className} w-full h-full`}>
         <Theme accentColor="violet" grayColor="olive">
-          <Header />
-          {children}
+          <div className=" w-full h-full flex flex-row align-middle justify-center">
+            <div className="max-w-[1620px]">
+              <Header />
+              {children}
+            </div>
+          </div>
         </Theme>
       </body>
     </html>
