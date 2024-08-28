@@ -20,11 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.className} w-full h-full`}>
-        <Theme accentColor="violet" grayColor="olive" hasBackground>
-          <Box width="100vw">
-            <Header />
-            {children}
-          </Box>
+        <Theme accentColor="violet" grayColor="olive">
+          <Header />
+          {children}
         </Theme>
       </body>
     </html>
