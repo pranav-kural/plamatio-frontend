@@ -1,5 +1,4 @@
 import {SAMPLE_DATA} from '@/app/(data)/sample-data';
-import {Breadcrumb} from '@/app/components/breadcrumb/breadcrumb';
 import ProductsShowcase from '@/app/components/products/productsShowcase';
 import {redirect} from 'next/navigation';
 
