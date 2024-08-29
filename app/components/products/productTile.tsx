@@ -19,7 +19,7 @@ export const ProductTile = ({
   return (
     <div
       className={classNames(
-        'opacity-80 w-[330px] h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between',
+        'opacity-80 w-[330px] h-full min-h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-4 justify-start align-top',
         className,
         tileWidth
       )}>
@@ -35,20 +35,24 @@ export const ProductTile = ({
           className="rounded-lg w-full"
         />
       </Link>
-      <div className="flex flex-col gap-2">
-        <span className={`text-xl font-semibold`}>{product.name}</span>
-        <span>{product.description}</span>
-      </div>
-      <div className="flex flex-row justify-between mt-3 mx-3">
-        <div className="flex flex-row gap-2">
-          <span className="font-bold text-lg">${product.price}</span>
-          {product.previousPrice && (
-            <span className="line-through text-lg">
-              ${product.previousPrice}
-            </span>
-          )}
+      <div className="flex flex-col h-full min-h-[180px] justify-between gap-2">
+        <div className="flex flex-col gap-2">
+          <span className={`text-xl font-semibold`}>{product.name}</span>
+          <span>{product.description}</span>
         </div>
-        <AddToCartButton id={product.id} />
+
+        <div className="flex flex-row items-center justify-between h-full mt-3 mx-3">
+          <div className="flex flex-row justify-between gap-2">
+            <span className="font-bold text-lg">${product.price}</span>
+            {product.previousPrice &&
+              product.price !== product.previousPrice && (
+                <span className="line-through text-lg">
+                  ${product.previousPrice}
+                </span>
+              )}
+          </div>
+          <AddToCartButton id={product.id} />
+        </div>
       </div>
     </div>
   );

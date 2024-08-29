@@ -341,7 +341,7 @@ const products: Product[] = [
   },
   {
     id: 14,
-    name: 'Llama Soothing Reader Sweatshirt',
+    name: 'Llama Cozy Sweatshirt',
     description:
       'Sweatshirt featuring an adorable Llama reading a book under a blanket fort, with fairy lights around.',
     category: 1,
@@ -497,7 +497,7 @@ const products: Product[] = [
   },
 ];
 
-const heroProducts: number[] = [1, 11, 16, 19];
+const heroProducts: number[] = [3, 4, 14, 23];
 
 const getHeroProducts = () => {
   return products.filter((product) => heroProducts.includes(product.id));
@@ -535,6 +535,30 @@ const getCategoryHeroProducts = (categoryId: number): Product[] => {
   return heroProducts as Product[];
 };
 
+const getCategoryName = (id: number): string => {
+  const category = categoriesMap.get(id);
+  if (!category) {
+    throw new Error(`Invalid category ID: ${id}`);
+  }
+  return category.name;
+};
+
+const getSubCategoryName = (id: number): string => {
+  const subCategory = subCategoriesMap.get(id);
+  if (!subCategory) {
+    throw new Error(`Invalid sub category ID: ${id}`);
+  }
+  return subCategory.name;
+};
+
+const getProductName = (id: number): string => {
+  const product = products.find((product) => product.id === id);
+  if (!product) {
+    throw new Error(`Invalid product ID: ${id}`);
+  }
+  return product.name;
+};
+
 export const SAMPLE_DATA = {
   categoriesMap,
   subCategoriesMap,
@@ -543,4 +567,7 @@ export const SAMPLE_DATA = {
   categorySubCategoriesMapping,
   products,
   getHeroProducts,
+  getCategoryName,
+  getSubCategoryName,
+  getProductName,
 };
