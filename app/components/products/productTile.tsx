@@ -51,7 +51,7 @@ export const ProductTile = ({
                 </span>
               )}
           </div>
-          <AddToCartButton id={product.id} />
+          <AddToCartButton product={product} />
         </div>
       </div>
     </div>

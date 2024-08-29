@@ -34,7 +34,7 @@ export const ProductPreview: FC<ProductPreviewProps> = ({product}) => {
             )}
           </div>
           <AddToCartButton
-            id={product.id}
+            product={product}
             showLabel
             className="lg:max-w-[20vw]"
           />
