@@ -1,15 +1,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import AddToCartButton from '../shop/addToCartButton';
+import classNames from 'classnames';
 import {Product} from '@/app/types/backend-types';
 
 type ProductTileProps = {
   product: Product;
+  numberOfProducts: number;
+  className?: string;
 };
 
-export const ProductTile = ({product}: ProductTileProps) => {
+export const ProductTile = ({
+  product,
+  numberOfProducts,
+  className,
+}: ProductTileProps) => {
+  const tileWidth = numberOfProducts === 3 ? 'md:w-[350px]' : 'w-[330px]';
   return (
-    <div className="opacity-80 w-full h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between">
+    <div
+      className={classNames(
+        'opacity-80 w-[330px] h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between',
+        className,
+        tileWidth
+      )}>
       <Link
         href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
         className="p-0 m-0">

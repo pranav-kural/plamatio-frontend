@@ -27,7 +27,7 @@ export type NavMenuItemProps = {
 export const NavMenuItem: FC<NavMenuItemProps> = ({item}: NavMenuItemProps) => {
   return (
     <NavigationMenu.Item>
-      <NavigationMenu.Trigger className="text-violet11 hover:bg-violet3 focus:shadow-violet7 group flex select-none items-center justify-between gap-[2px] rounded-[4px] px-3 py-2 text-lg font-medium leading-none outline-none focus:shadow-[0_0_0_2px]">
+      <NavigationMenu.Trigger className="text-violet11 hover:bg-violet3 focus:shadow-violet7 group flex select-none items-center justify-between gap-[2px] rounded-[4px] px-1 md:px-3 py-2 text-lg font-medium leading-none outline-none focus:shadow-[0_0_0_2px]">
         {item.name}{' '}
         <ChevronDown
           className="text-violet10 relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
