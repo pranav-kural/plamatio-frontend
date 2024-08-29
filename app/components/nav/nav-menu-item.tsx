@@ -1,5 +1,5 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import {ChevronDown, ShirtIcon} from 'lucide-react';
+import {ChevronDown} from 'lucide-react';
 import NavListItem from './list-item';
 import Link from 'next/link';
 import {FC} from 'react';
