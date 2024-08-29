@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import {Work_Sans} from 'next/font/google';
 import './globals.css';
-import {Header} from './components/nav/header';
+import {Header} from './components/header/header';
 
 const workSans = Work_Sans({subsets: ['latin']});
 

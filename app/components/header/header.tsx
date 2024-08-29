@@ -1,7 +1,8 @@
 import {Great_Vibes} from 'next/font/google';
-import NavMenu from './nav-menu';
+import NavMenu from './nav/nav-menu';
 import Link from 'next/link';
-import {Breadcrumb} from '../breadcrumb/breadcrumb';
+import {Breadcrumb} from './breadcrumb/breadcrumb';
+import LeftBar from './left-bar/leftBar';
 
 const greatVibes = Great_Vibes({weight: '400', subsets: ['latin']});
 
@@ -14,6 +15,7 @@ export const Header = () => {
       </div>
       <NavMenu />
       <Breadcrumb />
+      <LeftBar />
     </div>
   );
 };
