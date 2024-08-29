@@ -1,13 +1,10 @@
-import {Button, Flex} from '@radix-ui/themes';
 import {PlusIcon, ShoppingCartIcon} from 'lucide-react';
 
 export default function AddToCartButton({id}: {id: number}) {
   return (
-    <Button size="3" style={{paddingLeft: 0, paddingRight: 0}} variant="soft">
-      <Flex>
-        <PlusIcon className="ml-2" />
-        <ShoppingCartIcon className="mr-3" />
-      </Flex>
-    </Button>
+    <button className="flex flex-row align-middle justify-center p-2 rounded-md bg-violet-100 cursor-pointer hover:text-violet-100 hover:bg-violet-800">
+      <PlusIcon />
+      <ShoppingCartIcon />
+    </button>
   );
 }

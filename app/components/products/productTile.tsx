@@ -1,19 +1,30 @@
-import {Box, Flex, Heading, Text} from '@radix-ui/themes';
 import Image from 'next/image';
-
 import Link from 'next/link';
 import AddToCartButton from '../shop/addToCartButton';
+import classNames from 'classnames';
 import {Product} from '@/app/types/backend-types';
 
 type ProductTileProps = {
   product: Product;
+  numberOfProducts: number;
+  className?: string;
 };
 
-export const ProductTile = ({product}: ProductTileProps) => {
+export const ProductTile = ({
+  product,
+  numberOfProducts,
+  className,
+}: ProductTileProps) => {
+  const tileWidth = numberOfProducts === 3 ? 'md:w-[350px]' : 'w-[330px]';
   return (
-    <div className="opacity-80 w-full h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between">
+    <div
+      className={classNames(
+        'opacity-80 w-[330px] h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-2 justify-between',
+        className,
+        tileWidth
+      )}>
       <Link
-        href={`/${product.category}/${product.subCategory}/products/${product.id}`}
+        href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
         className="p-0 m-0">
         <Image
           src={product.imageUrl}
@@ -26,7 +37,7 @@ export const ProductTile = ({product}: ProductTileProps) => {
       </Link>
       <div className="flex flex-col gap-2">
         <span className={`text-xl font-semibold`}>{product.name}</span>
-        <Text>{product.description}</Text>
+        <span>{product.description}</span>
       </div>
       <div className="flex flex-row justify-between mt-3 mx-3">
         <div className="flex flex-row gap-2">
