@@ -13,6 +13,7 @@ export default async function CategoryPage({params}: {params: {id: string}}) {
     return (
       <ProductsShowcase
         products={heroProducts}
+        categoryId={categoryId}
         showSubcategories
         className="px-5"
       />
