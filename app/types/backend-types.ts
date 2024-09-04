@@ -2,51 +2,78 @@ export type Category = {
   id: number;
   name: string;
   description: string;
+  offered: boolean;
 };
 
 export type SubCategory = {
   id: number;
   name: string;
   description: string;
-  heroProduct: number;
+  categoryId: number;
+  offered: boolean;
 };
 
 export type Product = {
   id: number;
   name: string;
   description: string;
+  categoryId: number;
+  subCategoryId: number;
+  imageUrl: string;
   price: number;
   previousPrice?: number;
-  category: number;
-  subCategory: number;
-  imageUrl: string;
   offered: boolean;
+};
+
+export type CategoryHeroProduct = {
+  categoryId: number;
+  subCategoryId: number;
+  productId: number;
 };
 
 export type CartItem = {
   id: number;
-  product: Product;
+  productId: number;
   quantity: number;
-};
-
-export type Cart = {
-  id: number;
-  items: CartItem[];
-  total: number;
+  userId: number;
 };
 
 export type NewCartItem = {
   productId: number;
   quantity: number;
-};
-
-export type NewCart = {
-  items: NewCartItem[];
+  userId: number;
 };
 
 export type Order = {
   id: number;
-  items: CartItem[];
-  date: string;
-  total: number;
+  userId: number;
+  addressId: number;
+  totalPrice: number;
+  createdAt: string;
+  status: string;
+};
+
+export type NewOrder = {
+  userId: number;
+  addressId: number;
+  totalPrice: number;
+  status: string;
+};
+
+export type OrderItem = {
+  id: number;
+  orderId: number;
+  productId: number;
+  quantity: number;
+};
+
+export type NewOrderItem = {
+  orderId: number;
+  productId: number;
+  quantity: number;
+};
+
+export type DetailedOrder = {
+  order: Order;
+  orderItems: OrderItem[];
 };
