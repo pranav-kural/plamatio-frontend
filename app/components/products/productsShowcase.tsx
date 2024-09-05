@@ -32,11 +32,11 @@ export const ProductsShowcase: FC<ProductsShowcaseProps> = (
         ? props.products.map((product) => (
             <div key={product.id} className="flex flex-col mt-5 md:mt-0">
               <Link
-                href={`/category/${props.categoryId}/subcategory/${product.subCategory}`}
+                href={`/category/${props.categoryId}/subcategory/${product.subCategoryId}`}
                 className="text-center mb-5">
                 <span
                   className={`text-center text-3xl text-violet-900 hover:underline ${gayathri.className}`}>
-                  Shop {subCategoriesMap.get(product.subCategory)?.name || ''}
+                  Shop {subCategoriesMap.get(product.subCategoryId)?.name || ''}
                 </span>
               </Link>
               <ProductTile

@@ -77,3 +77,35 @@ export type DetailedOrder = {
   order: Order;
   orderItems: OrderItem[];
 };
+
+export type User = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+export type Address = {
+  id: number;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  zipCode: string;
+  userId: number;
+};
+
+export type NewUser = {
+  firstName: string;
+  lastName: string;
+  refId: string;
+};
+
+export type NewAddress = {
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  zipCode: string;
+  userId: number;
+};

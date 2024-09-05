@@ -40,7 +40,7 @@ export const ProductPreview: FC<ProductPreviewProps> = ({product}) => {
           />
         </div>
         <Link
-          href={`/category/${product.category}/subcategory/${product.subCategory}`}
+          href={`/category/${product.categoryId}/subcategory/${product.subCategoryId}`}
           className="hover:underline">
           <span>View more products like this.</span>
         </Link>
