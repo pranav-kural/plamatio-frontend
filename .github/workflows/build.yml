@@ -30,3 +30,6 @@ jobs:
         run: pnpm format
       - name: Build
         run: pnpm build
+    env:
+      NEXT_PUBLIC_PLAMATIO_BACKEND_API_KEY: ${{ secrets.NEXT_PUBLIC_PLAMATIO_BACKEND_API_KEY }}
+      NEXT_PUBLIC_PLAMATIO_BACKEND_API_URL: ${{ secrets.NEXT_PUBLIC_PLAMATIO_BACKEND_API_URL }}
