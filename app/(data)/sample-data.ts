@@ -108,8 +108,8 @@ const products: Product[] = [
     name: 'Llama Chinese Qipao Candle',
     description:
       'Soy wax scented candle with a label showcasing a Llama in a traditional Chinese qipao, holding a paper lantern.',
-    categoryId: 2,
-    subCategoryId: 5,
+    category: 2,
+    subCategory: 5,
     price: 25,
     previousPrice: 34,
     imageUrl:
@@ -121,8 +121,8 @@ const products: Product[] = [
     name: 'Llama Moroccan Candle',
     description:
       'Scented candle with a label featuring a Llama in traditional Moroccan attire, surrounded by intricate mosaic tiles',
-    categoryId: 2,
-    subCategoryId: 5,
+    category: 2,
+    subCategory: 5,
     price: 27,
     previousPrice: 30,
     imageUrl:
@@ -134,8 +134,8 @@ const products: Product[] = [
     name: 'Llama Mauve Candle',
     description:
       'Candle featuring an adorable Llama wearing a mauve scarf sitting besides fireplace.',
-    categoryId: 2,
-    subCategoryId: 5,
+    category: 2,
+    subCategory: 5,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -147,8 +147,8 @@ const products: Product[] = [
     name: 'Llama Comfy Desk Mat',
     description:
       'Desk mat with a cute Llama lying on a comfy pillow, reading a book under a cozy lamp.',
-    categoryId: 2,
-    subCategoryId: 6,
+    category: 2,
+    subCategory: 6,
     price: 15,
     previousPrice: 15,
     imageUrl:
@@ -160,8 +160,8 @@ const products: Product[] = [
     name: 'Llama Tech Desk Mat',
     description:
       'Desk mat featuring an adorable Llama working at a computer, with glasses perched on its nose and a steaming cup of coffee by its side.',
-    categoryId: 2,
-    subCategoryId: 6,
+    category: 2,
+    subCategory: 6,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -173,8 +173,8 @@ const products: Product[] = [
     name: 'Llama Cat Cloud Notebook',
     description:
       'Notebook featuring an adorable Llama sitting next to a cute cat between clouds.',
-    categoryId: 2,
-    subCategoryId: 7,
+    category: 2,
+    subCategory: 7,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -186,8 +186,8 @@ const products: Product[] = [
     name: 'Llama Bonefire Notebook',
     description:
       'Illuminating notebook with a guitar playing Llama beside a bonefire on a star filled night.',
-    categoryId: 2,
-    subCategoryId: 7,
+    category: 2,
+    subCategory: 7,
     price: 25,
     previousPrice: 25,
     imageUrl:
@@ -199,8 +199,8 @@ const products: Product[] = [
     name: 'Llama Campfire Hoodie',
     description:
       'Hoodie featuring Llamas sitting around a campfire with a night sky filled with constellations.',
-    categoryId: 1,
-    subCategoryId: 2,
+    category: 1,
+    subCategory: 2,
     price: 55,
     previousPrice: 65,
     imageUrl:
@@ -212,8 +212,8 @@ const products: Product[] = [
     name: 'Llama Indian Floral Hoodie',
     description:
       'Hoodie with a Llama in traditional Indian attire surrounded by vibrant flowers.',
-    categoryId: 1,
-    subCategoryId: 2,
+    category: 1,
+    subCategory: 2,
     price: 60,
     previousPrice: 70,
     imageUrl:
@@ -225,8 +225,8 @@ const products: Product[] = [
     name: 'Llama Superhero Hoodie',
     description:
       'Hoodie featuring a Llama in a superhero costume, flying through the sky with a cape.',
-    categoryId: 1,
-    subCategoryId: 2,
+    category: 1,
+    subCategory: 2,
     price: 50,
     previousPrice: 60,
     imageUrl:
@@ -238,8 +238,8 @@ const products: Product[] = [
     name: 'Llama Chinese Shorts',
     description:
       'Shorts featuring two Llama in traditional Chinese attire, surrounded by paper lanterns and bamboo.',
-    categoryId: 1,
-    subCategoryId: 4,
+    category: 1,
+    subCategory: 4,
     price: 30,
     previousPrice: 40,
     imageUrl:
@@ -251,8 +251,8 @@ const products: Product[] = [
     name: 'Llama Moon Shorts',
     description:
       'Shorts featuring a Llama sleeping on a crescent moon, surrounded by clouds and stars.',
-    categoryId: 1,
-    subCategoryId: 4,
+    category: 1,
+    subCategory: 4,
     price: 25,
     previousPrice: 30,
     imageUrl:
@@ -264,8 +264,8 @@ const products: Product[] = [
     name: 'Llama Moon Sweatshirt',
     description:
       'Sweatshirt featuring a Llama sleeping on a crescent moon, surrounded by clouds and stars.',
-    categoryId: 1,
-    subCategoryId: 3,
+    category: 1,
+    subCategory: 3,
     price: 45,
     previousPrice: 50,
     imageUrl:
@@ -277,8 +277,8 @@ const products: Product[] = [
     name: 'Llama Cozy Sweatshirt',
     description:
       'Sweatshirt featuring an adorable Llama reading a book under a blanket fort, with fairy lights around.',
-    categoryId: 1,
-    subCategoryId: 3,
+    category: 1,
+    subCategory: 3,
     price: 50,
     previousPrice: 60,
     imageUrl:
@@ -290,8 +290,8 @@ const products: Product[] = [
     name: 'Llama Winter Sweatshirt',
     description:
       'Sweatshirt featuring a Llama wrapped in a cozy scarf, holding a cup of hot cocoa in a winter landscape.',
-    categoryId: 1,
-    subCategoryId: 3,
+    category: 1,
+    subCategory: 3,
     price: 55,
     previousPrice: 65,
     imageUrl:
@@ -303,8 +303,8 @@ const products: Product[] = [
     name: 'Llama Japanese Kimono T-shirt',
     description:
       'T-shirt featuring an adorable Llama dressed in a traditional Japanese kimono, holding a fan and standing under a cherry blossom tree.',
-    categoryId: 1,
-    subCategoryId: 1,
+    category: 1,
+    subCategory: 1,
     price: 25,
     previousPrice: 30,
     imageUrl:
@@ -316,8 +316,8 @@ const products: Product[] = [
     name: 'Llama Skateboard T-shirt',
     description:
       'T-shirt featuring a fun Llama riding a skateboard with a backwards cap, surrounded by graffiti-style doodles.',
-    categoryId: 1,
-    subCategoryId: 1,
+    category: 1,
+    subCategory: 1,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -329,8 +329,8 @@ const products: Product[] = [
     name: 'Llama Hot Air Balloon T-shirt',
     description:
       'T-shirt featuring a adorable Llama wearing a Hawaiian lei and flying in a hot balloon, with a smile.',
-    categoryId: 1,
-    subCategoryId: 1,
+    category: 1,
+    subCategory: 1,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -342,8 +342,8 @@ const products: Product[] = [
     name: 'Llama African Tumbler',
     description:
       'Tumbler featuring a group of Llamas in traditional African attire, standing against a savanna backdrop with an acacia tree.',
-    categoryId: 3,
-    subCategoryId: 10,
+    category: 3,
+    subCategory: 10,
     price: 30,
     previousPrice: 35,
     imageUrl:
@@ -355,8 +355,8 @@ const products: Product[] = [
     name: 'Llama Ushanka Tumbler',
     description:
       'Tumbler with a festive Llama wearing a ushanka hat, surrounded by snow flakes.',
-    categoryId: 3,
-    subCategoryId: 10,
+    category: 3,
+    subCategory: 10,
     price: 35,
     previousPrice: 40,
     imageUrl:
@@ -368,8 +368,8 @@ const products: Product[] = [
     name: 'Llama Japanese Kimono Bottle',
     description:
       'Stainless steel water bottle featuring a playful Llama dressed in a Japanese kimono, surrounded by cherry blossoms.',
-    categoryId: 3,
-    subCategoryId: 8,
+    category: 3,
+    subCategory: 8,
     price: 40,
     previousPrice: 45,
     imageUrl:
@@ -381,8 +381,8 @@ const products: Product[] = [
     name: 'Llama Taj Mahal Bottle',
     description:
       'Stainless steel bottle with a Llama adorned in vibrant Indian jewelry, standing in front of the Taj Mahal.',
-    categoryId: 3,
-    subCategoryId: 8,
+    category: 3,
+    subCategory: 8,
     price: 45,
     previousPrice: 50,
     imageUrl:
@@ -394,8 +394,8 @@ const products: Product[] = [
     name: 'Llama Arizona Mug',
     description:
       'Mug with an adorable Llama surrounded by cacti and desert flowers.',
-    categoryId: 3,
-    subCategoryId: 9,
+    category: 3,
+    subCategory: 9,
     price: 35,
     previousPrice: 40,
     imageUrl:
@@ -407,8 +407,8 @@ const products: Product[] = [
     name: 'Llama Explorer Mug',
     description:
       'Mug with an adventurous Llama surrounded by mountains and river.',
-    categoryId: 3,
-    subCategoryId: 9,
+    category: 3,
+    subCategory: 9,
     price: 40,
     previousPrice: 55,
     imageUrl:
@@ -420,8 +420,8 @@ const products: Product[] = [
     name: 'Llama Mauve Patterned Mug',
     description:
       'Mug with an adorable Llama among a unique inspirational pattern with a Mauve backdrop.',
-    categoryId: 3,
-    subCategoryId: 9,
+    category: 3,
+    subCategory: 9,
     price: 30,
     previousPrice: 35,
     imageUrl:

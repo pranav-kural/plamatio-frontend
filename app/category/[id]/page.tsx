@@ -12,31 +12,30 @@ export default function CategoryPage({params}: {params: {id: string}}) {
     const categoryId = parseInt(params.id, 10);
 
     // hero products
-    const heroProducts = useGetHeroProductsByCategoryQuery(categoryId);
+    const {isLoading, isSuccess, isError, error, refetch, data} =
+      useGetHeroProductsByCategoryQuery(categoryId);
 
     // Log error if any occurs during fetching hero products
     useMemo(() => {
-      if (heroProducts.isError) {
+      if (isError) {
         console.error(
           `${Date.now()} CategoryPage: Error fetching hero products for category ${categoryId}`,
-          heroProducts.error
+          error
         );
       }
-    }, [heroProducts.isError, heroProducts.error]);
+    }, [isError, error]);
 
     return (
       <>
-        {heroProducts.isLoading && (
+        {isLoading && (
           <div className="w-full h-full flex flex-col items-center justify-center">
             <LoadingSpinner label="Loading products..." />
           </div>
         )}
-        {heroProducts.isError && (
-          <ErrorFetchingData refetchMethod={heroProducts.refetch} />
-        )}
-        {heroProducts.isSuccess && (
+        {isError && <ErrorFetchingData refetchMethod={refetch} />}
+        {isSuccess && (
           <ProductsShowcase
-            products={heroProducts.data.data}
+            products={data.data}
             categoryId={categoryId}
             showSubcategories
             className="px-5"

@@ -24,7 +24,7 @@ export default async function SubCategoryPage({
 
     // get data for the subcategories
     const products = SAMPLE_DATA.products.filter(
-      (product) => product.subCategoryId === subCategoryId
+      (product) => product.subCategory === subCategoryId
     );
 
     return (

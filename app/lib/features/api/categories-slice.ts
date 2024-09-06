@@ -4,6 +4,7 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../../plamatio-backend/plamatio-api';
+import { SubCategoriesCollection } from '../../plamatio-backend/types';
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -35,7 +36,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         ...result.map(({id}) => ({type: 'SubCategory', id}) as const),
       ],
     }),
-    getSubCategoriesByCategory: builder.query<SubCategory[], number>({
+    getSubCategoriesByCategory: builder.query<SubCategoriesCollection, number>({
       query: (categoryId) => ({
         url: PBE.CATEGORIES.GET_SUBCATEGORIES_BY_CATEGORY(categoryId),
         method: 'GET',
@@ -43,10 +44,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'CategorySubCategories',
-        ...result.map(({id}) => ({type: 'SubCategory', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'CategorySubCategories',
+            ...result.data.map(({id}) => ({type: 'SubCategory', id}) as const),
+          ]
+        } else { return []}
+      }
     }),
   }),
 });
