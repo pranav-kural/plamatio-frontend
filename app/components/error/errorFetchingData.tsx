@@ -3,11 +3,17 @@ import {FC} from 'react';
 type ErrorFetchingDataProps = {
   message?: string;
   refetchMethod?: () => void;
+  displayDetails?: boolean;
+  error?: unknown;
+  children?: React.ReactNode;
 };
 
 export const ErrorFetchingData: FC<ErrorFetchingDataProps> = ({
   message,
   refetchMethod,
+  displayDetails,
+  error,
+  children,
 }) => {
   return (
     <div className="w-full h-full flex flex-col gap-10 items-center justify-center">
@@ -22,6 +28,12 @@ export const ErrorFetchingData: FC<ErrorFetchingDataProps> = ({
           Retry
         </button>
       )}
+      {displayDetails && (
+        <div className="max-w-[500px] text-sm text-center">
+          <span>{JSON.stringify(error)}</span>
+        </div>
+      )}
+      {children}
     </div>
   );
 };
