@@ -16,7 +16,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['Categories'],
+      providesTags: (result = []) => [
+        'Categories',
+        ...result.map(({id}) => ({type: 'Category', id}) as const),
+      ],
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     getSubCategories: builder.query<SubCategory[], void>({
@@ -27,7 +30,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['SubCategories'],
+      providesTags: (result = []) => [
+        'SubCategories',
+        ...result.map(({id}) => ({type: 'SubCategory', id}) as const),
+      ],
     }),
     getSubCategoriesByCategory: builder.query<SubCategory[], number>({
       query: (categoryId) => ({
@@ -37,7 +43,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['SubCategories'],
+      providesTags: (result = []) => [
+        'CategorySubCategories',
+        ...result.map(({id}) => ({type: 'SubCategory', id}) as const),
+      ],
     }),
   }),
 });

@@ -15,7 +15,10 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['CartItems'],
+      providesTags: (result = []) => [
+        'CartItems',
+        ...result.map(({id}) => ({type: 'CartItem', id}) as const),
+      ],
     }),
     getCartItem: builder.query<CartItem, number>({
       query: (cartItemId) => ({
@@ -25,7 +28,7 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['CartItem'],
+      providesTags: (result) => [{type: 'CartItem', id: result?.id}],
     }),
     addCartItem: builder.mutation<CartItem, NewCartItem>({
       query: (newCartItem) => ({
@@ -36,9 +39,11 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: ['CartItem'],
+      invalidatesTags: (result) => {
+        return result ? [{type: 'CartItem', id: result.id}] : ['CartItems'];
+      },
     }),
-    updateCartItem: builder.mutation<CartItem, CartItem>({
+    updateCartItem: builder.mutation<string, CartItem>({
       query: (updatedCart) => ({
         url: PBE.CART.UPDATE(),
         method: 'PUT',
@@ -47,9 +52,11 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: ['CartItem'],
+      invalidatesTags: (result, _, args) => {
+        return result ? [{type: 'CartItem', id: args.id}] : ['CartItems'];
+      },
     }),
-    deleteCartItem: builder.mutation<CartItem, number>({
+    deleteCartItem: builder.mutation<string, number>({
       query: (cartItemId) => ({
         url: PBE.CART.DELETE(cartItemId),
         method: 'DELETE',
@@ -57,7 +64,9 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: ['CartItem'],
+      invalidatesTags: (result, _, args) => {
+        return result ? [{type: 'CartItem', id: args}] : ['CartItems'];
+      },
     }),
   }),
 });

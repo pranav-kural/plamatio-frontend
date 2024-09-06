@@ -15,7 +15,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['Product'],
+      providesTags: (result) => [{type: 'Product', id: result?.id}],
     }),
     getProductsByCategory: builder.query<Product[], number>({
       query: (categoryId) => ({
@@ -25,7 +25,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['Products'],
+      providesTags: (result = []) => [
+        'CategoryProducts',
+        ...result.map(({id}) => ({type: 'Product', id}) as const),
+      ],
     }),
     getProductsBySubCategory: builder.query<Product[], number>({
       query: (subCategoryId) => ({
@@ -35,7 +38,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['Products'],
+      providesTags: (result = []) => [
+        'SubCategoryProducts',
+        ...result.map(({id}) => ({type: 'Product', id}) as const),
+      ],
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     getProducts: builder.query<Product[], void>({
@@ -46,7 +52,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['Products'],
+      providesTags: (result = []) => [
+        'Products',
+        ...result.map(({id}) => ({type: 'Product', id}) as const),
+      ],
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     getHeroProducts: builder.query<Product[], void>({
@@ -57,7 +66,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['HeroProducts'],
+      providesTags: (result = []) => [
+        'HeroProducts',
+        ...result.map(({id}) => ({type: 'Product', id}) as const),
+      ],
     }),
     getHeroProductsByCategory: builder.query<Product[], number>({
       query: (categoryId) => ({
@@ -67,7 +79,10 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: ['HeroProducts'],
+      providesTags: (result = []) => [
+        'CategoryHeroProducts',
+        ...result.map(({id}) => ({type: 'Product', id}) as const),
+      ],
     }),
   }),
 });
