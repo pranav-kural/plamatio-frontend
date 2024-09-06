@@ -1,6 +1,6 @@
 // Import the RTK Query methods from the React-specific entry point
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {getPlamatioBackendAPIURL} from '../plamatio-api';
+import { getPlamatioBackendAPIURL } from '../../plamatio-backend/plamatio-api';
 
 export const apiSlice = createApi({
   reducerPath: 'api',

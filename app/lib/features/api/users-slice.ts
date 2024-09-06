@@ -3,7 +3,7 @@ import {apiSlice} from './api-slice';
 import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../plamatio-api';
+} from '../../plamatio-backend/plamatio-api';
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
