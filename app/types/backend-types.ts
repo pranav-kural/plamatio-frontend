@@ -9,7 +9,7 @@ export type SubCategory = {
   id: number;
   name: string;
   description: string;
-  categoryId: number;
+  category: number;
   offered: boolean;
 };
 

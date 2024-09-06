@@ -102,7 +102,7 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
   }, [url]);
 
   return (
-    <div className="absolute top-[115px] left-10 z-10">
+    <div className="px-1 sm:px-2 md:px-5 z-10">
       <div className={`${hidden ? 'hidden' : ''} text-sm text-violet-900`}>
         {breadcrumb}
       </div>

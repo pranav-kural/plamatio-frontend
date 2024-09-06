@@ -33,56 +33,56 @@ const subCategories: SubCategory[] = [
     id: 1,
     name: 'T-shirts',
     description: 'T-shirts like never before. Llama inspired, human approved.',
-    categoryId: 1,
+    category: 1,
     offered: true,
   },
   {
     id: 2,
     name: 'Hoodies',
     description: 'Hoodies for days good and bad. Cool design to keep you warm.',
-    categoryId: 1,
+    category: 1,
     offered: true,
   },
   {
     id: 3,
     name: 'Sweatshirts',
     description: 'Sweatshirts that make you sweat. In a good way.',
-    categoryId: 1,
+    category: 1,
     offered: true,
   },
   {
     id: 4,
     name: 'Shorts',
     description: 'Shorts for all occasions. Llama inspired.',
-    categoryId: 1,
+    category: 1,
     offered: true,
   },
   {
     id: 5,
     name: 'Candles',
     description: 'Candles to suit every mood. Handmade with love.',
-    categoryId: 2,
+    category: 2,
     offered: true,
   },
   {
     id: 6,
     name: 'Desk Mats',
     description: 'Desk mats that make your desk look good. And feel good',
-    categoryId: 2,
+    category: 2,
     offered: true,
   },
   {
     id: 7,
     name: 'Notebooks',
     description: 'Notebooks that inspire creativity. And productivity.',
-    categoryId: 2,
+    category: 2,
     offered: true,
   },
   {
     id: 8,
     name: 'Bottles',
     description: 'Bottles that fit your style. And your bag. And your life.',
-    categoryId: 3,
+    category: 3,
     offered: true,
   },
   {
@@ -90,14 +90,14 @@ const subCategories: SubCategory[] = [
     name: 'Mugs',
     description:
       'Mugs to empower your mornings. And your evenings. And your nights.',
-    categoryId: 3,
+    category: 3,
     offered: true,
   },
   {
     id: 10,
     name: 'Tumblers',
     description: 'Tumblers that keep your drinks hot. Or cold. Or just right.',
-    categoryId: 3,
+    category: 3,
     offered: true,
   },
 ];
@@ -451,7 +451,7 @@ const getHeroProducts = () => {
 
 const getSubCategories = (categoryId: number): SubCategory[] => {
   return subCategories.filter(
-    (subCategory) => subCategory.categoryId === categoryId
+    (subCategory) => subCategory.category === categoryId
   );
 };
 

@@ -1,15 +1,14 @@
-import {Category, SubCategory} from '@/app/types/backend-types';
 import {apiSlice} from './api-slice';
 import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../../plamatio-backend/plamatio-api';
-import { SubCategoriesCollection } from '../../plamatio-backend/types';
+import { CategoriesCollection, SubCategoriesCollection } from '../../plamatio-backend/types';
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    getCategories: builder.query<Category[], void>({
+    getCategories: builder.query<CategoriesCollection, void>({
       query: () => ({
         url: PBE.CATEGORIES.GET_ALL(),
         method: 'GET',
@@ -17,13 +16,19 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'Categories',
-        ...result.map(({id}) => ({type: 'Category', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'Categories',
+            ...result.data.map(({id}) => ({type: 'Category', id}) as const),
+          ];
+        } else {
+          return [];
+        }
+      }
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    getSubCategories: builder.query<SubCategory[], void>({
+    getSubCategories: builder.query<SubCategoriesCollection, void>({
       query: () => ({
         url: PBE.CATEGORIES.GET_ALL_SUBCATEGORIES(),
         method: 'GET',
@@ -31,10 +36,16 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'SubCategories',
-        ...result.map(({id}) => ({type: 'SubCategory', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'SubCategories',
+            ...result.data.map(({id}) => ({type: 'SubCategory', id}) as const),
+          ];
+        } else {
+          return [];
+        }
+      }
     }),
     getSubCategoriesByCategory: builder.query<SubCategoriesCollection, number>({
       query: (categoryId) => ({
