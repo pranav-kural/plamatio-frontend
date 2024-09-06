@@ -4,6 +4,7 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../../plamatio-backend/plamatio-api';
+import { ProductsCollection } from '../../plamatio-backend/types';
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -58,7 +59,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       ],
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    getHeroProducts: builder.query<Product[], void>({
+    getHeroProducts: builder.query<ProductsCollection, void>({
       query: () => ({
         url: PBE.PRODUCTS.GET_HERO(),
         method: 'GET',
@@ -66,10 +67,23 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'HeroProducts',
-        ...result.map(({id}) => ({type: 'Product', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          // if we have data, we want to invalidate all hero products
+          if (result.data) {
+            return [
+              'HeroProducts',
+              ...result.data.map(({id}) => ({type: 'Product', id}) as const),
+            ];
+          } else {
+            return ['HeroProducts'];
+          }
+          
+        } else {
+          // if we don't have data, no tags to invalidate
+          return [];
+        }
+      },
     }),
     getHeroProductsByCategory: builder.query<Product[], number>({
       query: (categoryId) => ({
