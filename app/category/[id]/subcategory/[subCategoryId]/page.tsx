@@ -1,10 +1,13 @@
-'use server';
+'use client';
 
-import {SAMPLE_DATA} from '@/app/(data)/sample-data';
+import ErrorFetchingData from '@/app/components/error/errorFetchingData';
 import ProductsShowcase from '@/app/components/products/productsShowcase';
+import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
+import {useGetProductsBySubCategoryQuery} from '@/app/lib/features/api/products-api-slice';
 import {redirect} from 'next/navigation';
+import {useMemo} from 'react';
 
-export default async function SubCategoryPage({
+export default function SubCategoryPage({
   params,
 }: {
   params: {subCategoryId: string};
@@ -13,24 +16,34 @@ export default async function SubCategoryPage({
     // parse the sub-category ID from the URL
     const subCategoryId = parseInt(params.subCategoryId, 10);
 
-    // get the sub-category data based on ID
-    const subCategoryData = SAMPLE_DATA.subCategories.find((subCategory) => {
-      return subCategory.id === subCategoryId;
-    });
+    // get products for the sub-category
+    const {isLoading, isSuccess, isError, error, refetch, data} =
+      useGetProductsBySubCategoryQuery(subCategoryId);
 
-    if (!subCategoryData) {
-      throw new Error('sub-category not found');
-    }
-
-    // get data for the subcategories
-    const products = SAMPLE_DATA.products.filter(
-      (product) => product.subCategory === subCategoryId
-    );
+    // Log error if any occurs during fetching data
+    useMemo(() => {
+      if (isError) {
+        console.error(
+          `${Date.now()} SubCategoryPage: Error fetching products for sub-category ${subCategoryId}`,
+          error
+        );
+      }
+    }, [isError, error]);
 
     return (
-      <div className="w-full flex flex-col align-middle justify-center">
-        <ProductsShowcase products={products} className="px-3" />
-      </div>
+      <>
+        {isLoading && (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <LoadingSpinner label="Loading products..." />
+          </div>
+        )}
+        {isError && <ErrorFetchingData refetchMethod={refetch} />}
+        {isSuccess && data && (
+          <div className="w-full flex flex-col align-middle justify-center">
+            <ProductsShowcase products={data.data} className="px-3" />
+          </div>
+        )}
+      </>
     );
   } catch (error) {
     console.error(error);
