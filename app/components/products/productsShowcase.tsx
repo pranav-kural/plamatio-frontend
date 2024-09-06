@@ -20,7 +20,16 @@ export const ProductsShowcase: FC<ProductsShowcaseProps> = (
   props: ProductsShowcaseProps
 ) => {
   // get data for the subcategories
-  const subCategoriesMap = SAMPLE_DATA.subCategoriesMap;
+  const subCategories = SAMPLE_DATA.subCategories.filter((subCategory) => {
+    return subCategory.categoryId === props.categoryId;
+  });
+
+  const getSubCategoryName = (subCategoryId: number) => {
+    const subCategory = subCategories.find(
+      (subCategory) => subCategory.id === subCategoryId
+    );
+    return subCategory?.name || '';
+  };
 
   return (
     <div
@@ -28,7 +37,7 @@ export const ProductsShowcase: FC<ProductsShowcaseProps> = (
         `w-full flex flex-row align-middle justify-evenly gap-4 px-4 flex-wrap`,
         props.className
       )}>
-      {props.showSubcategories && subCategoriesMap
+      {props.showSubcategories && subCategories
         ? props.products.map((product) => (
             <div key={product.id} className="flex flex-col mt-5 md:mt-0">
               <Link
@@ -36,7 +45,7 @@ export const ProductsShowcase: FC<ProductsShowcaseProps> = (
                 className="text-center mb-5">
                 <span
                   className={`text-center text-3xl text-violet-900 hover:underline ${gayathri.className}`}>
-                  Shop {subCategoriesMap.get(product.subCategoryId)?.name || ''}
+                  Shop {getSubCategoryName(product.subCategoryId)}
                 </span>
               </Link>
               <ProductTile
