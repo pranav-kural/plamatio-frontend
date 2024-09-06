@@ -11,12 +11,6 @@ type BreadcrumbProps = {
   url?: string;
 };
 
-const Separator: FC<{key: string}> = ({key}: {key: string}) => (
-  <span key={key} className="mx-2">
-    {'>'}
-  </span>
-);
-
 export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
   const [breadcrumb, setBreadcrumb] = useState<JSX.Element[]>([]);
 
@@ -54,7 +48,10 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
           <Link key="home" href="/" className="cursor-pointer">
             <HomeIcon className="inline mb-1" size={18} strokeWidth={1.5} />
           </Link>,
-          <Separator key="separator0" />,
+          // <Separator id="separator0" />,
+          <span key="separator0" className="mx-2">
+            {'>'}
+          </span>,
           <Link
             key="category"
             href={`/category/${categoryId}`}
@@ -69,7 +66,10 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
       const subCategoryName = SAMPLE_DATA.getSubCategoryName(subCategoryId);
       if (subCategoryName) {
         breadcrumbParts.push(
-          <Separator key="separator1" />,
+          // <Separator id="separator1" />,
+          <span key="separator1" className="mx-2">
+            {'>'}
+          </span>,
           <Link
             key="subcategory"
             href={`/category/${categoryId}/subcategory/${subCategoryId}`}
@@ -84,7 +84,10 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
       const productName = SAMPLE_DATA.getProductName(productId);
       if (productName) {
         breadcrumbParts.push(
-          <Separator key="separator2" />,
+          // <Separator id="separator2" />,
+          <span key="separator2" className="mx-2">
+            {'>'}
+          </span>,
           <Link
             key="product"
             href={`/category/${categoryId}/subcategory/${subCategoryId}/product/${productId}`}

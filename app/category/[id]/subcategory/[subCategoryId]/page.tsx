@@ -14,7 +14,9 @@ export default async function SubCategoryPage({
     const subCategoryId = parseInt(params.subCategoryId, 10);
 
     // get the sub-category data based on ID
-    const subCategoryData = SAMPLE_DATA.subCategoriesMap.get(subCategoryId);
+    const subCategoryData = SAMPLE_DATA.subCategories.find((subCategory) => {
+      return subCategory.id === subCategoryId;
+    });
 
     if (!subCategoryData) {
       throw new Error('sub-category not found');
@@ -22,7 +24,7 @@ export default async function SubCategoryPage({
 
     // get data for the subcategories
     const products = SAMPLE_DATA.products.filter(
-      (product) => product.subCategory === subCategoryId
+      (product) => product.subCategoryId === subCategoryId
     );
 
     return (

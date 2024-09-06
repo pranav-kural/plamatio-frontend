@@ -1,171 +1,104 @@
-import {Category, SubCategory, Product} from '../types/backend-types';
+import {
+  Category,
+  SubCategory,
+  Product,
+  CategoryHeroProduct,
+} from '../types/backend-types';
 
-const categoriesMap = new Map<number, Category>([
-  [
-    1,
-    {
-      id: 1,
-      name: 'Clothing',
-      description:
-        'Llama inspired clothing that embraces all cultures and promotes well-being and self-love.',
-    },
-  ],
-  [
-    2,
-    {
-      id: 2,
-      name: 'Accessories',
-      description: 'Find the perfect gift for your loved ones. Or yourself.',
-    },
-  ],
-  [
-    3,
-    {
-      id: 3,
-      name: 'Drinkware',
-      description:
-        'Llama inspired drinkware. Not just usable but also beautiful.',
-    },
-  ],
-]);
+const categories: Category[] = [
+  {
+    id: 1,
+    name: 'Clothing',
+    description:
+      'Llama inspired clothing that embraces all cultures and promotes well-being and self-love.',
+    offered: true,
+  },
+  {
+    id: 2,
+    name: 'Accessories',
+    description: 'Find the perfect gift for your loved ones. Or yourself.',
+    offered: true,
+  },
+  {
+    id: 3,
+    name: 'Drinkware',
+    description:
+      'Llama inspired drinkware. Not just usable but also beautiful.',
+    offered: true,
+  },
+];
 
-const subCategoriesMap = new Map<number, SubCategory>([
-  [
-    1,
-    {
-      id: 1,
-      name: 'T-shirts',
-      description:
-        'T-shirts like never before. Llama inspired, human approved.',
-      heroProduct: 16,
-    },
-  ],
-  [
-    2,
-    {
-      id: 2,
-      name: 'Hoodies',
-      description:
-        'Hoodies for days good and bad. Cool design to keep you warm.',
-      heroProduct: 8,
-    },
-  ],
-  [
-    3,
-    {
-      id: 3,
-      name: 'Sweatshirts',
-      description: 'Sweatshirts that make you sweat. In a good way.',
-      heroProduct: 13,
-    },
-  ],
-  [
-    4,
-    {
-      id: 4,
-      name: 'Shorts',
-      description: 'Shorts for all occasions. Llama inspired.',
-      heroProduct: 11,
-    },
-  ],
-  [
-    5,
-    {
-      id: 5,
-      name: 'Candles',
-      description: 'Candles to suit every mood. Handmade with love.',
-      heroProduct: 1,
-    },
-  ],
-  [
-    6,
-    {
-      id: 6,
-      name: 'Desk Mats',
-      description: 'Desk mats that make your desk look good. And feel good',
-      heroProduct: 4,
-    },
-  ],
-  [
-    7,
-    {
-      id: 7,
-      name: 'Notebooks',
-      description: 'Notebooks that inspire creativity. And productivity.',
-      heroProduct: 6,
-    },
-  ],
-  [
-    8,
-    {
-      id: 8,
-      name: 'Bottles',
-      description: 'Bottles that fit your style. And your bag. And your life.',
-      heroProduct: 21,
-    },
-  ],
-  [
-    9,
-    {
-      id: 9,
-      name: 'Mugs',
-      description:
-        'Mugs to empower your mornings. And your evenings. And your nights.',
-      heroProduct: 23,
-    },
-  ],
-  [
-    10,
-    {
-      id: 10,
-      name: 'Tumblers',
-      description:
-        'Tumblers that keep your drinks hot. Or cold. Or just right.',
-      heroProduct: 19,
-    },
-  ],
-]);
-
-const categorySubCategoriesMapping = [
+const subCategories: SubCategory[] = [
   {
+    id: 1,
+    name: 'T-shirts',
+    description: 'T-shirts like never before. Llama inspired, human approved.',
     categoryId: 1,
-    subCategoryId: 1,
+    offered: true,
   },
   {
+    id: 2,
+    name: 'Hoodies',
+    description: 'Hoodies for days good and bad. Cool design to keep you warm.',
     categoryId: 1,
-    subCategoryId: 2,
+    offered: true,
   },
   {
+    id: 3,
+    name: 'Sweatshirts',
+    description: 'Sweatshirts that make you sweat. In a good way.',
     categoryId: 1,
-    subCategoryId: 3,
+    offered: true,
   },
   {
+    id: 4,
+    name: 'Shorts',
+    description: 'Shorts for all occasions. Llama inspired.',
     categoryId: 1,
-    subCategoryId: 4,
+    offered: true,
   },
   {
+    id: 5,
+    name: 'Candles',
+    description: 'Candles to suit every mood. Handmade with love.',
     categoryId: 2,
-    subCategoryId: 5,
+    offered: true,
   },
   {
+    id: 6,
+    name: 'Desk Mats',
+    description: 'Desk mats that make your desk look good. And feel good',
     categoryId: 2,
-    subCategoryId: 6,
+    offered: true,
   },
   {
+    id: 7,
+    name: 'Notebooks',
+    description: 'Notebooks that inspire creativity. And productivity.',
     categoryId: 2,
-    subCategoryId: 7,
+    offered: true,
   },
   {
+    id: 8,
+    name: 'Bottles',
+    description: 'Bottles that fit your style. And your bag. And your life.',
     categoryId: 3,
-    subCategoryId: 8,
+    offered: true,
   },
   {
+    id: 9,
+    name: 'Mugs',
+    description:
+      'Mugs to empower your mornings. And your evenings. And your nights.',
     categoryId: 3,
-    subCategoryId: 9,
+    offered: true,
   },
   {
+    id: 10,
+    name: 'Tumblers',
+    description: 'Tumblers that keep your drinks hot. Or cold. Or just right.',
     categoryId: 3,
-    subCategoryId: 10,
+    offered: true,
   },
 ];
 
@@ -175,8 +108,8 @@ const products: Product[] = [
     name: 'Llama Chinese Qipao Candle',
     description:
       'Soy wax scented candle with a label showcasing a Llama in a traditional Chinese qipao, holding a paper lantern.',
-    category: 2,
-    subCategory: 5,
+    categoryId: 2,
+    subCategoryId: 5,
     price: 25,
     previousPrice: 34,
     imageUrl:
@@ -188,8 +121,8 @@ const products: Product[] = [
     name: 'Llama Moroccan Candle',
     description:
       'Scented candle with a label featuring a Llama in traditional Moroccan attire, surrounded by intricate mosaic tiles',
-    category: 2,
-    subCategory: 5,
+    categoryId: 2,
+    subCategoryId: 5,
     price: 27,
     previousPrice: 30,
     imageUrl:
@@ -201,8 +134,8 @@ const products: Product[] = [
     name: 'Llama Mauve Candle',
     description:
       'Candle featuring an adorable Llama wearing a mauve scarf sitting besides fireplace.',
-    category: 2,
-    subCategory: 5,
+    categoryId: 2,
+    subCategoryId: 5,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -214,8 +147,8 @@ const products: Product[] = [
     name: 'Llama Comfy Desk Mat',
     description:
       'Desk mat with a cute Llama lying on a comfy pillow, reading a book under a cozy lamp.',
-    category: 2,
-    subCategory: 6,
+    categoryId: 2,
+    subCategoryId: 6,
     price: 15,
     previousPrice: 15,
     imageUrl:
@@ -227,8 +160,8 @@ const products: Product[] = [
     name: 'Llama Tech Desk Mat',
     description:
       'Desk mat featuring an adorable Llama working at a computer, with glasses perched on its nose and a steaming cup of coffee by its side.',
-    category: 2,
-    subCategory: 6,
+    categoryId: 2,
+    subCategoryId: 6,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -240,8 +173,8 @@ const products: Product[] = [
     name: 'Llama Cat Cloud Notebook',
     description:
       'Notebook featuring an adorable Llama sitting next to a cute cat between clouds.',
-    category: 2,
-    subCategory: 7,
+    categoryId: 2,
+    subCategoryId: 7,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -253,8 +186,8 @@ const products: Product[] = [
     name: 'Llama Bonefire Notebook',
     description:
       'Illuminating notebook with a guitar playing Llama beside a bonefire on a star filled night.',
-    category: 2,
-    subCategory: 7,
+    categoryId: 2,
+    subCategoryId: 7,
     price: 25,
     previousPrice: 25,
     imageUrl:
@@ -266,8 +199,8 @@ const products: Product[] = [
     name: 'Llama Campfire Hoodie',
     description:
       'Hoodie featuring Llamas sitting around a campfire with a night sky filled with constellations.',
-    category: 1,
-    subCategory: 2,
+    categoryId: 1,
+    subCategoryId: 2,
     price: 55,
     previousPrice: 65,
     imageUrl:
@@ -279,8 +212,8 @@ const products: Product[] = [
     name: 'Llama Indian Floral Hoodie',
     description:
       'Hoodie with a Llama in traditional Indian attire surrounded by vibrant flowers.',
-    category: 1,
-    subCategory: 2,
+    categoryId: 1,
+    subCategoryId: 2,
     price: 60,
     previousPrice: 70,
     imageUrl:
@@ -292,8 +225,8 @@ const products: Product[] = [
     name: 'Llama Superhero Hoodie',
     description:
       'Hoodie featuring a Llama in a superhero costume, flying through the sky with a cape.',
-    category: 1,
-    subCategory: 2,
+    categoryId: 1,
+    subCategoryId: 2,
     price: 50,
     previousPrice: 60,
     imageUrl:
@@ -305,8 +238,8 @@ const products: Product[] = [
     name: 'Llama Chinese Shorts',
     description:
       'Shorts featuring two Llama in traditional Chinese attire, surrounded by paper lanterns and bamboo.',
-    category: 1,
-    subCategory: 4,
+    categoryId: 1,
+    subCategoryId: 4,
     price: 30,
     previousPrice: 40,
     imageUrl:
@@ -318,8 +251,8 @@ const products: Product[] = [
     name: 'Llama Moon Shorts',
     description:
       'Shorts featuring a Llama sleeping on a crescent moon, surrounded by clouds and stars.',
-    category: 1,
-    subCategory: 4,
+    categoryId: 1,
+    subCategoryId: 4,
     price: 25,
     previousPrice: 30,
     imageUrl:
@@ -331,8 +264,8 @@ const products: Product[] = [
     name: 'Llama Moon Sweatshirt',
     description:
       'Sweatshirt featuring a Llama sleeping on a crescent moon, surrounded by clouds and stars.',
-    category: 1,
-    subCategory: 3,
+    categoryId: 1,
+    subCategoryId: 3,
     price: 45,
     previousPrice: 50,
     imageUrl:
@@ -344,8 +277,8 @@ const products: Product[] = [
     name: 'Llama Cozy Sweatshirt',
     description:
       'Sweatshirt featuring an adorable Llama reading a book under a blanket fort, with fairy lights around.',
-    category: 1,
-    subCategory: 3,
+    categoryId: 1,
+    subCategoryId: 3,
     price: 50,
     previousPrice: 60,
     imageUrl:
@@ -357,8 +290,8 @@ const products: Product[] = [
     name: 'Llama Winter Sweatshirt',
     description:
       'Sweatshirt featuring a Llama wrapped in a cozy scarf, holding a cup of hot cocoa in a winter landscape.',
-    category: 1,
-    subCategory: 3,
+    categoryId: 1,
+    subCategoryId: 3,
     price: 55,
     previousPrice: 65,
     imageUrl:
@@ -370,8 +303,8 @@ const products: Product[] = [
     name: 'Llama Japanese Kimono T-shirt',
     description:
       'T-shirt featuring an adorable Llama dressed in a traditional Japanese kimono, holding a fan and standing under a cherry blossom tree.',
-    category: 1,
-    subCategory: 1,
+    categoryId: 1,
+    subCategoryId: 1,
     price: 25,
     previousPrice: 30,
     imageUrl:
@@ -383,8 +316,8 @@ const products: Product[] = [
     name: 'Llama Skateboard T-shirt',
     description:
       'T-shirt featuring a fun Llama riding a skateboard with a backwards cap, surrounded by graffiti-style doodles.',
-    category: 1,
-    subCategory: 1,
+    categoryId: 1,
+    subCategoryId: 1,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -396,8 +329,8 @@ const products: Product[] = [
     name: 'Llama Hot Air Balloon T-shirt',
     description:
       'T-shirt featuring a adorable Llama wearing a Hawaiian lei and flying in a hot balloon, with a smile.',
-    category: 1,
-    subCategory: 1,
+    categoryId: 1,
+    subCategoryId: 1,
     price: 20,
     previousPrice: 25,
     imageUrl:
@@ -409,8 +342,8 @@ const products: Product[] = [
     name: 'Llama African Tumbler',
     description:
       'Tumbler featuring a group of Llamas in traditional African attire, standing against a savanna backdrop with an acacia tree.',
-    category: 3,
-    subCategory: 10,
+    categoryId: 3,
+    subCategoryId: 10,
     price: 30,
     previousPrice: 35,
     imageUrl:
@@ -422,8 +355,8 @@ const products: Product[] = [
     name: 'Llama Ushanka Tumbler',
     description:
       'Tumbler with a festive Llama wearing a ushanka hat, surrounded by snow flakes.',
-    category: 3,
-    subCategory: 10,
+    categoryId: 3,
+    subCategoryId: 10,
     price: 35,
     previousPrice: 40,
     imageUrl:
@@ -435,8 +368,8 @@ const products: Product[] = [
     name: 'Llama Japanese Kimono Bottle',
     description:
       'Stainless steel water bottle featuring a playful Llama dressed in a Japanese kimono, surrounded by cherry blossoms.',
-    category: 3,
-    subCategory: 8,
+    categoryId: 3,
+    subCategoryId: 8,
     price: 40,
     previousPrice: 45,
     imageUrl:
@@ -448,8 +381,8 @@ const products: Product[] = [
     name: 'Llama Taj Mahal Bottle',
     description:
       'Stainless steel bottle with a Llama adorned in vibrant Indian jewelry, standing in front of the Taj Mahal.',
-    category: 3,
-    subCategory: 8,
+    categoryId: 3,
+    subCategoryId: 8,
     price: 45,
     previousPrice: 50,
     imageUrl:
@@ -461,8 +394,8 @@ const products: Product[] = [
     name: 'Llama Arizona Mug',
     description:
       'Mug with an adorable Llama surrounded by cacti and desert flowers.',
-    category: 3,
-    subCategory: 9,
+    categoryId: 3,
+    subCategoryId: 9,
     price: 35,
     previousPrice: 40,
     imageUrl:
@@ -474,8 +407,8 @@ const products: Product[] = [
     name: 'Llama Explorer Mug',
     description:
       'Mug with an adventurous Llama surrounded by mountains and river.',
-    category: 3,
-    subCategory: 9,
+    categoryId: 3,
+    subCategoryId: 9,
     price: 40,
     previousPrice: 55,
     imageUrl:
@@ -487,14 +420,27 @@ const products: Product[] = [
     name: 'Llama Mauve Patterned Mug',
     description:
       'Mug with an adorable Llama among a unique inspirational pattern with a Mauve backdrop.',
-    category: 3,
-    subCategory: 9,
+    categoryId: 3,
+    subCategoryId: 9,
     price: 30,
     previousPrice: 35,
     imageUrl:
       'https://res.cloudinary.com/dbbfm4bbc/image/upload/v1724716145/llama_white_mauve_mug_ub2jcb.png',
     offered: true,
   },
+];
+
+const categoryHeroProducts: CategoryHeroProduct[] = [
+  {categoryId: 1, subCategoryId: 1, productId: 16},
+  {categoryId: 1, subCategoryId: 2, productId: 8},
+  {categoryId: 1, subCategoryId: 3, productId: 13},
+  {categoryId: 1, subCategoryId: 4, productId: 11},
+  {categoryId: 2, subCategoryId: 5, productId: 1},
+  {categoryId: 2, subCategoryId: 6, productId: 4},
+  {categoryId: 2, subCategoryId: 7, productId: 6},
+  {categoryId: 3, subCategoryId: 8, productId: 21},
+  {categoryId: 3, subCategoryId: 9, productId: 23},
+  {categoryId: 3, subCategoryId: 10, productId: 19},
 ];
 
 const heroProducts: number[] = [3, 4, 14, 23];
@@ -504,39 +450,20 @@ const getHeroProducts = () => {
 };
 
 const getSubCategories = (categoryId: number): SubCategory[] => {
-  // confirm category Id is valid
-  if (!categoriesMap.has(categoryId)) {
-    throw new Error(`Invalid category ID: ${categoryId}`);
-  }
-  const subCategories = categorySubCategoriesMapping
-    .filter((mapping) => mapping.categoryId === categoryId)
-    .map((mapping) => subCategoriesMap.get(mapping.subCategoryId));
-
-  // confirm none of the sub categories are undefined
-  if (subCategories.some((subCategory) => !subCategory)) {
-    throw new Error('Invalid sub category data');
-  }
-
-  return subCategories as SubCategory[];
+  return subCategories.filter(
+    (subCategory) => subCategory.categoryId === categoryId
+  );
 };
 
 const getCategoryHeroProducts = (categoryId: number): Product[] => {
-  const subCategories = getSubCategories(categoryId);
-
-  const heroProducts = subCategories.map((subCategory) =>
-    products.find((product) => product.id === subCategory.heroProduct)
-  );
-
-  // confirm none of the hero products are undefined
-  if (heroProducts.some((product) => !product)) {
-    throw new Error('Unable to retrieve hero products');
-  }
-
-  return heroProducts as Product[];
+  const heroProductIds = categoryHeroProducts
+    .filter((heroProduct) => heroProduct.categoryId === categoryId)
+    .map((heroProduct) => heroProduct.productId);
+  return products.filter((product) => heroProductIds.includes(product.id));
 };
 
 const getCategoryName = (id: number): string => {
-  const category = categoriesMap.get(id);
+  const category = categories.find((category) => category.id === id);
   if (!category) {
     throw new Error(`Invalid category ID: ${id}`);
   }
@@ -544,7 +471,9 @@ const getCategoryName = (id: number): string => {
 };
 
 const getSubCategoryName = (id: number): string => {
-  const subCategory = subCategoriesMap.get(id);
+  const subCategory = subCategories.find(
+    (subCategory) => subCategory.id === id
+  );
   if (!subCategory) {
     throw new Error(`Invalid sub category ID: ${id}`);
   }
@@ -560,11 +489,10 @@ const getProductName = (id: number): string => {
 };
 
 export const SAMPLE_DATA = {
-  categoriesMap,
-  subCategoriesMap,
+  categories,
+  subCategories,
   getSubCategories,
   getCategoryHeroProducts,
-  categorySubCategoriesMapping,
   products,
   getHeroProducts,
   getCategoryName,

@@ -4,10 +4,8 @@ import {SAMPLE_DATA} from '@/app/(data)/sample-data';
 import {NavMenuItem, NavMenuSubItem} from './nav-menu-item';
 
 const NavMenu = () => {
-  const categories = SAMPLE_DATA.categoriesMap;
-
   // prepare the menu items for categories
-  const categoryMenuItems: NavMenuItem[] = Array.from(categories.values()).map(
+  const categoryMenuItems: NavMenuItem[] = SAMPLE_DATA.categories.map(
     (category) => {
       // prepare nav menu sub items for sub categories
       const subCategoryMenuItems: NavMenuSubItem[] =
