@@ -1,4 +1,5 @@
 'use client';
+import ErrorFetchingData from '@/app/components/error/errorFetchingData';
 import ProductsShowcase from '@/app/components/products/productsShowcase';
 import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
 import {useGetHeroProductsByCategoryQuery} from '@/app/lib/features/api/products-api-slice';
@@ -31,17 +32,7 @@ export default function CategoryPage({params}: {params: {id: string}}) {
           </div>
         )}
         {heroProducts.isError && (
-          <div className="w-full h-full flex flex-col gap-10 items-center justify-center">
-            <span className="max-w-[500px] text-2xl text-center">
-              Error fetching products. Please ensure you are connected to the
-              internet. If the problem persists, contact support.
-            </span>
-            <button
-              className="w-1/3 h-12 mx-auto bg-violet-700 text-white rounded-md"
-              onClick={() => heroProducts.refetch()}>
-              Retry
-            </button>
-          </div>
+          <ErrorFetchingData refetchMethod={heroProducts.refetch} />
         )}
         {heroProducts.isSuccess && (
           <ProductsShowcase
