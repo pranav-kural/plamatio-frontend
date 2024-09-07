@@ -40,12 +40,7 @@ export const ProductsShowcaseWithSubcategories: FC<ProductsShowcaseProps> = (
         subCategories.error
       );
     }
-  }, [
-    subCategories,
-    subCategories?.isError,
-    subCategories?.error,
-    props.categoryId,
-  ]);
+  }, [subCategories, props.categoryId]);
 
   const getSubCategoryName = (subCategoryId: number) => {
     let name = '';

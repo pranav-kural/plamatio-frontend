@@ -1,123 +1,97 @@
-'use client';
-
-import React, {useMemo} from 'react';
+import React from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import {NavMenuItem, NavMenuSubItem} from './nav-menu-item';
 import {
-  useGetCategoriesQuery,
-  useGetSubCategoriesQuery,
-} from '@/app/lib/features/api/categories-slice';
-import {LoadingSpinner} from '../../ui/loading-spinner';
-import ErrorFetchingData from '../../error/errorFetchingData';
+  getPlamatioBackendAPIKey,
+  getPlamatioBackendAPIURL,
+  PLAMATIO_BACKEND_ENDPOINTS,
+} from '@/app/lib/plamatio-backend/plamatio-api';
+import {
+  CategoriesCollection,
+  SubCategoriesCollection,
+} from '@/app/lib/plamatio-backend/types';
 
-const NavMenu = () => {
-  // const [menuItems, setMenuItems] = React.useState<NavMenuItem[]>([]);
+const NavMenus = async () => {
+  // Setup request headers
+  const requestOptions = {
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application',
+      Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
+    },
+  };
 
-  // get categories and subcategories data
-  const categoriesFetch = useGetCategoriesQuery();
-  const subCategoriesFetch = useGetSubCategoriesQuery();
+  // Fetch categories and subcategories
+  const categoriesFetch = await fetch(
+    getPlamatioBackendAPIURL() +
+      PLAMATIO_BACKEND_ENDPOINTS.CATEGORIES.GET_ALL(),
+    requestOptions
+  );
+  const subCategoriesFetch = await fetch(
+    getPlamatioBackendAPIURL() +
+      PLAMATIO_BACKEND_ENDPOINTS.CATEGORIES.GET_ALL_SUBCATEGORIES(),
+    requestOptions
+  );
 
-  // if (categoriesFetch.isSuccess && subCategoriesFetch.isSuccess) {
-  //   const categories = categoriesFetch.data;
-  //   const subCategories = subCategoriesFetch.data;
+  // Check for error
+  if (!categoriesFetch.ok || !subCategoriesFetch.ok) {
+    throw new Error(`
+      Failed to fetch categories: ${categoriesFetch.statusText}
+      Failed to fetch subcategories: ${subCategoriesFetch.statusText}
+    `);
+  }
 
-  //   // prepare the menu items for categories
-  //   const categoryMenuItems: NavMenuItem[] = categories.data.map((category) => {
-  //     // prepare nav menu sub items for sub categories
-  //     const subCategoryMenuItems: NavMenuSubItem[] = subCategories.data
-  //       .filter((subCategory) => subCategory.categoryId === category.id)
-  //       .map((subCategory) => {
-  //         return {
-  //           id: subCategory.id,
-  //           name: subCategory.name,
-  //           description: subCategory.description,
-  //           link: `/category/${category.id}/subcategory/${subCategory.id}`,
-  //         };
-  //       });
+  // Parse the response
+  const categories = (await categoriesFetch.json()) as CategoriesCollection;
+  const subCategories =
+    (await subCategoriesFetch.json()) as SubCategoriesCollection;
 
-  //     return {
-  //       id: category.id,
-  //       name: category.name,
-  //       tagline: `Shop ${category.name}`,
-  //       description: category.description,
-  //       link: `/category/${category.id}`,
-  //       subItems: subCategoryMenuItems,
-  //     };
-  //   });
+  let menuItems: NavMenuItem[] = [];
 
-  //   setMenuItems(categoryMenuItems);
-  // }
-
-  const getMenuItems: NavMenuItem[] = useMemo(() => {
-    if (categoriesFetch.data && subCategoriesFetch.data) {
-      const categories = categoriesFetch.data;
-      const subCategories = subCategoriesFetch.data;
-
-      // prepare the menu items for categories
-      const categoryMenuItems: NavMenuItem[] = categories.data.map(
-        (category) => {
-          // prepare nav menu sub items for sub categories
-          const subCategoryMenuItems: NavMenuSubItem[] = subCategories.data
-            .filter((subCategory) => subCategory.category === category.id)
-            .map((subCategory) => {
-              return {
-                id: subCategory.id,
-                name: subCategory.name,
-                description: subCategory.description,
-                link: `/category/${category.id}/subcategory/${subCategory.id}`,
-              };
-            });
-
+  if (categories.data && subCategories.data) {
+    // prepare the menu items for categories
+    menuItems = categories.data.map((category) => {
+      // prepare nav menu sub items for sub categories
+      const subCategoryMenuItems: NavMenuSubItem[] = subCategories.data
+        .filter((subCategory) => subCategory.category === category.id)
+        .map((subCategory) => {
           return {
-            id: category.id,
-            name: category.name,
-            tagline: `Shop ${category.name}`,
-            description: category.description,
-            link: `/category/${category.id}`,
-            subItems: subCategoryMenuItems,
+            id: subCategory.id,
+            name: subCategory.name,
+            description: subCategory.description,
+            link: `/category/${category.id}/subcategory/${subCategory.id}`,
           };
-        }
-      );
+        });
 
-      return categoryMenuItems;
-    } else {
-      return [];
-    }
-  }, [categoriesFetch.data, subCategoriesFetch.data]);
+      return {
+        id: category.id,
+        name: category.name,
+        tagline: `Shop ${category.name}`,
+        description: category.description,
+        link: `/category/${category.id}`,
+        subItems: subCategoryMenuItems,
+      };
+    });
+  }
 
   return (
     <>
-      {(categoriesFetch.isLoading || subCategoriesFetch.isLoading) && (
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          <LoadingSpinner label="Loading data..." />
+      <NavigationMenu.Root className="relative z-[1] flex w-screen justify-center">
+        <NavigationMenu.List className="center m-0 flex list-none rounded-[6px] p-1">
+          {menuItems &&
+            menuItems.map((item) => <NavMenuItem key={item.id} item={item} />)}
+
+          <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
+            <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-white" />
+          </NavigationMenu.Indicator>
+        </NavigationMenu.List>
+
+        <div className="perspective-[2000px] absolute top-full left-0 flex w-full justify-center">
+          <NavigationMenu.Viewport className="data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
         </div>
-      )}
-      {categoriesFetch.isError && (
-        <ErrorFetchingData refetchMethod={categoriesFetch.refetch} />
-      )}
-      {subCategoriesFetch.isError && (
-        <ErrorFetchingData refetchMethod={subCategoriesFetch.refetch} />
-      )}
-      {categoriesFetch.isSuccess && subCategoriesFetch.isSuccess && (
-        <NavigationMenu.Root className="relative z-[1] flex w-screen justify-center">
-          {/* {JSON.stringify(subCategoriesFetch.data)} */}
-          <NavigationMenu.List className="center m-0 flex list-none rounded-[6px] p-1">
-            {getMenuItems.map((item) => (
-              <NavMenuItem key={item.id} item={item} />
-            ))}
-
-            <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
-              <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-white" />
-            </NavigationMenu.Indicator>
-          </NavigationMenu.List>
-
-          <div className="perspective-[2000px] absolute top-full left-0 flex w-full justify-center">
-            <NavigationMenu.Viewport className="data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
-          </div>
-        </NavigationMenu.Root>
-      )}
+      </NavigationMenu.Root>
     </>
   );
 };
 
-export default NavMenu;
+export default NavMenus;
