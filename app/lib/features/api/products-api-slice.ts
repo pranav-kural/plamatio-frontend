@@ -51,7 +51,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       },
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    getProducts: builder.query<Product[], void>({
+    getProducts: builder.query<ProductsCollection, void>({
       query: () => ({
         url: PBE.PRODUCTS.GET_ALL(),
         method: 'GET',
@@ -59,10 +59,16 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'Products',
-        ...result.map(({id}) => ({type: 'Product', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'Products',
+            ...result.data.map(({id}) => ({type: 'Product', id}) as const),
+          ];
+        } else {
+          return [];
+        }
+      },
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     getHeroProducts: builder.query<ProductsCollection, void>({

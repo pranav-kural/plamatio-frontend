@@ -9,12 +9,24 @@ type MutateCartButtonProps = {
   cartItem: CartItem;
   handleRemovalFromCart: () => void;
   className?: string;
+  plusIconSize?: number;
+  plusIconStrokeWidth?: number;
+  minusIconSize?: number;
+  minusIconStrokeWidth?: number;
+  cartIconSize?: number;
+  cartIconStrokeWidth?: number;
 };
 
 export const MutateCartButton: FC<MutateCartButtonProps> = ({
   cartItem,
   className,
   handleRemovalFromCart,
+  plusIconSize,
+  plusIconStrokeWidth,
+  minusIconSize,
+  minusIconStrokeWidth,
+  cartIconSize,
+  cartIconStrokeWidth,
 }) => {
   // also, if user id is available, subscribe to the "cart_updates" topic
   // if new message received of event type "update_cart_item"
@@ -51,10 +63,22 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
           'flex flex-row align-middle justify-center p-2 rounded-md bg-violet-100 cursor-pointer hover:text-violet-100 hover:bg-violet-800',
           className
         )}>
-        <PlusCircleIcon onClick={incrementQuantity} />
+        <PlusCircleIcon
+          onClick={incrementQuantity}
+          size={plusIconSize}
+          strokeWidth={plusIconStrokeWidth}
+        />
         <span className="ml-2 mr-2">{productQuantity}</span>
-        <MinusCircleIcon onClick={decrementQuantity} />
-        <ShoppingCartIcon className="ml-2" />
+        <MinusCircleIcon
+          onClick={decrementQuantity}
+          size={minusIconSize}
+          strokeWidth={minusIconStrokeWidth}
+        />
+        <ShoppingCartIcon
+          className="ml-2"
+          size={cartIconSize}
+          strokeWidth={cartIconStrokeWidth}
+        />
       </div>
     </>
   );

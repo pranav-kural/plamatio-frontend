@@ -3,7 +3,12 @@ import {LOCAL_STORAGE_KEYS} from '../localStorage';
 import {CartItemsCollection} from '../plamatio-backend/types';
 
 export const useCartHooks = () => {
-  function addProductToCartItemsLocalStorage(productId: number): CartItem {
+  function getCartItems(userId: string): CartItemsCollection {
+    console.log(userId);
+    return {data: []};
+  }
+
+  function addProductToCartItems(productId: number): CartItem {
     // confirm window available
     if (typeof window !== 'undefined') {
       // check local storage for cart items
@@ -65,7 +70,7 @@ export const useCartHooks = () => {
     }
   }
 
-  function incrementLocalQuantity(cartItem: CartItem): CartItem {
+  function incrementQuantity(cartItem: CartItem): CartItem {
     // confirm window available
     if (typeof window !== 'undefined') {
       // check local storage for cart items
@@ -107,7 +112,7 @@ export const useCartHooks = () => {
     }
   }
 
-  function decrementLocalQuantity(cartItem: CartItem): CartItem {
+  function decrementQuantity(cartItem: CartItem): CartItem {
     // confirm window available
     if (typeof window !== 'undefined') {
       // check local storage for cart items
@@ -150,9 +155,10 @@ export const useCartHooks = () => {
   }
 
   return {
-    addProductToCartItemsLocalStorage,
-    incrementLocalQuantity,
-    decrementLocalQuantity,
+    getCartItems,
+    addProductToCartItems,
+    incrementQuantity,
+    decrementQuantity,
   };
 };
 

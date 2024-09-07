@@ -19,7 +19,7 @@ export const ProductTile = ({
   return (
     <div
       className={classNames(
-        'opacity-80 w-[330px] h-full min-h-full transition animate-scaleIn hover:opacity-100 flex flex-col gap-4 justify-start align-top',
+        'opacity-80 w-[330px] h-full min-h-full transition animate-scaleIn flex flex-col gap-4 justify-start align-top',
         className,
         tileWidth
       )}>

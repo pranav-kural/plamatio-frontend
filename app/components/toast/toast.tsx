@@ -11,7 +11,7 @@ type ToastProps = {
 export const Toast: FC<ToastProps> = (props: ToastProps) => {
   return (
     <div
-      className={`z-50 absolute top-[80px] right-[50px] p-3 max-w-[250px] max-h-[200px] min-h-[100px] flex flex-col items-center bg-violet-100 shadow-lg rounded-xl ${props.visible ? 'animate-fadeIn' : 'animate-fadeOut hidden'}`}
+      className={`z-20 absolute top-[80px] right-[50px] p-3 max-w-[250px] max-h-[200px] min-h-[100px] flex flex-col items-center bg-violet-100 shadow-lg rounded-xl ${props.visible ? 'animate-fadeIn' : 'animate-fadeOut hidden'}`}
       hidden={!props.visible}>
       <div className="z-50 px-3 pt-3 w-full flex flex-row bg-violet-200 align-top items-start justify-between rounded-t-lg">
         <span className="text-md">{props.title}</span>

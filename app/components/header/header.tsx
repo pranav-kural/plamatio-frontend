@@ -2,7 +2,8 @@ import {Great_Vibes} from 'next/font/google';
 import NavMenu from './nav/nav-menu';
 import Link from 'next/link';
 import {Breadcrumb} from './breadcrumb/breadcrumb';
-import LeftBar from './left-bar/leftBar';
+import CartIcon from '../cart/cartIcon';
+import SignInSignUpButtons from '../auth/sigInSignUpButtons';
 
 const greatVibes = Great_Vibes({weight: '400', subsets: ['latin']});
 
@@ -13,9 +14,14 @@ export const Header = () => {
         className={`${greatVibes.className} text-violet-900 text-[3.5rem] text-center`}>
         <Link href="/">Plamatio</Link>
       </div>
+      <div className="absolute top-[80px] right-[10px] md:right-[30px]">
+        <CartIcon />
+      </div>
       <NavMenu />
+      <div className="absolute top-[20px] right-[10px] md:right-[30px]">
+        <SignInSignUpButtons />
+      </div>
       <Breadcrumb />
-      <LeftBar />
     </div>
   );
 };
