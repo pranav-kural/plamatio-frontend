@@ -31,7 +31,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         ...result.map(({id}) => ({type: 'Product', id}) as const),
       ],
     }),
-    getProductsBySubCategory: builder.query<Product[], number>({
+    getProductsBySubCategory: builder.query<ProductsCollection, number>({
       query: (subCategoryId) => ({
         url: PBE.PRODUCTS.GET_BY_SUBCATEGORY(subCategoryId),
         method: 'GET',
@@ -39,10 +39,16 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'SubCategoryProducts',
-        ...result.map(({id}) => ({type: 'Product', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'SubCategoryProducts',
+            ...result.data.map(({id}) => ({type: 'Product', id}) as const),
+          ];
+        } else {
+          return [];
+        }
+      },
     }),
     // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     getProducts: builder.query<Product[], void>({
@@ -85,7 +91,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    getHeroProductsByCategory: builder.query<Product[], number>({
+    getHeroProductsByCategory: builder.query<ProductsCollection, number>({
       query: (categoryId) => ({
         url: PBE.PRODUCTS.GET_HERO_BY_CATEGORY(categoryId),
         method: 'GET',
@@ -93,10 +99,23 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'CategoryHeroProducts',
-        ...result.map(({id}) => ({type: 'Product', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          // if we have data, we want to invalidate all hero products
+          if (result.data) {
+            return [
+              'CategoryHeroProducts',
+              ...result.data.map(({id}) => ({type: 'Product', id}) as const),
+            ];
+          } else {
+            return ['CategoryHeroProducts'];
+          }
+          
+        } else {
+          // if we don't have data, no tags to invalidate
+          return [];
+      }
+    }
     }),
   }),
 });

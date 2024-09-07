@@ -3,6 +3,7 @@ import {useMemo} from 'react';
 import ProductsShowcase from '../products/productsShowcase';
 import {useGetHeroProductsQuery} from '@/app/lib/features/api/products-api-slice';
 import {LoadingSpinner} from '../ui/loading-spinner';
+import ErrorFetchingData from '../error/errorFetchingData';
 
 export default function LandingPageShowcase() {
   // get hero products
@@ -26,17 +27,7 @@ export default function LandingPageShowcase() {
         </div>
       )}
       {heroProducts.isError && (
-        <div className="w-full h-full flex flex-col gap-10 items-center justify-center">
-          <span className="max-w-[500px] text-2xl text-center">
-            Error fetching products. Please ensure you are connected to the
-            internet. If the problem persists, contact support.
-          </span>
-          <button
-            className="w-1/3 h-12 mx-auto bg-violet-700 text-white rounded-md"
-            onClick={() => heroProducts.refetch()}>
-            Retry
-          </button>
-        </div>
+        <ErrorFetchingData refetchMethod={heroProducts.refetch} />
       )}
       {heroProducts.isSuccess && (
         <ProductsShowcase products={heroProducts.data.data} className="pt-4" />

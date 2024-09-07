@@ -24,7 +24,7 @@ export const ProductTile = ({
         tileWidth
       )}>
       <Link
-        href={`/category/${product.categoryId}/subcategory/${product.subCategoryId}/product/${product.id}`}
+        href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
         className="p-0 m-0">
         <Image
           src={product.imageUrl}
