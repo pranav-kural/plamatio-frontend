@@ -2,36 +2,18 @@ import React from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import {NavMenuItem, NavMenuSubItem} from './nav-menu-item';
 import {
-  getPlamatioBackendAPIKey,
-  getPlamatioBackendAPIURL,
-  PLAMATIO_BACKEND_ENDPOINTS,
-} from '@/app/lib/plamatio-backend/plamatio-api';
-import {
   CategoriesCollection,
   SubCategoriesCollection,
 } from '@/app/lib/plamatio-backend/types';
+import {
+  fetchCategories,
+  fetchSubCategories,
+} from '@/app/lib/plamatio-backend/actions';
 
 const NavMenus = async () => {
-  // Setup request headers
-  const requestOptions = {
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application',
-      Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
-    },
-  };
-
   // Fetch categories and subcategories
-  const categoriesFetch = await fetch(
-    getPlamatioBackendAPIURL() +
-      PLAMATIO_BACKEND_ENDPOINTS.CATEGORIES.GET_ALL(),
-    requestOptions
-  );
-  const subCategoriesFetch = await fetch(
-    getPlamatioBackendAPIURL() +
-      PLAMATIO_BACKEND_ENDPOINTS.CATEGORIES.GET_ALL_SUBCATEGORIES(),
-    requestOptions
-  );
+  const categoriesFetch = await fetchCategories();
+  const subCategoriesFetch = await fetchSubCategories();
 
   // Check for error
   if (!categoriesFetch.ok || !subCategoriesFetch.ok) {

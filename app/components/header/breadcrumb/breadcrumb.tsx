@@ -52,11 +52,9 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
           <Link key="home" href="/" className="cursor-pointer">
             <HomeIcon className="inline mb-1" size={18} strokeWidth={1.5} />
           </Link>
-          ,
           <span key="separator0" className="mx-2">
             {'>'}
           </span>
-          ,
           <Link
             key="category"
             href={`/category/${categoryId}`}
@@ -78,7 +76,6 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
           <span key="separator1" className="mx-2">
             {'>'}
           </span>
-          ,
           <Link
             key="subcategory"
             href={`/category/${categoryId}/subcategory/${subCategoryId}`}
@@ -100,7 +97,6 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
           <span key="separator2" className="mx-2">
             {'>'}
           </span>
-          ,
           <Link
             key="product"
             href={`/category/${categoryId}/subcategory/${subCategoryId}/product/${productId}`}
