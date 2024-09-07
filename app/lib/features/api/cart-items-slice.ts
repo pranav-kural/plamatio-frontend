@@ -4,10 +4,11 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../../plamatio-backend/plamatio-api';
+import {CartItemsCollection} from '../../plamatio-backend/types';
 
 export const cartItemsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCartItems: builder.query<CartItem[], string>({
+    getCartItems: builder.query<CartItemsCollection, string>({
       query: (userId: string) => ({
         url: PBE.CART.GET_ALL(userId),
         method: 'GET',
@@ -15,10 +16,16 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'CartItems',
-        ...result.map(({id}) => ({type: 'CartItem', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'CartItems',
+            ...result.data.map(({id}) => ({type: 'CartItem', id}) as const),
+          ];
+        } else {
+          return [];
+        }
+      },
     }),
     getCartItem: builder.query<CartItem, number>({
       query: (cartItemId) => ({

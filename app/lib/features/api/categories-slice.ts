@@ -3,8 +3,11 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../../plamatio-backend/plamatio-api';
-import { CategoriesCollection, SubCategoriesCollection } from '../../plamatio-backend/types';
-import { Category, SubCategory } from '@/app/types/backend-types';
+import {
+  CategoriesCollection,
+  SubCategoriesCollection,
+} from '../../plamatio-backend/types';
+import {Category, SubCategory} from '@/app/types/backend-types';
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -36,7 +39,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         } else {
           return [];
         }
-      }
+      },
     }),
     getSubCategory: builder.query<SubCategory, number>({
       query: (subCategoryId) => ({
@@ -66,7 +69,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         } else {
           return [];
         }
-      }
+      },
     }),
     getSubCategoriesByCategory: builder.query<SubCategoriesCollection, number>({
       query: (categoryId) => ({
@@ -81,9 +84,11 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           return [
             'CategorySubCategories',
             ...result.data.map(({id}) => ({type: 'SubCategory', id}) as const),
-          ]
-        } else { return []}
-      }
+          ];
+        } else {
+          return [];
+        }
+      },
     }),
   }),
 });

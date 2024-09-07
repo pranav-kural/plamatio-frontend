@@ -3,10 +3,14 @@ import {PlusIcon, ShoppingCartIcon} from 'lucide-react';
 import classNames from 'classnames';
 import {FC, useEffect, useState} from 'react';
 import {Toast} from '../toast/toast';
-import {Product} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/types/backend-types';
+// import useCartHooks from '@/app/lib/hooks/useCartHooks';
+import useLocalCartHooks from '@/app/lib/hooks/useLocalCartHooks';
 
 type AddToCartButtonProps = {
   product: Product;
+  handleAdditionToCart: (cartItem: CartItem) => void;
+  userId?: string;
   showLabel?: boolean;
   className?: string;
   labelClassName?: string;
@@ -16,6 +20,7 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
   props: AddToCartButtonProps
 ) => {
   const [toastVisible, setToastVisible] = useState(false);
+  const localCart = useLocalCartHooks();
 
   useEffect(() => {
     if (toastVisible) {
@@ -24,6 +29,22 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
       }, 1500);
     }
   }, [toastVisible]);
+
+  const handleAddToCart = () => {
+    // if user id not available
+    if (!props.userId) {
+      // add product to cart items in local storage
+      const cartItem: CartItem = localCart.addProductToCartItemsLocalStorage(
+        props.product.id
+      );
+
+      // update cart button
+      props.handleAdditionToCart(cartItem);
+    }
+
+    // show toast
+    setToastVisible(true);
+  };
 
   return (
     <>
@@ -38,7 +59,7 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
           'flex flex-row align-middle justify-center p-2 rounded-md bg-violet-100 cursor-pointer hover:text-violet-100 hover:bg-violet-800',
           props.className
         )}
-        onClick={() => setToastVisible(true)}>
+        onClick={handleAddToCart}>
         {props.showLabel && (
           <span
             className={classNames('text-lg ml-3 mr-3', props.labelClassName)}>

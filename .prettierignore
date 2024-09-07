@@ -2,7 +2,7 @@
 node_modules
 
 # Ignore all files in the build directory
-lib
+.next
 
 # Ignore all files with a ".log" extension
 *.log
@@ -12,3 +12,8 @@ lib
 
 # Ignore all files in the "coverage" directory
 coverage
+
+# other files
+.vscode
+.idea
+.github

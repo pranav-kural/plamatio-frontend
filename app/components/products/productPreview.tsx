@@ -1,7 +1,7 @@
 import {Product} from '@/app/types/backend-types';
 import Image from 'next/image';
 import {FC} from 'react';
-import AddToCartButton from '../shop/addToCartButton';
+import AddToCartButton from '../cart/addToCartButton';
 import Link from 'next/link';
 
 type ProductPreviewProps = {

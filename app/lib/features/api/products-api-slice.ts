@@ -4,7 +4,7 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../../plamatio-backend/plamatio-api';
-import { ProductsCollection } from '../../plamatio-backend/types';
+import {ProductsCollection} from '../../plamatio-backend/types';
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -84,7 +84,6 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           } else {
             return ['HeroProducts'];
           }
-          
         } else {
           // if we don't have data, no tags to invalidate
           return [];
@@ -110,12 +109,11 @@ export const productsApiSlice = apiSlice.injectEndpoints({
           } else {
             return ['CategoryHeroProducts'];
           }
-          
         } else {
           // if we don't have data, no tags to invalidate
           return [];
-      }
-    }
+        }
+      },
     }),
   }),
 });

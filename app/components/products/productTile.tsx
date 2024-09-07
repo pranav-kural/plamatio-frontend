@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import AddToCartButton from '../shop/addToCartButton';
 import classNames from 'classnames';
 import {Product} from '@/app/types/backend-types';
+import CartButton from '../cart/cartButton';
 
 type ProductTileProps = {
   product: Product;
@@ -51,7 +51,7 @@ export const ProductTile = ({
                 </span>
               )}
           </div>
-          <AddToCartButton product={product} />
+          <CartButton product={product} />
         </div>
       </div>
     </div>
