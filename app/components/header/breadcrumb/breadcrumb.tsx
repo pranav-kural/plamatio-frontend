@@ -40,13 +40,9 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
       : null;
 
   // fetch data
-  const categoryFetch = categoryId
-    ? useGetCategoryQuery(categoryId)
-    : undefined;
-  const subCategoryFetch = subCategoryId
-    ? useGetSubCategoryQuery(subCategoryId)
-    : undefined;
-  const productFetch = productId ? useGetProductQuery(productId) : undefined;
+  const categoryFetch = useGetCategoryQuery(categoryId || -1);
+  const subCategoryFetch = useGetSubCategoryQuery(subCategoryId || -1);
+  const productFetch = useGetProductQuery(productId || -1);
 
   // Method to get the categories part of the breadcrumb
   const getCategoriesPart = useMemo(() => {
@@ -72,7 +68,7 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
     }
 
     return null;
-  }, [categoryFetch]);
+  }, [categoryFetch, categoryId]);
 
   // Method to get the subcategories part of the breadcrumb
   const getSubCategoriesPart = useMemo(() => {
@@ -94,7 +90,7 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
     }
 
     return null;
-  }, [subCategoryFetch]);
+  }, [subCategoryFetch, categoryId, subCategoryId]);
 
   // Method to get the products part of the breadcrumb
   const getProductsPart = useMemo(() => {
@@ -116,7 +112,7 @@ export const Breadcrumb: FC<BreadcrumbProps> = ({url, hidden}) => {
     }
 
     return null;
-  }, [productFetch]);
+  }, [productFetch, categoryId, subCategoryId, productId]);
 
   // Log error if any occurs during fetching data
   useMemo(() => {

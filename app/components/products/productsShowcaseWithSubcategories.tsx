@@ -22,17 +22,15 @@ export const ProductsShowcaseWithSubcategories: FC<ProductsShowcaseProps> = (
 ) => {
   const categoryId = props.categoryId;
 
-  // get data for the subcategories
-  let subCategories = undefined;
-
   // if showing subcategories
-  if (!categoryId) {
+  if (!categoryId || categoryId <= 0) {
     console.error(
       'ProductsShowcaseWithSubcategories: categoryId is required. Will show products without subcategories by default.'
     );
-  } else {
-    subCategories = useGetSubCategoriesByCategoryQuery(categoryId);
   }
+
+  // get data for the subcategories
+  const subCategories = useGetSubCategoriesByCategoryQuery(categoryId || -1);
 
   // Log error if any occurs during fetching data
   useMemo(() => {
@@ -42,7 +40,12 @@ export const ProductsShowcaseWithSubcategories: FC<ProductsShowcaseProps> = (
         subCategories.error
       );
     }
-  }, [subCategories, subCategories?.isError, subCategories?.error]);
+  }, [
+    subCategories,
+    subCategories?.isError,
+    subCategories?.error,
+    props.categoryId,
+  ]);
 
   const getSubCategoryName = (subCategoryId: number) => {
     let name = '';
