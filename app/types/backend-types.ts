@@ -79,7 +79,7 @@ export type DetailedOrder = {
 };
 
 export type User = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -92,7 +92,8 @@ export type Address = {
   state: string;
   country: string;
   zipCode: string;
-  userId: number;
+  userId: string;
+  primary: boolean;
 };
 
 export type NewUser = {
@@ -107,5 +108,5 @@ export type NewAddress = {
   state: string;
   country: string;
   zipCode: string;
-  userId: number;
+  userId: string;
 };

@@ -1,4 +1,5 @@
 import {
+  Address,
   CartItem,
   Category,
   Product,
@@ -19,4 +20,8 @@ export type SubCategoriesCollection = {
 
 export type CartItemsCollection = {
   data: CartItem[];
+};
+
+export type AddressesCollection = {
+  data: Address[];
 };

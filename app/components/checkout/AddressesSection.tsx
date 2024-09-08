@@ -1,0 +1,116 @@
+'use client';
+import {Address} from '@/app/types/backend-types';
+import {FC, useMemo, useState} from 'react';
+
+import NewAddressModal from '../addresses/NewAddressModel';
+import {useGetUserAddressesQuery} from '@/app/lib/api/users-slice';
+import {LoadingSpinner} from '../ui/loading-spinner';
+import SelectAddressModal from '../addresses/SelectAddressModal';
+
+export const addresses: Address[] = [
+  {
+    id: 1,
+    userId: '1',
+    street: '1234 Elm St',
+    city: 'Toronto',
+    state: 'ON',
+    country: 'Canada',
+    zipCode: 'M1M 1M1',
+    primary: true,
+  },
+  {
+    id: 2,
+    userId: '1',
+    street: '5678 Oak St',
+    city: 'Ottawa',
+    state: 'ON',
+    country: 'Canada',
+    zipCode: 'M1M 1M1',
+    primary: false,
+  },
+];
+
+export const AddressesSection: FC = () => {
+  const userId = '1';
+  const addressesFetch = useGetUserAddressesQuery(userId);
+  const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(
+    addresses[0]
+  );
+
+  // Log error if any occurs during fetching data
+  useMemo(() => {
+    if (addressesFetch.isError) {
+      console.error(
+        `${Date.now()} AddressesSection: Error fetching addresses for user ${userId}`,
+        addressesFetch.error
+      );
+    }
+  }, [addressesFetch.isError, addressesFetch.error, userId]);
+
+  // set selected address once addresses are fetched
+  useMemo(() => {
+    // if no address is selected and addresses are fetched successfully
+    if (
+      !selectedAddress &&
+      addressesFetch.isSuccess &&
+      addressesFetch.data?.data
+    ) {
+      // check for primary address
+      const primaryAddress = addressesFetch.data?.data?.find(
+        (address) => address.primary
+      );
+      // if primary address exists, set it as selected address, else set first address
+      setSelectedAddress(primaryAddress || addressesFetch.data.data[0]);
+    }
+  }, [addressesFetch.isSuccess, addressesFetch.data?.data, selectedAddress]);
+
+  return (
+    <>
+      <div className="w-full md:min-h-[200px] flex flex-col gap-3 p-5 justify-between border border-fuchsia-800 rounded-lg shadow-lg">
+        <h2 className="font-[500]">Shipping To</h2>
+        {addressesFetch.isLoading && (
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <LoadingSpinner label="Loading addresses..." />
+          </div>
+        )}
+        {addressesFetch.isSuccess && selectedAddress && (
+          <>
+            <div className="w-full flex flex-row">
+              <div className="w-full">
+                <h2 className="text-gray-500">Current Address</h2>
+                <p>
+                  {selectedAddress.street}, {selectedAddress.city},{' '}
+                  {selectedAddress.state}, {selectedAddress.country},{' '}
+                  {selectedAddress.zipCode}
+                </p>
+              </div>
+            </div>
+            <div className="w-full">
+              <SelectAddressModal
+                addresses={addresses}
+                setSelectedAddress={setSelectedAddress}
+              />
+            </div>
+          </>
+        )}
+        {addressesFetch.isSuccess && !selectedAddress && (
+          <>
+            <div className="w-full flex flex-row">
+              <div className="w-full">
+                <h2 className="text-gray-500">
+                  You currently have no addresses on this account. Please add a
+                  new address to continue.
+                </h2>
+              </div>
+            </div>
+            <div className="w-full">
+              <NewAddressModal />
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default AddressesSection;

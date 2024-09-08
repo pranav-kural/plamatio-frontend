@@ -4,6 +4,7 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../plamatio-backend/plamatio-api';
+import {AddressesCollection} from '../plamatio-backend/types';
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +18,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: (result) => [{type: 'User', id: result?.id}],
     }),
-    getUserAddresses: builder.query<Address[], string>({
+    getUserAddresses: builder.query<AddressesCollection, string>({
       query: (userId) => ({
         url: PBE.USERS.GET_ADDRESSES(userId),
         method: 'GET',
@@ -25,10 +26,16 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'Addresses',
-        ...result.map(({id}) => ({type: 'Address', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result && result.data) {
+          return [
+            'Addresses',
+            ...result.data.map(({id}) => ({type: 'Address', id}) as const),
+          ];
+        } else {
+          return [];
+        }
+      },
     }),
     addUser: builder.mutation<User, User>({
       query: (newUser) => ({

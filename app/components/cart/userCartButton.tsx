@@ -29,7 +29,11 @@ export const UserCartButton: FC<UserCartButtonProps> = (props) => {
         // if valid cart item available, show the mutate cart button
         if (cartItem) {
           return (
-            <MutateCartButton cartItem={cartItem} className={props.className} />
+            <MutateCartButton
+              cartItem={cartItem}
+              className={props.className}
+              setShowMutateCartButton={() => {}}
+            />
           );
         }
       }

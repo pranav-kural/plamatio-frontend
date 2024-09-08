@@ -88,6 +88,7 @@ export const CartWindow = () => {
                     <MutateCartButton
                       cartItem={item}
                       className="max-w-[100px]"
+                      setShowMutateCartButton={() => {}}
                     />
                   </div>
                 </div>

@@ -34,29 +34,8 @@ export const OrderSection: FC<OrderSectionProps> = ({cartItems, products}) => {
     return [orderTotal, numberOfItems, roundedTaxes];
   }, [cartItems, products]);
 
-  // // calculate order total
-  // const orderTotal = useMemo(() => {
-  //   return cartItems.reduce((acc, item) => {
-  //     const product = products.find((p) => p.id === item.productId);
-  //     return Math.round((product ? acc + product.price : acc) * 100) / 100;
-  //   }, 0);
-  // }, [cartItems, products]);
-
-  // // calculate number of items in cart
-  // const numberOfItems = useMemo(() => {
-  //   return cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  // }, [cartItems]);
-
-  // // calculate taxes
-  // const taxes = useMemo(() => {
-  //   const taxRate = 0.13;
-  //   const taxes = orderTotal * taxRate;
-  //   // round to 2 decimal places
-  //   return Math.round(taxes * 100) / 100;
-  // }, [cartItems, orderTotal]);
-
   return (
-    <div className="flex flex-col gap-5 p-5 bg-teal-600 text-white rounded-lg">
+    <div className="flex flex-col gap-5 p-5 bg-teal-800 text-white rounded-lg shadow-lg">
       <div className="flex justify-between items-center rounded-lg">
         <h2 className="text-xl">Order Summary</h2>
         <span className="text-md">{numberOfItems} Items</span>
@@ -71,7 +50,12 @@ export const OrderSection: FC<OrderSectionProps> = ({cartItems, products}) => {
       </div>
       <div className="flex justify-between items-center">
         <h2 className="text-lg">Shipping</h2>
-        <span className="text-md">Free</span>
+        <div className="flex flex-row gap-2 justify-between">
+          <span className="text-md">{numberOfItems ? 'Free' : '$0'}</span>
+          {numberOfItems > 0 && (
+            <span className="text-md line-through">${numberOfItems * 1}</span>
+          )}
+        </div>
       </div>
       <hr />
       <div className="flex justify-between items-center">
