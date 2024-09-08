@@ -7,6 +7,7 @@ import MutateCartButton from './mutateCartButton';
 import Link from 'next/link';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
+import {SmileIcon} from 'lucide-react';
 
 export const CartWindow = () => {
   // const userId: string | undefined = undefined;
@@ -63,7 +64,7 @@ export const CartWindow = () => {
             <LoadingSpinner label="Loading products..." />
           </div>
         )}
-        <div className="w-full flex flex-col gap-5 max-h-[350px] overflow-y-scroll scroll-smooth">
+        <div className="w-full flex flex-col gap-5 max-h-[350px] min-w-[300px] overflow-y-scroll scroll-smooth">
           {productsFetch.isSuccess &&
             cartItems?.map((item) => (
               <div
@@ -92,14 +93,25 @@ export const CartWindow = () => {
                 </div>
               </div>
             ))}
+          {cartItems && cartItems.length <= 0 && (
+            <div className="w-full flex flex-col gap-5 items-center justify-center">
+              <span className="text-md">You have nothing here yet :{'('}</span>
+              <span className="text-md">
+                We know you will find something you love{' '}
+                <SmileIcon className="inline" size={20} strokeWidth={1.5} />
+              </span>
+            </div>
+          )}
         </div>
-        <div className="w-full text-center">
+        <button
+          className="w-full text-center"
+          hidden={!cartItems || cartItems.length <= 0}>
           <Link
             href="/checkout"
             className="p-3 rounded-lg bg-violet-700 text-white hover:bg-violet-800">
             Go to Checkout
           </Link>
-        </div>
+        </button>
       </div>
     </>
   );

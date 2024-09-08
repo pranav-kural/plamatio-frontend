@@ -3,6 +3,8 @@ import {Work_Sans} from 'next/font/google';
 import './globals.css';
 import {Header} from './components/header/header';
 import {ReduxProvider} from './ReduxProvider';
+import LoadCartItems from './components/auxiliary/LoadCartItems';
+import LoadProducts from './components/auxiliary/LoadProducts';
 
 const workSans = Work_Sans({subsets: ['latin']});
 
@@ -26,6 +28,8 @@ export default function RootLayout({
             {children}
           </div>
         </body>
+        <LoadCartItems />
+        <LoadProducts />
       </ReduxProvider>
     </html>
   );

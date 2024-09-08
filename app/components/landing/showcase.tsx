@@ -1,7 +1,6 @@
 import {fetchHeroProducts} from '@/app/lib/plamatio-backend/actions';
 import ProductsShowcase from '../products/productsShowcase';
 import {ProductsCollection} from '@/app/lib/plamatio-backend/types';
-import {FetchProductsBG} from './products';
 
 export default async function LandingPageShowcase() {
   // Fetch hero products
@@ -20,7 +19,6 @@ export default async function LandingPageShowcase() {
   return (
     <>
       <ProductsShowcase products={heroProducts.data} className="pt-4" />
-      <FetchProductsBG />
     </>
   );
 }

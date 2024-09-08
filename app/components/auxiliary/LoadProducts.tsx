@@ -2,7 +2,9 @@
 
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 
-export const FetchProductsBG = () => {
+export const LoadProducts = () => {
   useGetProductsQuery();
   return <></>;
 };
+
+export default LoadProducts;

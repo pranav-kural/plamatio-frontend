@@ -37,6 +37,10 @@ export const cartSlice = createSlice({
             : cartItem
         );
       }
+      // update cart items in local storage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      }
     },
     removeCartItem: (state, action: PayloadAction<CartItem>) => {
       // initial cart items
@@ -46,6 +50,10 @@ export const cartSlice = createSlice({
       state.cartItems = cartItems.filter(
         (cartItem) => cartItem.productId !== cartItemToRemove.productId
       );
+      // update cart items in local storage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      }
     },
     incrementQuantity: (state, action: PayloadAction<CartItem>) => {
       // initial cart items
@@ -66,27 +74,48 @@ export const cartSlice = createSlice({
             : cartItem
         );
       }
+      // update cart items in local storage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      }
     },
     decrementQuantity: (state, action: PayloadAction<CartItem>) => {
       // initial cart items
       const cartItems = state.cartItems;
       const cartItemToRemove = action.payload;
       // check if product quantity is 1
-      const removeProduct =
-        cartItems.find(
-          (cartItem) => cartItem.productId === cartItemToRemove.productId
-        )?.quantity === 1;
+      const removeProduct = cartItems.find(
+        (cartItem) => cartItem.productId === cartItemToRemove.productId
+      );
+      console.log(
+        `removing product: ${removeProduct?.id} ${removeProduct?.quantity}`
+      );
       // if product's current quantity 1, remove the product from cart, else
       // decrement the quantity
-      state.cartItems = removeProduct
-        ? cartItems.filter(
-            (cartItem) => cartItem.productId !== cartItemToRemove.productId
-          )
-        : cartItems.map((cartItem) =>
-            cartItem.productId === cartItemToRemove.productId
-              ? {...cartItem, quantity: cartItem.quantity - 1}
-              : cartItem
-          );
+      if (removeProduct) {
+        state.cartItems =
+          removeProduct.quantity === 1
+            ? cartItems.filter(
+                (cartItem) => cartItem.productId !== cartItemToRemove.productId
+              )
+            : cartItems.map((cartItem) =>
+                cartItem.productId === cartItemToRemove.productId
+                  ? {...cartItem, quantity: cartItem.quantity - 1}
+                  : cartItem
+              );
+      }
+      // update cart items in local storage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      }
+    },
+    loadItemsFromLocalStorage: (state) => {
+      if (typeof window !== 'undefined') {
+        const cartItems = localStorage.getItem('cartItems');
+        if (cartItems) {
+          state.cartItems = JSON.parse(cartItems);
+        }
+      }
     },
   },
 });
@@ -100,6 +129,7 @@ export const {
   removeCartItem,
   incrementQuantity,
   decrementQuantity,
+  loadItemsFromLocalStorage,
 } = cartSlice.actions;
 
 // Export generated reducer
