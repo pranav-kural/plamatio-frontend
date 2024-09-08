@@ -1,5 +1,5 @@
 'use client';
-import {useGetSubCategoryQuery} from '@/app/lib/features/api/categories-slice';
+import {useGetSubCategoryQuery} from '@/app/lib/api/categories-slice';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';
 

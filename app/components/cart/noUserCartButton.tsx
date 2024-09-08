@@ -1,11 +1,11 @@
 'use client';
 
 import {CartItem, Product} from '@/app/types/backend-types';
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useMemo, useState} from 'react';
 import {MutateCartButton} from './mutateCartButton';
 import {AddToCartButton} from './addToCartButton';
-import {CartItemsCollection} from '@/app/lib/plamatio-backend/types';
-import {LOCAL_STORAGE_KEYS} from '@/app/lib/localStorage';
+import {useAppSelector} from '@/app/lib/store/storeHooks';
+import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 
 type NoUserCartButtonProps = {
   product: Product;
@@ -15,64 +15,48 @@ type NoUserCartButtonProps = {
 };
 
 export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
-  // state to hold which cart button to display
-  const [displayMutateCartButton, setDisplayMutateCartButton] = useState(false);
   // state to store cart items
   const [cartItem, setCartItem] = useState<CartItem | undefined>(undefined);
-
-  // method to handle addition to cart of a new product
-  const handleAdditionToCart = (cartItem: CartItem) => {
-    // set the cart item
-    setCartItem(cartItem);
-    // show the mutate cart button
-    setDisplayMutateCartButton(true);
-  };
-
-  // method to handle removal from cart of a product
-  const handleRemovalFromCart = () => {
-    console.log(
-      `Removing product from cart with id: ${props.product.id} ${cartItem}`
-    );
-    // set the cart item
-    setCartItem(undefined);
-    // hide the mutate cart button
-    setDisplayMutateCartButton(false);
-    console.log('Product removed from cart');
-  };
+  // use selector to get cart items from redux store
+  const cartItems = useAppSelector(selectCartItems);
 
   useEffect(() => {
-    // if no cart item already available and window is available
-    if (!cartItem && typeof window !== 'undefined') {
-      // check local storage for cart items
-      const cartItemsData = localStorage.getItem(LOCAL_STORAGE_KEYS.CART_ITEMS);
+    // if no cart item already available
+    if (!cartItem) {
       // check if cart items available
-      if (cartItemsData) {
-        // parse the cart items
-        const cartItems = JSON.parse(cartItemsData) as CartItemsCollection;
+      if (cartItems) {
         // get the cart item matching the product id or the product provided in props
-        const cartItem = cartItems?.data?.find(
+        const cartItem = cartItems.find(
           (item: CartItem) => item.productId === props.product.id
         );
         // if valid cart item available, set the cart item
         if (cartItem) {
           setCartItem(cartItem);
-          setDisplayMutateCartButton(true);
         }
       }
     }
-  }, [cartItem, props.product.id]);
+  }, [cartItem, cartItems, props.product.id]);
+
+  useMemo(() => {
+    // check if cart items available
+    if (cartItems) {
+      // get the cart item matching the product id or the product provided in props
+      const cartItem = cartItems.find(
+        (item: CartItem) => item.productId === props.product.id
+      );
+      // if valid cart item available, set the cart item
+      if (cartItem) {
+        setCartItem(cartItem);
+      }
+    }
+  }, [cartItems, props.product.id]);
 
   // if cart items not available or cart item for the product not available, show the add to cart button
-  return displayMutateCartButton && cartItem ? (
-    <MutateCartButton
-      cartItem={cartItem}
-      className={props.className}
-      handleRemovalFromCart={handleRemovalFromCart}
-    />
+  return cartItem ? (
+    <MutateCartButton cartItem={cartItem} className={props.className} />
   ) : (
     <AddToCartButton
       product={props.product}
-      handleAdditionToCart={handleAdditionToCart}
       showLabel={props.showLabel}
       className={props.className}
       labelClassName={props.labelClassName}

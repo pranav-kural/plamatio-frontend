@@ -3,7 +3,7 @@ import {CartItem, Product} from '@/app/types/backend-types';
 import {FC, useMemo} from 'react';
 import {MutateCartButton} from './mutateCartButton';
 import {AddToCartButton} from './addToCartButton';
-import {useGetCartItemsQuery} from '@/app/lib/features/api/cart-items-slice';
+import {useGetCartItemsQuery} from '@/app/lib/api/cart-items-slice';
 
 type UserCartButtonProps = {
   userId: string;

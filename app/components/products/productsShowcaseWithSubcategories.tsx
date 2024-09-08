@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import {FC, useMemo} from 'react';
 import Link from 'next/link';
 import {Gayathri} from 'next/font/google';
-import {useGetSubCategoriesByCategoryQuery} from '@/app/lib/features/api/categories-slice';
+import {useGetSubCategoriesByCategoryQuery} from '@/app/lib/api/categories-slice';
 import {LoadingSpinner} from '../ui/loading-spinner';
 import ErrorFetchingData from '../error/errorFetchingData';
 

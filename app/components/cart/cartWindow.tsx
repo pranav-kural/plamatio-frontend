@@ -1,29 +1,18 @@
 'use client';
-import {useGetProductsQuery} from '@/app/lib/features/api/products-api-slice';
-import useCartHooks from '@/app/lib/hooks/useCartHooks';
-import useLocalCartHooks from '@/app/lib/hooks/useLocalCartHooks';
-import {CartItemsCollection} from '@/app/lib/plamatio-backend/types';
+import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import Image from 'next/image';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
 import MutateCartButton from './mutateCartButton';
 import Link from 'next/link';
+import {useAppSelector} from '@/app/lib/store/storeHooks';
+import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 
 export const CartWindow = () => {
-  const userId: string | undefined = undefined;
-  const [cartItems, setCartItems] = useState<CartItemsCollection>();
-  const localCart = useLocalCartHooks();
-  const userCart = useCartHooks();
+  // const userId: string | undefined = undefined;
+  const cartItems = useAppSelector(selectCartItems);
 
   const productsFetch = useGetProductsQuery();
-
-  useEffect(() => {
-    if (!userId) {
-      setCartItems(localCart.getCartItemsFromLocalStorage());
-    } else {
-      setCartItems(userCart.getCartItems(userId));
-    }
-  }, [userId]);
 
   // Log error if any occurs during fetching  products
   useMemo(() => {
@@ -65,16 +54,6 @@ export const CartWindow = () => {
     throw new Error('Product not found');
   }
 
-  // method to handle removal from cart of a product
-  const handleRemovalFromCart = () => {
-    // re-fetch cart items
-    if (!userId) {
-      setCartItems(localCart.getCartItemsFromLocalStorage());
-    } else {
-      setCartItems(userCart.getCartItems(userId));
-    }
-  };
-
   return (
     <>
       <div className="w-full flex flex-col gap-5 bg-white shadow-lg shadow-mauve8 p-5 rounded-md border">
@@ -86,8 +65,10 @@ export const CartWindow = () => {
         )}
         <div className="w-full flex flex-col gap-5 max-h-[350px] overflow-y-scroll scroll-smooth">
           {productsFetch.isSuccess &&
-            cartItems?.data.map((item) => (
-              <div className="w-full flex flex-row gap-5 min-w-[350px]">
+            cartItems?.map((item) => (
+              <div
+                key={item.id}
+                className="w-full flex flex-row gap-5 min-w-[350px]">
                 <Image
                   src={getProductImageURL(item.productId)}
                   width={100}
@@ -105,7 +86,6 @@ export const CartWindow = () => {
                     </span>
                     <MutateCartButton
                       cartItem={item}
-                      handleRemovalFromCart={handleRemovalFromCart}
                       className="max-w-[100px]"
                     />
                   </div>

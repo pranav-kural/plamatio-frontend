@@ -3,8 +3,8 @@ import {apiSlice} from './api-slice';
 import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../../plamatio-backend/plamatio-api';
-import {CartItemsCollection} from '../../plamatio-backend/types';
+} from '../plamatio-backend/plamatio-api';
+import {CartItemsCollection} from '../plamatio-backend/types';
 
 export const cartItemsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

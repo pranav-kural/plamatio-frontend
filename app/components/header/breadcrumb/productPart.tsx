@@ -1,5 +1,5 @@
 'use client';
-import {useGetProductQuery} from '@/app/lib/features/api/products-api-slice';
+import {useGetProductQuery} from '@/app/lib/api/products-api-slice';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';
 

@@ -1,5 +1,5 @@
 'use client';
-import {useGetCategoryQuery} from '@/app/lib/features/api/categories-slice';
+import {useGetCategoryQuery} from '@/app/lib/api/categories-slice';
 import {HomeIcon} from 'lucide-react';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';

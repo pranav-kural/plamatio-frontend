@@ -1,14 +1,15 @@
 'use client';
 import {MinusCircleIcon, PlusCircleIcon, ShoppingCartIcon} from 'lucide-react';
 import classNames from 'classnames';
-import {FC, useState} from 'react';
+import {FC} from 'react';
 import {CartItem} from '@/app/types/backend-types';
-import useLocalCartHooks from '@/app/lib/hooks/useLocalCartHooks';
+import {useAppDispatch} from '@/app/lib/store/storeHooks';
+import {
+  decrementQuantity,
+  incrementQuantity,
+} from '@/app/lib/store/reducers/cart/cartReducer';
 
-type MutateCartButtonProps = {
-  cartItem: CartItem;
-  handleRemovalFromCart: () => void;
-  className?: string;
+type MutateCartButtonIconsProps = {
   plusIconSize?: number;
   plusIconStrokeWidth?: number;
   minusIconSize?: number;
@@ -17,43 +18,28 @@ type MutateCartButtonProps = {
   cartIconStrokeWidth?: number;
 };
 
+type MutateCartButtonProps = {
+  cartItem: CartItem;
+  className?: string;
+  iconConfig?: MutateCartButtonIconsProps;
+};
+
 export const MutateCartButton: FC<MutateCartButtonProps> = ({
   cartItem,
   className,
-  handleRemovalFromCart,
-  plusIconSize,
-  plusIconStrokeWidth,
-  minusIconSize,
-  minusIconStrokeWidth,
-  cartIconSize,
-  cartIconStrokeWidth,
+  iconConfig,
 }) => {
-  // also, if user id is available, subscribe to the "cart_updates" topic
-  // if new message received of event type "update_cart_item"
-  // if cart item id matches the current cart item id, update the cart item if any changes
-  const [productQuantity, setProductQuantity] = useState(cartItem.quantity);
-  const localCart = useLocalCartHooks();
+  // dispatch cart actions
+  const dispatch = useAppDispatch();
 
-  function incrementQuantity() {
-    // update local storage
-    const updatedCartItem = localCart.incrementLocalQuantity(cartItem);
-    // set quantity to display
-    setProductQuantity(updatedCartItem.quantity);
+  function incrementProductQuantity() {
+    // increment quantity
+    dispatch(incrementQuantity(cartItem));
   }
 
-  function decrementQuantity() {
-    // if quantity is 1, remove the product from cart
-    if (productQuantity === 1) {
-      // set quantity to 0
-      localCart.decrementLocalQuantity(cartItem);
-      // remove product from cart
-      handleRemovalFromCart();
-    } else {
-      // update local storage
-      const updatedCartItem = localCart.decrementLocalQuantity(cartItem);
-      // set quantity to display
-      setProductQuantity(updatedCartItem.quantity);
-    }
+  function decrementProductQuantity() {
+    // decrement quantity
+    dispatch(decrementQuantity(cartItem));
   }
 
   return (
@@ -64,20 +50,20 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
           className
         )}>
         <PlusCircleIcon
-          onClick={incrementQuantity}
-          size={plusIconSize}
-          strokeWidth={plusIconStrokeWidth}
+          onClick={incrementProductQuantity}
+          size={iconConfig?.plusIconSize}
+          strokeWidth={iconConfig?.plusIconStrokeWidth}
         />
-        <span className="ml-2 mr-2">{productQuantity}</span>
+        <span className="ml-2 mr-2">{cartItem.quantity}</span>
         <MinusCircleIcon
-          onClick={decrementQuantity}
-          size={minusIconSize}
-          strokeWidth={minusIconStrokeWidth}
+          onClick={decrementProductQuantity}
+          size={iconConfig?.minusIconSize}
+          strokeWidth={iconConfig?.minusIconStrokeWidth}
         />
         <ShoppingCartIcon
           className="ml-2"
-          size={cartIconSize}
-          strokeWidth={cartIconStrokeWidth}
+          size={iconConfig?.cartIconSize}
+          strokeWidth={iconConfig?.cartIconStrokeWidth}
         />
       </div>
     </>

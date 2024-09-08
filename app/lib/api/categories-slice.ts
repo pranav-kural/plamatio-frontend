@@ -2,11 +2,11 @@ import {apiSlice} from './api-slice';
 import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../../plamatio-backend/plamatio-api';
+} from '../plamatio-backend/plamatio-api';
 import {
   CategoriesCollection,
   SubCategoriesCollection,
-} from '../../plamatio-backend/types';
+} from '../plamatio-backend/types';
 import {Category, SubCategory} from '@/app/types/backend-types';
 
 export const productsApiSlice = apiSlice.injectEndpoints({

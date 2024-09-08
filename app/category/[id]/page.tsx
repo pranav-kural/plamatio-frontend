@@ -2,7 +2,7 @@
 import ErrorFetchingData from '@/app/components/error/errorFetchingData';
 import ProductsShowcase from '@/app/components/products/productsShowcase';
 import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
-import {useGetHeroProductsByCategoryQuery} from '@/app/lib/features/api/products-api-slice';
+import {useGetHeroProductsByCategoryQuery} from '@/app/lib/api/products-api-slice';
 import {useMemo} from 'react';
 
 export default function CategoryPage({params}: {params: {id: string}}) {
