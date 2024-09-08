@@ -19,6 +19,9 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
   const [cartItem, setCartItem] = useState<CartItem | undefined>(undefined);
   // use selector to get cart items from redux store
   const cartItems = useAppSelector(selectCartItems);
+  // state to control which button to show
+  const [showMutateCartButton, setShowMutateCartButton] =
+    useState<boolean>(false);
 
   useEffect(() => {
     // if no cart item already available
@@ -29,9 +32,11 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
         const cartItem = cartItems.find(
           (item: CartItem) => item.productId === props.product.id
         );
+        console.log(`NoUserCartButton: cart item: ${cartItem}`);
         // if valid cart item available, set the cart item
         if (cartItem) {
           setCartItem(cartItem);
+          setShowMutateCartButton(true);
         }
       }
     }
@@ -47,13 +52,18 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
       // if valid cart item available, set the cart item
       if (cartItem) {
         setCartItem(cartItem);
+        setShowMutateCartButton(true);
       }
     }
   }, [cartItems, props.product.id]);
 
   // if cart items not available or cart item for the product not available, show the add to cart button
-  return cartItem ? (
-    <MutateCartButton cartItem={cartItem} className={props.className} />
+  return showMutateCartButton && cartItem ? (
+    <MutateCartButton
+      cartItem={cartItem}
+      className={props.className}
+      setShowMutateCartButton={setShowMutateCartButton}
+    />
   ) : (
     <AddToCartButton
       product={props.product}

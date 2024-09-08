@@ -22,12 +22,14 @@ type MutateCartButtonProps = {
   cartItem: CartItem;
   className?: string;
   iconConfig?: MutateCartButtonIconsProps;
+  setShowMutateCartButton: (state: boolean) => void;
 };
 
 export const MutateCartButton: FC<MutateCartButtonProps> = ({
   cartItem,
   className,
   iconConfig,
+  setShowMutateCartButton,
 }) => {
   // dispatch cart actions
   const dispatch = useAppDispatch();
@@ -38,6 +40,10 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
   }
 
   function decrementProductQuantity() {
+    // if quantity is 1, remove the product from cart
+    if (cartItem.quantity === 1) {
+      setShowMutateCartButton(false);
+    }
     // decrement quantity
     dispatch(decrementQuantity(cartItem));
   }
