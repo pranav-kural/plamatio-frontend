@@ -29,16 +29,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result) => {
-        if (result && result.data) {
-          return [
-            'Addresses',
-            ...result.data.map(({id}) => ({type: 'Address', id}) as const),
-          ];
-        } else {
-          return ['Addresses'];
-        }
-      },
+      providesTags: ['Addresses'],
     }),
     addUser: builder.mutation<User, User>({
       query: (newUser) => ({
@@ -87,11 +78,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: (result) => {
-        return result
-          ? ['Addresses', {type: 'Address', id: result.id}]
-          : ['Addresses'];
-      },
+      invalidatesTags: ['Addresses'],
     }),
     updateUserAddress: builder.mutation<Address, Address>({
       query: (updatedAddress) => ({
@@ -102,11 +89,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: (result) => {
-        return result
-          ? ['Addresses', {type: 'Address', id: result.id}]
-          : ['Addresses'];
-      },
+      invalidatesTags: ['Addresses'],
     }),
     deleteUserAddress: builder.mutation<string, DeleteAddressRequestParams>({
       query: (deleteAddressRequestParams) => ({
@@ -116,11 +99,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: (result, _, args) => {
-        return result
-          ? ['Addresses', {type: 'Address', id: args.addressId}]
-          : ['Addresses'];
-      },
+      invalidatesTags: ['Addresses'],
     }),
   }),
 });

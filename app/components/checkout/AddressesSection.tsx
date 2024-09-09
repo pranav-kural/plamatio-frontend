@@ -42,7 +42,12 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
       // if primary address exists, set it as selected address, else set first address
       setSelectedAddress(primaryAddress || addressesFetch.data.data[0]);
     }
-  }, [addressesFetch.isSuccess, addressesFetch.data?.data, selectedAddress]);
+  }, [
+    addressesFetch.isSuccess,
+    addressesFetch.data?.data,
+    addressesFetch.isFetching,
+    selectedAddress,
+  ]);
 
   // if all address deleted, set selected address to undefined
   useMemo(() => {
@@ -53,6 +58,17 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
       setSelectedAddress(undefined);
     }
   }, [addressesFetch.isSuccess, addressesFetch.data?.data]);
+
+  function updatePrimarySelectedAddress() {
+    if (addressesFetch.data?.data) {
+      const primaryAddress = addressesFetch.data?.data?.find(
+        (address) => address.primary
+      );
+      setSelectedAddress(primaryAddress || addressesFetch.data.data[0]);
+    } else {
+      setSelectedAddress(undefined);
+    }
+  }
 
   const refetchData = () => {
     addressesFetch.refetch();
@@ -79,12 +95,14 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
                 </p>
               </div>
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-row justify-between">
               <SelectAddressModal
                 addresses={addressesFetch.data?.data || []}
                 setSelectedAddress={setSelectedAddress}
+                updatePrimarySelectedAddress={updatePrimarySelectedAddress}
                 userId={userId}
               />
+              <NewAddressModal userId={userId} refetchData={refetchData} />
             </div>
           </>
         )}

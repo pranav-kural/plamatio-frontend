@@ -72,7 +72,7 @@ export default function CheckoutPage() {
 
         {productsFetch.isSuccess && (
           <div className="w-full flex flex-col md:flex-row gap-5 items-start">
-            <div className="md:w-[75%] md:min-w-[75%] h-full">
+            <div className="md:w-[75%] md:min-w-[75%]">
               <CheckoutCartItems
                 cartItems={cartItems}
                 products={productsInCart}

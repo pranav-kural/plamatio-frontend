@@ -22,7 +22,6 @@ const NewAddressModal: FC<NewAddressModalProps> = ({userId, refetchData}) => {
 
   return (
     <>
-      (
       <Dialog.Root>
         <Dialog.Trigger asChild>
           <button className="block text-violet-700  hover:text-violet-900 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-1 py-2.5 text-center dark:text-white dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
@@ -50,6 +49,11 @@ const NewAddressModal: FC<NewAddressModalProps> = ({userId, refetchData}) => {
                 <Dialog.Description className="text-mauve11 mt-[10px] mb-5 text-[15px] leading-normal">
                   Address added successfully.
                 </Dialog.Description>
+                <button
+                  className="w-full mt-4 text-white bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"
+                  onClick={() => setDisplayForm(true)}>
+                  Add another address
+                </button>
               </>
             )}
 
@@ -63,7 +67,6 @@ const NewAddressModal: FC<NewAddressModalProps> = ({userId, refetchData}) => {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-      )
     </>
   );
 };

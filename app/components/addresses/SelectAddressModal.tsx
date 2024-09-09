@@ -9,12 +9,14 @@ type SelectAddressModalProps = {
   userId: string;
   addresses: Address[];
   setSelectedAddress: (address: Address) => void;
+  updatePrimarySelectedAddress: () => void;
 };
 
 const SelectAddressModal: FC<SelectAddressModalProps> = ({
   userId,
   addresses,
   setSelectedAddress,
+  updatePrimarySelectedAddress,
 }) => {
   const [removeAddress, {isError, error, isLoading, isSuccess}] =
     useDeleteUserAddressMutation();
@@ -22,6 +24,7 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
   function deleteAddress(id: number) {
     console.log('SelectAddressModal: Deleting address', id);
     removeAddress({addressId: id, userId});
+    updatePrimarySelectedAddress();
   }
 
   // Log success if any occurs during fetching hero products
@@ -53,11 +56,11 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
           Error changing address. Please refresh and try again.
         </div>
       )}
-      (
+
       {!isLoading && !isError && (
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <button className="block text-violet-700  hover:text-violet-900 font-medium rounded-lg text-sm px-1 py-2.5 text-center dark:text-white dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
+            <button className="block text-fuchsia-700  hover:text-fuchsia-900 font-medium rounded-lg text-sm px-1 py-2.5 text-center dark:text-white dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
               Change address
             </button>
           </Dialog.Trigger>
@@ -93,12 +96,14 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
                               {address.street}, {address.city}, {address.state},{' '}
                               {address.country}, {address.zipCode}
                             </div>
-                            <TrashIcon
-                              size={20}
-                              strokeWidth={1.5}
-                              className=" dark:text-gray-300 dark:hover:text-gray-50 hover:fill-violet-700"
-                              onClick={() => deleteAddress(address.id)}
-                            />
+                            <div className="rounded-xl bg-transparent hover:bg-red-50 p-1">
+                              <TrashIcon
+                                size={20}
+                                strokeWidth={1.5}
+                                className=" dark:text-gray-300 dark:hover:text-gray-50"
+                                onClick={() => deleteAddress(address.id)}
+                              />
+                            </div>
                           </div>
                         </label>
                       </li>
@@ -124,7 +129,6 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
           </Dialog.Portal>
         </Dialog.Root>
       )}
-      )
     </>
   );
 };

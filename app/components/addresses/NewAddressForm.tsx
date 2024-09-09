@@ -25,6 +25,7 @@ export const NewAddressForm: FC<NewAddressFormProps> = ({
     register,
     handleSubmit,
     formState: {errors},
+    reset,
   } = useForm<NewAddress>({});
 
   const [addAddress, {isError, error, isLoading, isSuccess}] =
@@ -50,6 +51,7 @@ export const NewAddressForm: FC<NewAddressFormProps> = ({
       ...data,
       userId,
     });
+    reset();
   };
 
   const onSubmitError = (error: unknown) => {
