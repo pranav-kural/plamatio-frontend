@@ -25,3 +25,8 @@ export type CartItemsCollection = {
 export type AddressesCollection = {
   data: Address[];
 };
+
+export type DeleteAddressRequestParams = {
+  addressId: number;
+  userId: string;
+};

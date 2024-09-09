@@ -7,34 +7,14 @@ import {useGetUserAddressesQuery} from '@/app/lib/api/users-slice';
 import {LoadingSpinner} from '../ui/loading-spinner';
 import SelectAddressModal from '../addresses/SelectAddressModal';
 
-export const addresses: Address[] = [
-  {
-    id: 1,
-    userId: '1',
-    street: '1234 Elm St',
-    city: 'Toronto',
-    state: 'ON',
-    country: 'Canada',
-    zipCode: 'M1M 1M1',
-    primary: true,
-  },
-  {
-    id: 2,
-    userId: '1',
-    street: '5678 Oak St',
-    city: 'Ottawa',
-    state: 'ON',
-    country: 'Canada',
-    zipCode: 'M1M 1M1',
-    primary: false,
-  },
-];
+type AddressesSectionProps = {
+  userId: string;
+};
 
-export const AddressesSection: FC = () => {
-  const userId = '1';
+export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
   const addressesFetch = useGetUserAddressesQuery(userId);
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(
-    addresses[0]
+    undefined
   );
 
   // Log error if any occurs during fetching data
@@ -62,7 +42,37 @@ export const AddressesSection: FC = () => {
       // if primary address exists, set it as selected address, else set first address
       setSelectedAddress(primaryAddress || addressesFetch.data.data[0]);
     }
-  }, [addressesFetch.isSuccess, addressesFetch.data?.data, selectedAddress]);
+  }, [
+    addressesFetch.isSuccess,
+    addressesFetch.data?.data,
+    addressesFetch.isFetching,
+    selectedAddress,
+  ]);
+
+  // if all address deleted, set selected address to undefined
+  useMemo(() => {
+    if (
+      addressesFetch.isSuccess &&
+      (!addressesFetch.data?.data || addressesFetch.data?.data.length === 0)
+    ) {
+      setSelectedAddress(undefined);
+    }
+  }, [addressesFetch.isSuccess, addressesFetch.data?.data]);
+
+  function updatePrimarySelectedAddress() {
+    if (addressesFetch.data?.data) {
+      const primaryAddress = addressesFetch.data?.data?.find(
+        (address) => address.primary
+      );
+      setSelectedAddress(primaryAddress || addressesFetch.data.data[0]);
+    } else {
+      setSelectedAddress(undefined);
+    }
+  }
+
+  const refetchData = () => {
+    addressesFetch.refetch();
+  };
 
   return (
     <>
@@ -85,11 +95,14 @@ export const AddressesSection: FC = () => {
                 </p>
               </div>
             </div>
-            <div className="w-full">
+            <div className="w-full flex flex-row justify-between">
               <SelectAddressModal
-                addresses={addresses}
+                addresses={addressesFetch.data?.data || []}
                 setSelectedAddress={setSelectedAddress}
+                updatePrimarySelectedAddress={updatePrimarySelectedAddress}
+                userId={userId}
               />
+              <NewAddressModal userId={userId} refetchData={refetchData} />
             </div>
           </>
         )}
@@ -104,7 +117,7 @@ export const AddressesSection: FC = () => {
               </div>
             </div>
             <div className="w-full">
-              <NewAddressModal />
+              <NewAddressModal userId={userId} refetchData={refetchData} />
             </div>
           </>
         )}

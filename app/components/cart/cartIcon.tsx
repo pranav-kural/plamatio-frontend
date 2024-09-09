@@ -22,7 +22,9 @@ export const CartIcon: FC<CartIconProps> = ({
   return (
     <>
       <div className={classNames('', className)}>
-        <button onClick={() => setDisplayCartWindow(!displayCartWindow)}>
+        <button
+          onClick={() => setDisplayCartWindow(!displayCartWindow)}
+          className="text-violet-900">
           <ShoppingBagIcon
             size={iconSize || 35}
             strokeWidth={strokeWidth || 1}

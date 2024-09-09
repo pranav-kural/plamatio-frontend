@@ -5,15 +5,19 @@ import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {CheckoutCartItems} from '@/app/components/cart/checkoutCartItems';
 import {Raleway} from 'next/font/google';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
-import {Product} from '@/app/types/backend-types';
+import {Product, User} from '@/app/types/backend-types';
 import OrderSection from '@/app/components/checkout/OrderSection';
 import {LoadingSpinner} from '../components/ui/loading-spinner';
 import UserDetailsSection from '../components/checkout/UserDetailsSection';
 import AddressesSection from '../components/checkout/AddressesSection';
+import {useUser} from '@clerk/nextjs';
+import SignInSignUpButtons from '../components/auth/sigInSignUpButtons';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 
 export default function CheckoutPage() {
+  // get user details
+  const {isLoaded, isSignedIn, user} = useUser();
   // get cart items
   const cartItems = useAppSelector(selectCartItems);
 
@@ -41,6 +45,19 @@ export default function CheckoutPage() {
     }
   }, [productsFetch.isSuccess, cartItems, productsFetch.data?.data]);
 
+  const userObj = useMemo(() => {
+    if (user) {
+      const u: User = {
+        id: user.id,
+        firstName: user.firstName ?? '',
+        lastName: user.lastName ?? '',
+        email: user.emailAddresses[0]?.emailAddress,
+      };
+      return u;
+    }
+    return undefined;
+  }, [user]);
+
   return (
     <>
       <div className="w-full max-w-[1720px] h-full flex flex-col gap-5 items-start justify-start px-5 md:px-20 pt-5">
@@ -52,6 +69,7 @@ export default function CheckoutPage() {
             <LoadingSpinner label="Loading products..." />
           </div>
         )}
+
         {productsFetch.isSuccess && (
           <div className="w-full flex flex-col md:flex-row gap-5 items-start">
             <div className="md:w-[75%] md:min-w-[75%]">
@@ -59,18 +77,34 @@ export default function CheckoutPage() {
                 cartItems={cartItems}
                 products={productsInCart}
               />
-              {cartItems.length < 3 && (
+
+              {isSignedIn && cartItems.length < 2 && userObj && (
                 <div className="mt-5 w-full flex flex-row gap-5">
-                  <UserDetailsSection />
-                  <AddressesSection />
+                  <UserDetailsSection user={userObj} />
+                  <AddressesSection userId={user.id} />
                 </div>
               )}
             </div>
             <div className="md:w-[25%] md:min-w-[25%] flex flex-col gap-5">
-              {cartItems.length >= 3 && (
+              {!isSignedIn && (
+                <div className="w-full flex flex-col gap-5 justify-between p-3 border border-violet-800 rounded-lg shadow-lg">
+                  <p className="text-gray-500 text-md">
+                    Please Sign In or Sign Up to continue placing your order.
+                  </p>
+                  <SignInSignUpButtons />
+                </div>
+              )}
+
+              {isSignedIn && !isLoaded && (
+                <div className="w-full h-full flex flex-col items-center justify-center">
+                  <LoadingSpinner label="Loading user data..." />
+                </div>
+              )}
+
+              {isSignedIn && cartItems.length >= 2 && userObj && (
                 <>
-                  <UserDetailsSection />
-                  <AddressesSection />
+                  <UserDetailsSection user={userObj} />
+                  <AddressesSection userId={user.id} />
                 </>
               )}
 

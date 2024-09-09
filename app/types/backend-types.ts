@@ -41,7 +41,7 @@ export type CartItem = {
 export type NewCartItem = {
   productId: number;
   quantity: number;
-  userId: number;
+  userId: string;
 };
 
 export type Order = {
