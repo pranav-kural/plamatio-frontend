@@ -1,3 +1,5 @@
+import {DeleteAddressRequestParams} from './types';
+
 /**
  * Plamatio Backend API URL
  */
@@ -62,7 +64,8 @@ export const PLAMATIO_BACKEND_ENDPOINTS = {
     UPDATE_USER: () => '/users/update',
     UPDATE_ADDRESS: () => '/users/addresses/update',
     DELETE: (id: string) => `/users/delete/${id}`,
-    DELETE_ADDRESS: (id: number) => `/users/addresses/delete/${id}`,
+    DELETE_ADDRESS: (params: DeleteAddressRequestParams) =>
+      `/users/addresses/delete/${params.addressId}/user/${params.userId}`,
   },
   ORDERS: {
     GET: (id: number) => `/orders/get/${id}`,

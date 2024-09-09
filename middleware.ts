@@ -9,7 +9,7 @@ export const config = {
   ],
 };
 
-const isPrivateRoute = createRouteMatcher(['/checkout(.*)', '/orders(.*)']);
+const isPrivateRoute = createRouteMatcher(['/orders(.*)']);
 
 export default clerkMiddleware((auth, request) => {
   if (isPrivateRoute(request)) {

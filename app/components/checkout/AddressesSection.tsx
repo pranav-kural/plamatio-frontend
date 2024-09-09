@@ -7,34 +7,14 @@ import {useGetUserAddressesQuery} from '@/app/lib/api/users-slice';
 import {LoadingSpinner} from '../ui/loading-spinner';
 import SelectAddressModal from '../addresses/SelectAddressModal';
 
-export const addresses: Address[] = [
-  {
-    id: 1,
-    userId: '1',
-    street: '1234 Elm St',
-    city: 'Toronto',
-    state: 'ON',
-    country: 'Canada',
-    zipCode: 'M1M 1M1',
-    primary: true,
-  },
-  {
-    id: 2,
-    userId: '1',
-    street: '5678 Oak St',
-    city: 'Ottawa',
-    state: 'ON',
-    country: 'Canada',
-    zipCode: 'M1M 1M1',
-    primary: false,
-  },
-];
+type AddressesSectionProps = {
+  userId: string;
+};
 
-export const AddressesSection: FC = () => {
-  const userId = '1';
+export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
   const addressesFetch = useGetUserAddressesQuery(userId);
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(
-    addresses[0]
+    undefined
   );
 
   // Log error if any occurs during fetching data
@@ -64,6 +44,20 @@ export const AddressesSection: FC = () => {
     }
   }, [addressesFetch.isSuccess, addressesFetch.data?.data, selectedAddress]);
 
+  // if all address deleted, set selected address to undefined
+  useMemo(() => {
+    if (
+      addressesFetch.isSuccess &&
+      (!addressesFetch.data?.data || addressesFetch.data?.data.length === 0)
+    ) {
+      setSelectedAddress(undefined);
+    }
+  }, [addressesFetch.isSuccess, addressesFetch.data?.data]);
+
+  const refetchData = () => {
+    addressesFetch.refetch();
+  };
+
   return (
     <>
       <div className="w-full md:min-h-[200px] flex flex-col gap-3 p-5 justify-between border border-fuchsia-800 rounded-lg shadow-lg">
@@ -87,8 +81,9 @@ export const AddressesSection: FC = () => {
             </div>
             <div className="w-full">
               <SelectAddressModal
-                addresses={addresses}
+                addresses={addressesFetch.data?.data || []}
                 setSelectedAddress={setSelectedAddress}
+                userId={userId}
               />
             </div>
           </>
@@ -104,7 +99,7 @@ export const AddressesSection: FC = () => {
               </div>
             </div>
             <div className="w-full">
-              <NewAddressModal />
+              <NewAddressModal userId={userId} refetchData={refetchData} />
             </div>
           </>
         )}

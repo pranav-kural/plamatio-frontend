@@ -6,6 +6,7 @@ import {Header} from './components/header/header';
 import {ReduxProvider} from './ReduxProvider';
 import LoadCartItems from './components/auxiliary/LoadCartItems';
 import LoadProducts from './components/auxiliary/LoadProducts';
+import {CreateUserBridge} from './components/landing/CreateUserBridge';
 
 const workSans = Work_Sans({subsets: ['latin']});
 
@@ -38,6 +39,7 @@ export default function RootLayout({
           </body>
           <LoadCartItems />
           <LoadProducts />
+          <CreateUserBridge />
         </ReduxProvider>
       </html>
     </ClerkProvider>

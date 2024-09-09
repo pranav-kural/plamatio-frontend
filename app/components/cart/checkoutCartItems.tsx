@@ -15,7 +15,7 @@ export const CheckoutCartItems: FC<CheckoutCartItemsProps> = ({
   products,
 }) => {
   return (
-    <div className="w-full flex flex-col gap-10 max-h-[350px] min-w-[300px]">
+    <div className="w-full h-full flex flex-col justify-between gap-10 min-w-[300px]">
       {products.map((product) => (
         <ProductCheckoutPreview key={product.id} product={product} />
       ))}

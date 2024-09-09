@@ -1,4 +1,7 @@
+import {useAddUserAddressMutation} from '@/app/lib/api/users-slice';
+import {FC, useMemo} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
+import {LoadingSpinner} from '../ui/loading-spinner';
 
 type NewAddress = {
   street: string;
@@ -9,116 +12,169 @@ type NewAddress = {
   userId: string;
 };
 
-const sampleUserId = 'sampleUserId123';
+type NewAddressFormProps = {
+  userId: string;
+  onSubmitSuccess: () => void;
+};
 
-export default function NewAddressForm() {
+export const NewAddressForm: FC<NewAddressFormProps> = ({
+  userId,
+  onSubmitSuccess,
+}) => {
   const {
     register,
     handleSubmit,
     formState: {errors},
-  } = useForm<NewAddress>();
+  } = useForm<NewAddress>({});
+
+  const [addAddress, {isError, error, isLoading, isSuccess}] =
+    useAddUserAddressMutation();
+
+  // Log error if any occurs during adding address to database
+  useMemo(() => {
+    if (isError) {
+      console.error(
+        `${Date.now()} NewAddressForm: Error adding address for user ${userId}`,
+        error
+      );
+    }
+  }, [isError, error, userId]);
 
   const onSubmit: SubmitHandler<NewAddress> = (data) => {
-    data.userId = sampleUserId; // Assign sample user ID
-    console.log(data);
+    console.log('NewAddressForm: Submitting new address', data);
+    // confirm user ID available
+    if (!userId) {
+      throw new Error('NewAddressForm: User ID is required');
+    }
+    addAddress({
+      ...data,
+      userId,
+    });
   };
 
+  const onSubmitError = (error: unknown) => {
+    console.error(
+      `${Date.now()} NewAddressForm: Error adding address for user ${userId}`,
+      error
+    );
+  };
+
+  // if address is added successfully, call onSubmitSuccess
+  useMemo(() => {
+    if (isSuccess) {
+      onSubmitSuccess();
+    }
+  }, [isSuccess, onSubmitSuccess]);
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col gap-1">
-      <label
-        htmlFor="street"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Street
-        <input
-          id="street"
-          {...register('street', {required: true})}
-          placeholder="Street"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-        />
-        {errors.street && <span>Street is required</span>}
-      </label>
+    <>
+      {isLoading && (
+        <div className="w-full h-full flex flex-col items-center justify-center">
+          <LoadingSpinner label="Loading products..." />
+        </div>
+      )}
 
-      <label
-        htmlFor="city"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        City
-        <input
-          id="city"
-          {...register('city', {required: true})}
-          placeholder="City"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-        />
-        {errors.city && <span>City is required</span>}
-      </label>
+      {!isLoading && (
+        <form
+          onSubmit={handleSubmit(onSubmit, onSubmitError)}
+          className="w-full flex flex-col gap-1">
+          <label
+            htmlFor="street"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Street
+            <input
+              id="street"
+              {...register('street', {required: true})}
+              placeholder="Street"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.street && <span>Street is required</span>}
+          </label>
 
-      <fieldset className="flex flex-row gap-5">
-        <label
-          htmlFor="state"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          Province
-          <select
-            id="state"
-            {...register('state', {required: true})}
-            name="Province"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-            <option value="">Select Province</option>
-            <option value="AB">Alberta</option>
-            <option value="BC">British Columbia</option>
-            <option value="MB">Manitoba</option>
-            <option value="NB">New Brunswick</option>
-            <option value="NL">Newfoundland and Labrador</option>
-            <option value="NS">Nova Scotia</option>
-            <option value="ON">Ontario</option>
-            <option value="PE">Prince Edward Island</option>
-            <option value="QC">Quebec</option>
-            <option value="SK">Saskatchewan</option>
-          </select>
-          {errors.state && <span>Province is required</span>}
-        </label>
+          <label
+            htmlFor="city"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            City
+            <input
+              id="city"
+              {...register('city', {required: true})}
+              placeholder="City"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.city && <span>City is required</span>}
+          </label>
 
-        <label
-          htmlFor="country"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          Country
-          <input
-            id="country"
-            {...register('country', {required: true})}
-            placeholder="Country"
-            defaultValue="Canada"
-            disabled
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-          />
-          {errors.country && <span>Country is required</span>}
-        </label>
-      </fieldset>
+          <fieldset className="flex flex-row gap-5">
+            <label
+              htmlFor="state"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Province
+              <select
+                id="state"
+                {...register('state', {required: true})}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option value="">Select Province</option>
+                <option value="AB">Alberta</option>
+                <option value="BC">British Columbia</option>
+                <option value="MB">Manitoba</option>
+                <option value="NB">New Brunswick</option>
+                <option value="NL">Newfoundland and Labrador</option>
+                <option value="NS">Nova Scotia</option>
+                <option value="ON">Ontario</option>
+                <option value="PE">Prince Edward Island</option>
+                <option value="QC">Quebec</option>
+                <option value="SK">Saskatchewan</option>
+              </select>
+              {errors.state && <span>Province is required</span>}
+            </label>
 
-      <label
-        htmlFor="zipCode"
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Postal Code
-        <input
-          id="zipCode"
-          {...register('zipCode', {
-            required: true,
-            pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
-          })}
-          placeholder="Postal Code"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-        />
-        {errors.zipCode && (
-          <span>
-            Postal Code is required and must match the format A1A 1A1 or A1A1A1
-          </span>
-        )}
-      </label>
+            <label
+              htmlFor="country"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Country
+              <input
+                id="country"
+                {...register('country', {value: 'Canada'})}
+                placeholder="Country"
+                defaultValue="Canada"
+                value="Canada"
+                disabled
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              />
+              {errors.country && <span>Country is required</span>}
+            </label>
+          </fieldset>
 
-      <button
-        type="submit"
-        className='w-full mt-4 text-white bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"'>
-        Save
-      </button>
-    </form>
+          <label
+            htmlFor="zipCode"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Postal Code
+            <input
+              id="zipCode"
+              {...register('zipCode', {
+                required: true,
+                pattern: /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/,
+              })}
+              placeholder="Postal Code"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.zipCode && (
+              <span>
+                Postal Code is required and must match the format A1A 1A1 or
+                A1A1A1
+              </span>
+            )}
+          </label>
+
+          <button
+            type="submit"
+            className='w-full mt-4 text-white bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800"'>
+            Save
+          </button>
+        </form>
+      )}
+    </>
   );
-}
+};
+
+export default NewAddressForm;
