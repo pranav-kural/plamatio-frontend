@@ -26,7 +26,7 @@ export const OrderSection: FC<OrderSectionProps> = ({cartItems, products}) => {
     );
 
     // calculate taxes
-    const taxRate = 0.13;
+    const taxRate = 0.05;
     const taxes = orderTotal * taxRate;
     // round to 2 decimal places
     const roundedTaxes = Math.round(taxes * 100) / 100;

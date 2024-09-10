@@ -60,7 +60,7 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
       {!isLoading && !isError && (
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <button className="block text-fuchsia-700  hover:text-fuchsia-900 font-medium rounded-lg text-sm px-1 py-2.5 text-center dark:text-white dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
+            <button className="block text-fuchsia-700  hover:text-fuchsia-900 font-medium rounded-lg text-sm px-1 py-2.5 text-center  dark:text-gray-200 dark:hover:text-white dark:focus:ring-fuchsia-800">
               Change address
             </button>
           </Dialog.Trigger>

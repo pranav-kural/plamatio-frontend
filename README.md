@@ -18,7 +18,7 @@ This project also serves as one of the frontends for the [Plamatio Backend](http
 - **Clerk:** Using Clerk for user authentication. A duplicate entry exists in the Plamatio backend for each user with user's data. This is done to reduce vendor dependency and to ensure referential integrity of data on the backend side.
 - **Stripe:** Integrates with Stripe for payment handling. Plamatio frontend primarily uses the Stripe's JS SDK and Embedded Form, with price IDs setup in Stripe.
 
-Plamatio is a brand focused on Llama-inspired products. However, the Plamatio Frontend and Plamatio Backend projects are very loosely coupled with the Plamatio e-commerce data. 
+Plamatio is a brand focused on Llama-inspired products. However, the Plamatio Frontend and Plamatio Backend projects are very loosely coupled with the Plamatio e-commerce data.
 
 It is possible to completely switch the products data, branding data, company name, product categories, product subcategories, etc. The intention behind building this project was not to develop a frontend specifically for Plamatio brand, but instead, focuses on displaying a production-quality e-commerce frontend that is not only snappy and visually pleasing but is also capable of handling side effects, data mutations, state changes efficiently, while streaming & listening for real-time data and user events (Kafka).
 

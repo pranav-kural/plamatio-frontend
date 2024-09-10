@@ -6,12 +6,13 @@ import {CheckoutCartItems} from '@/app/components/cart/checkoutCartItems';
 import {Raleway} from 'next/font/google';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import {Product, User} from '@/app/types/backend-types';
-import OrderSection from '@/app/components/checkout/OrderSection';
 import {LoadingSpinner} from '../components/ui/loading-spinner';
 import UserDetailsSection from '../components/checkout/UserDetailsSection';
 import AddressesSection from '../components/checkout/AddressesSection';
 import {useUser} from '@clerk/nextjs';
 import SignInSignUpButtons from '../components/auth/sigInSignUpButtons';
+import CheckoutPaymentModal from '../components/checkout/CheckoutPaymentModal';
+import OrderSection from '../components/checkout/OrderSection';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 
@@ -78,7 +79,7 @@ export default function CheckoutPage() {
                 products={productsInCart}
               />
 
-              {isSignedIn && cartItems.length < 2 && userObj && (
+              {isSignedIn && isLoaded && cartItems.length < 2 && userObj && (
                 <div className="mt-5 w-full flex flex-row gap-5">
                   <UserDetailsSection user={userObj} />
                   <AddressesSection userId={user.id} />
@@ -101,7 +102,7 @@ export default function CheckoutPage() {
                 </div>
               )}
 
-              {isSignedIn && cartItems.length >= 2 && userObj && (
+              {isSignedIn && isLoaded && cartItems.length >= 2 && userObj && (
                 <>
                   <UserDetailsSection user={userObj} />
                   <AddressesSection userId={user.id} />
@@ -109,6 +110,7 @@ export default function CheckoutPage() {
               )}
 
               <OrderSection cartItems={cartItems} products={productsInCart} />
+              <CheckoutPaymentModal />
             </div>
           </div>
         )}

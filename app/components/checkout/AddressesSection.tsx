@@ -42,12 +42,7 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
       // if primary address exists, set it as selected address, else set first address
       setSelectedAddress(primaryAddress || addressesFetch.data.data[0]);
     }
-  }, [
-    addressesFetch.isSuccess,
-    addressesFetch.data?.data,
-    addressesFetch.isFetching,
-    selectedAddress,
-  ]);
+  }, [addressesFetch.isSuccess, addressesFetch.data?.data, selectedAddress]);
 
   // if all address deleted, set selected address to undefined
   useMemo(() => {
@@ -76,7 +71,7 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
 
   return (
     <>
-      <div className="w-full md:min-h-[200px] flex flex-col gap-3 p-5 justify-between border border-fuchsia-800 rounded-lg shadow-lg">
+      <div className="w-full md:min-h-[200px] flex flex-col gap-3 p-5 justify-between border border-fuchsia-800 rounded-lg shadow-lg dark:text-white dark:bg-fuchsia-800 dark:focus:ring-violet-800">
         <h2 className="font-[500]">Shipping To</h2>
         {addressesFetch.isLoading && (
           <div className="w-full h-full flex flex-col items-center justify-center">
@@ -87,7 +82,9 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
           <>
             <div className="w-full flex flex-row">
               <div className="w-full">
-                <h2 className="text-gray-500">Current Address</h2>
+                <h2 className="text-gray-500 dark:text-gray-300">
+                  Current Address
+                </h2>
                 <p>
                   {selectedAddress.street}, {selectedAddress.city},{' '}
                   {selectedAddress.state}, {selectedAddress.country},{' '}
