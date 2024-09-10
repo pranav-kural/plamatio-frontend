@@ -3,10 +3,11 @@ import {MinusCircleIcon, PlusCircleIcon, ShoppingCartIcon} from 'lucide-react';
 import classNames from 'classnames';
 import {FC} from 'react';
 import {CartItem} from '@/app/types/backend-types';
-import {useAppDispatch} from '@/app/lib/store/storeHooks';
+import {useAppDispatch, useAppSelector} from '@/app/lib/store/storeHooks';
 import {
   decrementQuantity,
   incrementQuantity,
+  selectAllowCartChanges,
 } from '@/app/lib/store/reducers/cart/cartReducer';
 
 type MutateCartButtonIconsProps = {
@@ -33,19 +34,27 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
 }) => {
   // dispatch cart actions
   const dispatch = useAppDispatch();
+  // monitor if cart changes are allowed
+  const allowCartChanges = useAppSelector(selectAllowCartChanges);
 
   function incrementProductQuantity() {
-    // increment quantity
-    dispatch(incrementQuantity(cartItem));
+    // if cart changes allowed
+    if (allowCartChanges) {
+      // increment quantity
+      dispatch(incrementQuantity(cartItem));
+    }
   }
 
   function decrementProductQuantity() {
-    // if quantity is 1, remove the product from cart
-    if (cartItem.quantity === 1) {
-      setShowMutateCartButton(false);
+    // if cart changes allowed
+    if (allowCartChanges) {
+      // if quantity is 1, remove the product from cart
+      if (cartItem.quantity === 1) {
+        setShowMutateCartButton(false);
+      }
+      // decrement quantity
+      dispatch(decrementQuantity(cartItem));
     }
-    // decrement quantity
-    dispatch(decrementQuantity(cartItem));
   }
 
   return (
@@ -53,6 +62,8 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
       <div
         className={classNames(
           'flex flex-row align-middle justify-center p-2 rounded-md bg-violet-100 cursor-pointer hover:text-violet-100 hover:bg-violet-800',
+          !allowCartChanges &&
+            'opacity-50 hover:bg-violet-100 hover:text-black hover:cursor-not-allowed',
           className
         )}>
         <PlusCircleIcon
