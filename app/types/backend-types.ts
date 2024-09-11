@@ -46,7 +46,7 @@ export type NewCartItem = {
 
 export type Order = {
   id: number;
-  userId: number;
+  userId: string;
   addressId: number;
   totalPrice: number;
   createdAt: string;
@@ -54,10 +54,12 @@ export type Order = {
 };
 
 export type NewOrder = {
-  userId: number;
+  userId: string;
   addressId: number;
   totalPrice: number;
   status: string;
+  paymentStatus: string;
+  clientSecret: string;
 };
 
 export type OrderItem = {
@@ -69,6 +71,11 @@ export type OrderItem = {
 
 export type NewOrderItem = {
   orderId: number;
+  productId: number;
+  quantity: number;
+};
+
+export type NewDetailedOrderItem = {
   productId: number;
   quantity: number;
 };

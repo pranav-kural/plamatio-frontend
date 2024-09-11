@@ -6,13 +6,13 @@ import {CheckoutCartItems} from '@/app/components/cart/checkoutCartItems';
 import {Raleway} from 'next/font/google';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import {Product, User} from '@/app/types/backend-types';
-import {LoadingSpinner} from '../components/ui/loading-spinner';
-import UserDetailsSection from '../components/checkout/UserDetailsSection';
-import AddressesSection from '../components/checkout/AddressesSection';
+import {LoadingSpinner} from '../../components/ui/loading-spinner';
+import UserDetailsSection from '../../components/checkout/UserDetailsSection';
+import AddressesSection from '../../components/checkout/AddressesSection';
 import {useUser} from '@clerk/nextjs';
-import SignInSignUpButtons from '../components/auth/sigInSignUpButtons';
-import CheckoutPaymentModal from '../components/checkout/CheckoutPaymentModal';
-import OrderSection from '../components/checkout/OrderSection';
+import SignInSignUpButtons from '../../components/auth/sigInSignUpButtons';
+import CheckoutPaymentModal from '../../components/checkout/CheckoutPaymentModal';
+import OrderSection from '../../components/checkout/OrderSection';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 
@@ -25,7 +25,10 @@ export default function CheckoutPage() {
   const productsFetch = useGetProductsQuery();
   const [productsInCart, setProductsInCart] = useState<Product[]>([]);
 
-  // Log error if any occurs during fetching  products
+  // store shipping address ID
+  const [addressId, setAddressId] = useState<number>(0);
+
+  // Log error if any occurs during fetching data
   useMemo(() => {
     if (productsFetch.isError) {
       console.error(
@@ -82,7 +85,10 @@ export default function CheckoutPage() {
               {isSignedIn && isLoaded && cartItems.length < 2 && userObj && (
                 <div className="mt-5 w-full flex flex-row gap-5">
                   <UserDetailsSection user={userObj} />
-                  <AddressesSection userId={user.id} />
+                  <AddressesSection
+                    userId={user.id}
+                    setAddressId={setAddressId}
+                  />
                 </div>
               )}
             </div>
@@ -105,12 +111,15 @@ export default function CheckoutPage() {
               {isSignedIn && isLoaded && cartItems.length >= 2 && userObj && (
                 <>
                   <UserDetailsSection user={userObj} />
-                  <AddressesSection userId={user.id} />
+                  <AddressesSection
+                    userId={user.id}
+                    setAddressId={setAddressId}
+                  />
                 </>
               )}
 
               <OrderSection cartItems={cartItems} products={productsInCart} />
-              <CheckoutPaymentModal />
+              <CheckoutPaymentModal addressId={addressId} />
             </div>
           </div>
         )}

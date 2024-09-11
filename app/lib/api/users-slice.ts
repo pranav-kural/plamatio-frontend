@@ -69,6 +69,16 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         return result ? ['Users', {type: 'User', id: args}] : ['Users'];
       },
     }),
+    getAddress: builder.query<Address, number>({
+      query: (addressId) => ({
+        url: PBE.USERS.GET_ADDRESS(addressId),
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
+        },
+      }),
+      providesTags: (result) => [{type: 'Address', id: result?.id}],
+    }),
     addUserAddress: builder.mutation<Address, NewAddress>({
       query: (newAddress) => ({
         url: PBE.USERS.ADD_ADDRESS(),
@@ -106,6 +116,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetUserQuery,
+  useGetAddressQuery,
   useGetUserAddressesQuery,
   useAddUserMutation,
   useUpdateUserProfileMutation,

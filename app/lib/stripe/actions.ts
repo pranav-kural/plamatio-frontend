@@ -8,8 +8,9 @@ import {stripe} from '@/app/lib/stripe/config';
  * @param origin Origin of the request
  * @returns String with the return URL for the checkout session
  */
-export const getReturnUrl = (origin: string) =>
-  `${origin}/checkout/result?session_id={CHECKOUT_SESSION_ID}`;
+export const getReturnUrl = (origin: string) => {
+  return `${origin}/checkout/result?session_id={CHECKOUT_SESSION_ID}`;
+};
 
 /**
  * Method to create a checkout session.
@@ -18,8 +19,10 @@ export const getReturnUrl = (origin: string) =>
  */
 export async function createCheckoutSession({
   lineItems,
+  addressId,
 }: {
   lineItems: Stripe.Checkout.SessionCreateParams.LineItem[];
+  addressId: number;
 }): Promise<{client_secret: string | null; url: string | null}> {
   const origin: string = headers().get('origin') as string;
 
@@ -27,8 +30,11 @@ export async function createCheckoutSession({
     await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: lineItems,
-      return_url: getReturnUrl(origin),
+      return_url: `${origin}/checkout/result?session_id={CHECKOUT_SESSION_ID}`,
       ui_mode: 'embedded',
+      metadata: {
+        addressId,
+      },
     });
 
   return {

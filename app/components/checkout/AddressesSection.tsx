@@ -9,9 +9,13 @@ import SelectAddressModal from '../addresses/SelectAddressModal';
 
 type AddressesSectionProps = {
   userId: string;
+  setAddressId: (addressId: number) => void;
 };
 
-export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
+export const AddressesSection: FC<AddressesSectionProps> = ({
+  userId,
+  setAddressId,
+}) => {
   const addressesFetch = useGetUserAddressesQuery(userId);
   const [selectedAddress, setSelectedAddress] = useState<Address | undefined>(
     undefined
@@ -53,6 +57,13 @@ export const AddressesSection: FC<AddressesSectionProps> = ({userId}) => {
       setSelectedAddress(undefined);
     }
   }, [addressesFetch.isSuccess, addressesFetch.data?.data]);
+
+  // set selected address ID
+  useMemo(() => {
+    if (selectedAddress) {
+      setAddressId(selectedAddress.id);
+    }
+  }, [selectedAddress, setAddressId]);
 
   function updatePrimarySelectedAddress() {
     if (addressesFetch.data?.data) {

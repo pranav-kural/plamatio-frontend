@@ -43,10 +43,10 @@ export const ProductPreview: FC<ProductPreviewProps> = ({
   return (
     <div
       className={classNames(
-        `w-full h-full flex flex-col gap-5 md:flex-row align-top justify-start px-5 md:px-20 pt-5`,
+        `w-full h-full flex flex-col gap-5 md:flex-row items-center justify-center px-5 md:px-20 pt-5`,
         className
       )}>
-      <div className="w-full h-full md:w-1/2 md:max-w-[500px] min-w-[350px] min-h-[350px]">
+      <div className="w-full h-full md:w-1/2 md:max-w-[400px] min-w-[350px] min-h-[350px]">
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -59,7 +59,7 @@ export const ProductPreview: FC<ProductPreviewProps> = ({
           )}
         />
       </div>
-      <div className="w-full md:w-1/2 min-h-[350px] md:min-h-[500px] flex flex-col gap-5 sm:px-10 lg:px-20 h-full items-start justify-between">
+      <div className="w-full md:w-1/2 md:min-h-[400px] flex flex-col gap-5 sm:px-10 lg:px-20 h-full items-start justify-between">
         <div className="w-full flex flex-col gap-3">
           <span className="text-lg md:text-3xl font-semibold">
             {product.name}

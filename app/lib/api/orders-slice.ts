@@ -4,10 +4,14 @@ import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../plamatio-backend/plamatio-api';
+import {
+  DetailedOrdersCollection,
+  OrdersCollection,
+} from '../plamatio-backend/types';
 
 export const ordersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getOrders: builder.query<Order[], string>({
+    getOrders: builder.query<OrdersCollection, string>({
       query: (userId: string) => ({
         url: PBE.ORDERS.GET_ALL(userId),
         method: 'GET',
@@ -15,10 +19,16 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => [
-        'Orders',
-        ...result.map(({id}) => ({type: 'Order', id}) as const),
-      ],
+      providesTags: (result) => {
+        if (result) {
+          return [
+            'Orders',
+            ...result.data.map(({id}) => ({type: 'Order', id}) as const),
+          ];
+        } else {
+          return ['Orders'];
+        }
+      },
     }),
     addOrder: builder.mutation<Order, DetailedOrder>({
       query: (newOrder) => ({
@@ -75,7 +85,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
             ),
           ];
         } else {
-          return [];
+          return ['Orders'];
         }
       },
     }),
@@ -101,7 +111,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    getDetailedOrders: builder.query<DetailedOrder[], string>({
+    getDetailedOrders: builder.query<DetailedOrdersCollection, string>({
       query: (userId) => ({
         url: PBE.ORDERS.GET_ALL_DETAILED(userId),
         method: 'GET',
@@ -109,29 +119,32 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      providesTags: (result = []) => {
-        if (result) {
-          return [
-            'Orders',
-            ...result.map(
-              ({order}) => ({type: 'Order', id: order.id}) as const
-            ),
-            ...result.flatMap(({orderItems}) =>
-              orderItems.map(({id}) => ({type: 'OrderItem', id}) as const)
-            ),
-          ];
-        } else {
-          return ['Orders'];
-        }
-      },
+      providesTags: ['Orders'],
+      // providesTags: (result) => {
+      //   if (result && result.data) {
+      //     return [
+      //       'Orders',
+      //       ...result.data.map(
+      //         ({order}) => ({type: 'Order', id: order.id}) as const
+      //       ),
+      //       ...result.data.flatMap(({orderItems}) =>
+      //         orderItems?.map(({id}) => ({type: 'OrderItem', id}) as const)
+      //       ),
+      //     ];
+      //   } else {
+      //     return ['Orders'];
+      //   }
+      // },
     }),
   }),
 });
 
-// export const {
-//   useGetCartItemsQuery,
-//   useGetCartItemQuery,
-//   useAddCartItemMutation,
-//   useUpdateCartItemMutation,
-//   useDeleteCartItemMutation,
-// } = cartItemsApiSlice;
+export const {
+  useGetOrdersQuery,
+  useAddOrderMutation,
+  useUpdateOrderMutation,
+  useDeleteOrderMutation,
+  useGetDetailedOrderQuery,
+  useAddDetailedOrderMutation,
+  useGetDetailedOrdersQuery,
+} = ordersApiSlice;
