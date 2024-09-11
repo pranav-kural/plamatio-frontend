@@ -3,7 +3,7 @@ import Image from 'next/image';
 import {FC} from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
-import CartButton from '../cart/cartButton';
+import CartButton from '../cart/CartButton';
 
 type ProductStyleConfig = {
   nameClassName?: string;

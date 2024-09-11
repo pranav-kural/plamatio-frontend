@@ -131,6 +131,9 @@ export const cartSlice = createSlice({
         localStorage.removeItem('cartItems');
       }
     },
+    setNewCartItems: (state, action: PayloadAction<CartItem[]>) => {
+      state.cartItems = action.payload;
+    },
   },
 });
 
@@ -147,6 +150,7 @@ export const {
   decrementQuantity,
   loadItemsFromLocalStorage,
   clearCart,
+  setNewCartItems,
   enableCartChanges,
   disableCartChanges,
 } = cartSlice.actions;

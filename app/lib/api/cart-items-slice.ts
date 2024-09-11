@@ -1,10 +1,14 @@
-import {CartItem, NewCartItem} from '@/app/types/backend-types';
+import {CartItem} from '@/app/types/backend-types';
 import {apiSlice} from './api-slice';
 import {
   getPlamatioBackendAPIKey,
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../plamatio-backend/plamatio-api';
-import {CartItemsCollection} from '../plamatio-backend/types';
+import {
+  CartItemsCollection,
+  NewCartItem,
+  NewCartItemsCollection,
+} from '../plamatio-backend/types';
 
 export const cartItemsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -50,6 +54,19 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         return result ? [{type: 'CartItem', id: result.id}] : ['CartItems'];
       },
     }),
+    addCartItems: builder.mutation<CartItemsCollection, NewCartItemsCollection>(
+      {
+        query: (newCartItems) => ({
+          url: PBE.CART.ADD_ALL(),
+          method: 'POST',
+          body: newCartItems,
+          headers: {
+            Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
+          },
+        }),
+        invalidatesTags: ['CartItems'],
+      }
+    ),
     updateCartItem: builder.mutation<string, CartItem>({
       query: (updatedCart) => ({
         url: PBE.CART.UPDATE(),
@@ -82,6 +99,7 @@ export const {
   useGetCartItemsQuery,
   useGetCartItemQuery,
   useAddCartItemMutation,
+  useAddCartItemsMutation,
   useUpdateCartItemMutation,
   useDeleteCartItemMutation,
 } = cartItemsApiSlice;

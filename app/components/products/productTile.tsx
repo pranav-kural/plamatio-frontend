@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import classNames from 'classnames';
 import {Product} from '@/app/types/backend-types';
-import CartButton from '../cart/cartButton';
+import CartButton from '../cart/CartButton';
 
 type ProductTileProps = {
   product: Product;

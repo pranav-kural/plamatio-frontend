@@ -1,7 +1,9 @@
 import {Product} from '@/app/types/backend-types';
 import {FC} from 'react';
-import {UserCartButton} from './userCartButton';
-import NoUserCartButton from './noUserCartButton';
+import StatefulCartButton from '@/app/components/cart/StatefulCartButton';
+import {useUser} from '@clerk/nextjs';
+import LoadingSpinner from '../ui/loading-spinner';
+import MergeCartItems from './MergeCartItems';
 
 type CartButtonProps = {
   product: Product;
@@ -12,24 +14,25 @@ type CartButtonProps = {
 
 export const CartButton: FC<CartButtonProps> = (props) => {
   // get user id
-  const userId = undefined;
+  const {isLoaded, isSignedIn, user} = useUser();
   // if user is not available
-  return !userId ? (
-    <NoUserCartButton
-      product={props.product}
-      showLabel={props.showLabel}
-      className={props.className}
-      labelClassName={props.labelClassName}
-    />
-  ) : (
-    // if user available
-    <UserCartButton
-      userId={userId}
-      product={props.product}
-      showLabel={props.showLabel}
-      className={props.className}
-      labelClassName={props.labelClassName}
-    />
+  return (
+    <>
+      {!isLoaded ? (
+        <LoadingSpinner />
+      ) : (
+        <StatefulCartButton
+          userId={user?.id}
+          product={props.product}
+          showLabel={props.showLabel}
+          className={props.className}
+          labelClassName={props.labelClassName}
+        />
+      )}
+
+      {/* If user signed in, merge cart items if any difference between local cart items & database */}
+      {isSignedIn && <MergeCartItems userId={user.id} />}
+    </>
   );
 };
 

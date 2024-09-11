@@ -68,8 +68,8 @@ export const CreateUser: FC<CreateUserProps> = ({user}) => {
           console.log('CreateUser: Adding cart item', cartItem);
           // add cart item with user id
           addCartItem({
-            userId: user.id,
-            productId: cartItem.productId,
+            user_id: user.id,
+            product_id: cartItem.productId,
             quantity: cartItem.quantity,
           });
         }

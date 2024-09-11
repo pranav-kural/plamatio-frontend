@@ -1,11 +1,12 @@
 'use client';
 import {PlusIcon, ShoppingCartIcon} from 'lucide-react';
 import classNames from 'classnames';
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useMemo, useState} from 'react';
 import {Toast} from '../toast/toast';
 import {CartItem, Product} from '@/app/types/backend-types';
 import {useAppDispatch} from '@/app/lib/store/storeHooks';
 import {addCartItem} from '@/app/lib/store/reducers/cart/cartReducer';
+import {useAddCartItemMutation} from '@/app/lib/api/cart-items-slice';
 
 type AddToCartButtonProps = {
   product: Product;
@@ -21,6 +22,15 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
   const [toastVisible, setToastVisible] = useState(false);
   // dispatch cart actions
   const dispatch = useAppDispatch();
+  // when user logged in, need to add cart item to database
+  const [addCartItemToDB, {isError, error}] = useAddCartItemMutation();
+
+  // Log any error in updating cart item on database
+  useMemo(() => {
+    if (isError) {
+      console.error(`AddToCartButton: error adding cart item: ${error}`);
+    }
+  }, [isError, error]);
 
   useEffect(() => {
     if (toastVisible) {
@@ -31,17 +41,24 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
   }, [toastVisible]);
 
   const handleAddToCart = () => {
-    // if user id not available
-    if (!props.userId) {
-      // prepare cart item
-      const cartItemToAdd: CartItem = {
-        id: Math.floor(Math.random() * 10000),
-        productId: props.product.id,
-        quantity: 1,
-        userId: '', // no user id
-      };
-      // add product to cart items
-      dispatch(addCartItem(cartItemToAdd));
+    // prepare cart item
+    const cartItemToAdd: CartItem = {
+      id: Math.floor(Math.random() * 10000),
+      productId: props.product.id,
+      quantity: 1,
+      userId: props.userId && props.userId.length > 0 ? props.userId : '', // no user id if not logged in
+    };
+
+    // add product to cart items
+    dispatch(addCartItem(cartItemToAdd));
+
+    // if valid user id, add cart item to database
+    if (props.userId && props.userId.length > 0) {
+      addCartItemToDB({
+        product_id: cartItemToAdd.productId,
+        quantity: cartItemToAdd.quantity,
+        user_id: cartItemToAdd.userId,
+      });
     }
 
     // show toast

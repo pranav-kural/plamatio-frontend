@@ -23,6 +23,16 @@ export type CartItemsCollection = {
   data: CartItem[];
 };
 
+export type NewCartItem = {
+  product_id: number;
+  quantity: number;
+  user_id: string;
+};
+
+export type NewCartItemsCollection = {
+  data: NewCartItem[];
+};
+
 export type AddressesCollection = {
   data: Address[];
 };

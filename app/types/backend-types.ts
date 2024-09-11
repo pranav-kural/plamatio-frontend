@@ -38,12 +38,6 @@ export type CartItem = {
   userId: string;
 };
 
-export type NewCartItem = {
-  productId: number;
-  quantity: number;
-  userId: string;
-};
-
 export type Order = {
   id: number;
   userId: string;

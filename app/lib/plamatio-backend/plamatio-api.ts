@@ -52,6 +52,7 @@ export const PLAMATIO_BACKEND_ENDPOINTS = {
     GET: (id: number) => `/cart/get/${id}`,
     GET_ALL: (userId: string) => `/cart/all/${userId}`,
     ADD: () => '/cart/add',
+    ADD_ALL: () => '/cart/add/all',
     UPDATE: () => '/cart/update',
     DELETE: (id: number) => `/cart/delete/${id}`,
   },

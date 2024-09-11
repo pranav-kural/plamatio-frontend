@@ -2,7 +2,7 @@ import {Great_Vibes} from 'next/font/google';
 import NavMenu from './nav/nav-menu';
 import Link from 'next/link';
 import {Breadcrumb} from './breadcrumb/breadcrumb';
-import CartIcon from '../cart/cartIcon';
+import CartIcon from '../cart/CartIcon';
 import SignInSignUpButtons from '../auth/sigInSignUpButtons';
 
 const greatVibes = Great_Vibes({weight: '400', subsets: ['latin']});
