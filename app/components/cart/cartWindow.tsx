@@ -3,7 +3,7 @@ import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import Image from 'next/image';
 import {useMemo} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import MutateCartButton from './MutateCartButton';
+import MutateCartButton from './mutateCartButton';
 import Link from 'next/link';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';

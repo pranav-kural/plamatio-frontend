@@ -2,8 +2,8 @@
 
 import {CartItem, Product} from '@/app/types/backend-types';
 import {FC, useEffect, useMemo, useState} from 'react';
-import {MutateCartButton} from './MutateCartButton';
-import {AddToCartButton} from './AddToCartButton';
+import {MutateCartButton} from './mutateCartButton';
+import {AddToCartButton} from './addToCartButton';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 

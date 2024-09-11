@@ -2,7 +2,7 @@
 import classNames from 'classnames';
 import {ShoppingBagIcon} from 'lucide-react';
 import {FC, useState} from 'react';
-import {CartWindow} from './CartWindow';
+import {CartWindow} from './cartWindow';
 
 type CartIconProps = {
   className?: string;
