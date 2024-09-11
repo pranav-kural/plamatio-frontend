@@ -5,11 +5,13 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 // cart state schema
 type CartState = {
   cartItems: CartItem[];
+  allowCartChanges: boolean;
 };
 
 // initial cart state schema
 const INITIAL_CART_STATE: CartState = {
   cartItems: [],
+  allowCartChanges: true,
 };
 
 // cart slice
@@ -117,11 +119,25 @@ export const cartSlice = createSlice({
         }
       }
     },
+    enableCartChanges: (state) => {
+      state.allowCartChanges = true;
+    },
+    disableCartChanges: (state) => {
+      state.allowCartChanges = false;
+    },
+    clearCart: (state) => {
+      state.cartItems = [];
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('cartItems');
+      }
+    },
   },
 });
 
 // Export selectors
 export const selectCartItems = (state: RootState) => state.cart.cartItems;
+export const selectAllowCartChanges = (state: RootState) =>
+  state.cart.allowCartChanges;
 
 // Export generated actions
 export const {
@@ -130,6 +146,9 @@ export const {
   incrementQuantity,
   decrementQuantity,
   loadItemsFromLocalStorage,
+  clearCart,
+  enableCartChanges,
+  disableCartChanges,
 } = cartSlice.actions;
 
 // Export generated reducer

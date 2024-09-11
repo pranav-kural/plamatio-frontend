@@ -43,39 +43,29 @@ export const ProductPreview: FC<ProductPreviewProps> = ({
   return (
     <div
       className={classNames(
-        `w-full h-full flex flex-col gap-5 md:flex-row align-top justify-start px-5 md:px-20 pt-5`,
+        `w-full h-full flex flex-col gap-5 md:flex-row items-center justify-center px-5 md:px-20 pt-5`,
         className
       )}>
-      <Image
-        src={product.imageUrl}
-        alt={product.name}
-        width={imageStyleConfig?.width ?? 400}
-        height={imageStyleConfig?.height ?? 600}
-        priority={false}
-        className={classNames(
-          `rounded-lg w-full min-w-[${imageStyleConfig?.minWidth ?? '300'}px] max-w-[${imageStyleConfig?.maxWidth ?? '340'}px] md:max-w-[${imageStyleConfig?.maxWidthMD ?? '500'}px]`,
-          imageStyleConfig?.className
-        )}
-      />
-      <div
-        className={classNames(
-          'flex flex-col gap-5 sm:px-10 lg:px-20 h-full align-middle justify-evenly',
-          productStyleConfig?.detailsContainerClassName
-        )}>
-        <span
+      <div className="w-full h-full md:w-1/2 md:max-w-[400px] min-w-[350px] min-h-[350px]">
+        <Image
+          src={product.imageUrl}
+          alt={product.name}
+          width={800}
+          height={800}
+          priority={false}
           className={classNames(
-            `text-lg md:text-3xl font-semibold`,
-            productStyleConfig?.nameClassName
-          )}>
-          {product.name}
-        </span>
-        <span
-          className={classNames(
-            'md:text-lg',
-            productStyleConfig?.descriptionClassName
-          )}>
-          {product.description}
-        </span>
+            `rounded-lg w-full min-w-[200px] sm:min-w-[300px] md:min-w-[200px] max-w-[340px] md:max-w-[500px]`,
+            imageStyleConfig?.className
+          )}
+        />
+      </div>
+      <div className="w-full md:w-1/2 md:min-h-[400px] flex flex-col gap-5 sm:px-10 lg:px-20 h-full items-start justify-between">
+        <div className="w-full flex flex-col gap-3">
+          <span className="text-lg md:text-3xl font-semibold">
+            {product.name}
+          </span>
+          <span className="md:text-lg">{product.description}</span>
+        </div>
         <div
           className={classNames(
             'flex flex-col md:flex-col gap-10 lg:mt-10 justify-between',
