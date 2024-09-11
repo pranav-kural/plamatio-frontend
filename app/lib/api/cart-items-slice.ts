@@ -5,6 +5,8 @@ import {
   PLAMATIO_BACKEND_ENDPOINTS as PBE,
 } from '../plamatio-backend/plamatio-api';
 import {
+  CartItemAPIStruct,
+  CartItemDeleteParams,
   CartItemsCollection,
   NewCartItem,
   NewCartItemsCollection,
@@ -21,7 +23,7 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         },
       }),
       providesTags: (result) => {
-        if (result) {
+        if (result && result.data) {
           return [
             'CartItems',
             ...result.data.map(({id}) => ({type: 'CartItem', id}) as const),
@@ -67,7 +69,7 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         invalidatesTags: ['CartItems'],
       }
     ),
-    updateCartItem: builder.mutation<string, CartItem>({
+    updateCartItem: builder.mutation<string, CartItemAPIStruct>({
       query: (updatedCart) => ({
         url: PBE.CART.UPDATE(),
         method: 'PUT',
@@ -80,16 +82,16 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         return result ? [{type: 'CartItem', id: args.id}] : ['CartItems'];
       },
     }),
-    deleteCartItem: builder.mutation<string, number>({
-      query: (cartItemId) => ({
-        url: PBE.CART.DELETE(cartItemId),
+    deleteCartItem: builder.mutation<number, CartItemDeleteParams>({
+      query: (cartItemDeleteParams) => ({
+        url: PBE.CART.DELETE(cartItemDeleteParams),
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: (result, _, args) => {
-        return result ? [{type: 'CartItem', id: args}] : ['CartItems'];
+      invalidatesTags: (result) => {
+        return result ? [{type: 'CartItem', id: result}] : ['CartItems'];
       },
     }),
   }),

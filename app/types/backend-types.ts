@@ -33,9 +33,9 @@ export type CategoryHeroProduct = {
 
 export type CartItem = {
   id: number;
-  productId: number;
+  product_id: number;
   quantity: number;
-  userId: string;
+  user_id: string;
 };
 
 export type Order = {

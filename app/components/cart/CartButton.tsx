@@ -1,3 +1,4 @@
+'use client';
 import {Product} from '@/app/types/backend-types';
 import {FC} from 'react';
 import StatefulCartButton from '@/app/components/cart/StatefulCartButton';
@@ -14,24 +15,26 @@ type CartButtonProps = {
 
 export const CartButton: FC<CartButtonProps> = (props) => {
   // get user id
-  const {isLoaded, isSignedIn, user} = useUser();
+  const {isLoaded, user} = useUser();
   // if user is not available
   return (
     <>
       {!isLoaded ? (
         <LoadingSpinner />
       ) : (
-        <StatefulCartButton
-          userId={user?.id}
-          product={props.product}
-          showLabel={props.showLabel}
-          className={props.className}
-          labelClassName={props.labelClassName}
-        />
+        <>
+          <StatefulCartButton
+            userId={user?.id}
+            product={props.product}
+            showLabel={props.showLabel}
+            className={props.className}
+            labelClassName={props.labelClassName}
+          />
+          {user && <MergeCartItems userId={user.id} />}
+        </>
       )}
 
       {/* If user signed in, merge cart items if any difference between local cart items & database */}
-      {isSignedIn && <MergeCartItems userId={user.id} />}
     </>
   );
 };

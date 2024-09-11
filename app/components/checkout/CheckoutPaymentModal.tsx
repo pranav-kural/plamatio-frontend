@@ -47,7 +47,7 @@ const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
   useEffect(() => {
     if (productsFetch.isSuccess) {
       const products = productsFetch.data?.data.filter((product) =>
-        cartItems.map((item) => item.productId).includes(product.id)
+        cartItems.map((item) => item.product_id).includes(product.id)
       );
       if (products) {
         setProductsInCart(products);
@@ -67,7 +67,7 @@ const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
     // prepare data for new order items
     const orderItems: NewDetailedOrderItem[] = cartItems.map((item) => {
       return {
-        product_id: item.productId,
+        product_id: item.product_id,
         quantity: item.quantity,
       };
     });

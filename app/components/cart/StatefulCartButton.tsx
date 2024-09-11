@@ -31,7 +31,7 @@ export const StatefulCartButton: FC<StatefulCartButtonProps> = (props) => {
       if (cartItems) {
         // get the cart item matching the product id or the product provided in props
         const cartItem = cartItems.find(
-          (item: CartItem) => item.productId === props.product.id
+          (item: CartItem) => item.product_id === props.product.id
         );
         // if valid cart item available, set the cart item
         if (cartItem) {
@@ -47,7 +47,7 @@ export const StatefulCartButton: FC<StatefulCartButtonProps> = (props) => {
     if (cartItems) {
       // get the cart item matching the product id or the product provided in props
       const cartItem = cartItems.find(
-        (item: CartItem) => item.productId === props.product.id
+        (item: CartItem) => item.product_id === props.product.id
       );
       // if valid cart item available, set the cart item
       if (cartItem) {
@@ -66,6 +66,7 @@ export const StatefulCartButton: FC<StatefulCartButtonProps> = (props) => {
     />
   ) : (
     <AddToCartButton
+      userId={props.userId}
       product={props.product}
       showLabel={props.showLabel}
       className={props.className}

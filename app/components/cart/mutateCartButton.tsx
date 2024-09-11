@@ -51,10 +51,18 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
     if (allowCartChanges) {
       // increment quantity
       dispatch(incrementQuantity(cartItem));
+      console.dir(cartItem);
       // if cart item has a valid user id
-      if (cartItem.userId && cartItem.userId.length > 0) {
+      if (cartItem.user_id && cartItem.user_id.length > 0) {
+        console.log(`Updating cart item`);
+        console.dir(cartItem);
         // update cart item in database
-        updateCartItem(cartItem);
+        updateCartItem({
+          id: cartItem.id,
+          product_id: cartItem.product_id,
+          user_id: cartItem.user_id,
+          quantity: cartItem.quantity + 1,
+        });
       }
     }
   }
@@ -67,15 +75,17 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
         setShowMutateCartButton(false);
       }
       // if cart item has a valid user id
-      if (cartItem.userId && cartItem.userId.length > 0) {
+      if (cartItem.user_id && cartItem.user_id.length > 0) {
         // if quantity is 1, remove the product from cart
         if (cartItem.quantity === 1) {
           // remove cart item from database
-          removeCartItem(cartItem.id);
+          removeCartItem({cartItemId: cartItem.id, userId: cartItem.user_id});
         } else {
           // update cart item in database
           updateCartItem({
-            ...cartItem,
+            id: cartItem.id,
+            product_id: cartItem.product_id,
+            user_id: cartItem.user_id,
             quantity: cartItem.quantity - 1,
           });
         }

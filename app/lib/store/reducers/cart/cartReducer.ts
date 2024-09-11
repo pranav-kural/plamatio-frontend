@@ -26,7 +26,7 @@ export const cartSlice = createSlice({
       const cartItemToAdd = action.payload;
       // find if product being added is already in cart
       const productInCart = cartItems.find(
-        (cartItem) => cartItem.productId === cartItemToAdd.productId
+        (cartItem) => cartItem.product_id === cartItemToAdd.product_id
       );
       // if product not in cart, add it to cart
       if (!productInCart) {
@@ -34,7 +34,7 @@ export const cartSlice = createSlice({
       } else {
         // if product already in cart, increment quantity
         state.cartItems = state.cartItems.map((cartItem) =>
-          cartItem.productId === cartItemToAdd.productId
+          cartItem.product_id === cartItemToAdd.product_id
             ? {...cartItem, quantity: cartItem.quantity + 1}
             : cartItem
         );
@@ -50,7 +50,7 @@ export const cartSlice = createSlice({
       const cartItemToRemove = action.payload;
       // remove product from cart
       state.cartItems = cartItems.filter(
-        (cartItem) => cartItem.productId !== cartItemToRemove.productId
+        (cartItem) => cartItem.product_id !== cartItemToRemove.product_id
       );
       // update cart items in local storage
       if (typeof window !== 'undefined') {
@@ -63,7 +63,7 @@ export const cartSlice = createSlice({
       const cartItemToAdd = action.payload;
       // find if product being added is already in cart
       const productInCart = state.cartItems.find(
-        (cartItem) => cartItem.productId === cartItemToAdd.productId
+        (cartItem) => cartItem.product_id === cartItemToAdd.product_id
       );
       // if product not in cart, add it to cart
       if (!productInCart) {
@@ -71,7 +71,7 @@ export const cartSlice = createSlice({
       } else {
         // if product already in cart, increment quantity
         state.cartItems = state.cartItems.map((cartItem) =>
-          cartItem.productId === cartItemToAdd.productId
+          cartItem.product_id === cartItemToAdd.product_id
             ? {...cartItem, quantity: cartItem.quantity + 1}
             : cartItem
         );
@@ -87,7 +87,7 @@ export const cartSlice = createSlice({
       const cartItemToRemove = action.payload;
       // check if product quantity is 1
       const removeProduct = cartItems.find(
-        (cartItem) => cartItem.productId === cartItemToRemove.productId
+        (cartItem) => cartItem.product_id === cartItemToRemove.product_id
       );
       console.log(
         `removing product: ${removeProduct?.id} ${removeProduct?.quantity}`
@@ -98,10 +98,11 @@ export const cartSlice = createSlice({
         state.cartItems =
           removeProduct.quantity === 1
             ? cartItems.filter(
-                (cartItem) => cartItem.productId !== cartItemToRemove.productId
+                (cartItem) =>
+                  cartItem.product_id !== cartItemToRemove.product_id
               )
             : cartItems.map((cartItem) =>
-                cartItem.productId === cartItemToRemove.productId
+                cartItem.product_id === cartItemToRemove.product_id
                   ? {...cartItem, quantity: cartItem.quantity - 1}
                   : cartItem
               );

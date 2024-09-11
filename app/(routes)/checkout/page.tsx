@@ -44,7 +44,7 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (productsFetch.isSuccess) {
       const products = productsFetch.data?.data.filter((product) =>
-        cartItems.map((item) => item.productId).includes(product.id)
+        cartItems.map((item) => item.product_id).includes(product.id)
       );
       if (products) {
         setProductsInCart(products);

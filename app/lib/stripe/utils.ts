@@ -95,7 +95,7 @@ export function getCartLineItems(
   products: Product[]
 ): Stripe.Checkout.SessionCreateParams.LineItem[] {
   return cartItems.map((cartItem) => {
-    const product = getProductData(products, cartItem.productId);
+    const product = getProductData(products, cartItem.product_id);
     return {
       price_data: product,
       quantity: cartItem.quantity,

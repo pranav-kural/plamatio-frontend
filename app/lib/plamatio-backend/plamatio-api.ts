@@ -1,4 +1,4 @@
-import {DeleteAddressRequestParams} from './types';
+import {CartItemDeleteParams, DeleteAddressRequestParams} from './types';
 
 /**
  * Plamatio Backend API URL
@@ -54,7 +54,8 @@ export const PLAMATIO_BACKEND_ENDPOINTS = {
     ADD: () => '/cart/add',
     ADD_ALL: () => '/cart/add/all',
     UPDATE: () => '/cart/update',
-    DELETE: (id: number) => `/cart/delete/${id}`,
+    DELETE: (params: CartItemDeleteParams) =>
+      `/cart/delete/${params.cartItemId}/user/${params.userId}`,
   },
   USERS: {
     GET: (id: string) => `/users/get/${id}`,

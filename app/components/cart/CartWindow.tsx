@@ -8,6 +8,7 @@ import Link from 'next/link';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {SmileIcon} from 'lucide-react';
+import {CartItem} from '@/app/types/backend-types';
 
 export const CartWindow = () => {
   // const userId: string | undefined = undefined;
@@ -45,7 +46,9 @@ export const CartWindow = () => {
     throw new Error('Product not found');
   }
 
-  function getProductImageURL(productId: number): string {
+  function getProductImageURL(cartItem: CartItem, productId: number): string {
+    console.log(`Product ID: ${productId}`);
+    console.dir(cartItem);
     const product = productsFetch.data?.data.find(
       (item) => item.id === productId
     );
@@ -71,7 +74,7 @@ export const CartWindow = () => {
                 key={item.id}
                 className="w-full flex flex-row gap-5 min-w-[350px]">
                 <Image
-                  src={getProductImageURL(item.productId)}
+                  src={getProductImageURL(item, item.product_id)}
                   width={100}
                   height={100}
                   alt="product image"
@@ -79,11 +82,11 @@ export const CartWindow = () => {
                 />
                 <div className="w-full flex flex-col gap-2">
                   <span className="font-semibold">
-                    {getProductName(item.productId)}
+                    {getProductName(item.product_id)}
                   </span>
                   <div className="flex flex-row justify-between">
                     <span className="text-lg">
-                      ${getProductPrice(item.productId)}
+                      ${getProductPrice(item.product_id)}
                     </span>
                     <MutateCartButton
                       cartItem={item}

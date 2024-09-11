@@ -40,26 +40,34 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
     }
   }, [toastVisible]);
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     // prepare cart item
     const cartItemToAdd: CartItem = {
       id: Math.floor(Math.random() * 10000),
-      productId: props.product.id,
+      product_id: props.product.id,
       quantity: 1,
-      userId: props.userId && props.userId.length > 0 ? props.userId : '', // no user id if not logged in
+      user_id: props.userId && props.userId.length > 0 ? props.userId : '', // no user id if not logged in
     };
-
-    // add product to cart items
-    dispatch(addCartItem(cartItemToAdd));
 
     // if valid user id, add cart item to database
     if (props.userId && props.userId.length > 0) {
-      addCartItemToDB({
-        product_id: cartItemToAdd.productId,
+      console.log(
+        `AddToCartButton: adding cart item to database for user: ${props.userId}`
+      );
+      const r = await addCartItemToDB({
+        product_id: cartItemToAdd.product_id,
         quantity: cartItemToAdd.quantity,
-        user_id: cartItemToAdd.userId,
+        user_id: cartItemToAdd.user_id,
       });
+      if (r.data) {
+        cartItemToAdd.id = r.data.id;
+      } else {
+        console.error(`AddToCartButton: error adding cart item: ${r.error}`);
+      }
     }
+
+    // add product to cart items
+    dispatch(addCartItem(cartItemToAdd));
 
     // show toast
     setToastVisible(true);

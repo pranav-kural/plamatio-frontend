@@ -24,7 +24,7 @@ export const UserCartButton: FC<UserCartButtonProps> = (props) => {
       // check if cart items available
       if (cartItems) {
         const cartItem = cartItems.find(
-          (item: CartItem) => item.productId === props.product.id
+          (item: CartItem) => item.product_id === props.product.id
         );
         // if valid cart item available, show the mutate cart button
         if (cartItem) {
