@@ -10,15 +10,20 @@ import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {createCheckoutSession} from '@/app/lib/stripe/actions';
 import {getCartLineItems} from '@/app/lib/stripe/utils';
 import {LoadingSpinner} from '../ui/loading-spinner';
+import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 
 type CheckoutPaymentModalProps = {
   label?: string;
+  userId: string;
   addressId: number;
+  totalPrice: number;
 };
 
 const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
   label,
+  userId,
   addressId,
+  totalPrice,
 }) => {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,11 +57,26 @@ const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
 
   async function initiateCheckout() {
     setIsLoading(true);
+    // prepare data for new order
+    const newOrder: NewOrder = {
+      user_id: userId,
+      address_id: addressId,
+      total_price: totalPrice,
+      status: 'pending',
+    };
+    // prepare data for new order items
+    const orderItems: NewDetailedOrderItem[] = cartItems.map((item) => {
+      return {
+        product_id: item.productId,
+        quantity: item.quantity,
+      };
+    });
+    // create checkout session
     const {client_secret} = await createCheckoutSession({
       lineItems: getCartLineItems(cartItems, productsInCart),
-      addressId,
+      newOrder,
+      newOrderItems: orderItems,
     });
-
     setIsLoading(false);
     return setClientSecret(client_secret);
   }

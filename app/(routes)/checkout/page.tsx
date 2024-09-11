@@ -28,6 +28,9 @@ export default function CheckoutPage() {
   // store shipping address ID
   const [addressId, setAddressId] = useState<number>(0);
 
+  // track total price
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+
   // Log error if any occurs during fetching data
   useMemo(() => {
     if (productsFetch.isError) {
@@ -118,8 +121,18 @@ export default function CheckoutPage() {
                 </>
               )}
 
-              <OrderSection cartItems={cartItems} products={productsInCart} />
-              <CheckoutPaymentModal addressId={addressId} />
+              <OrderSection
+                cartItems={cartItems}
+                products={productsInCart}
+                setTotalPrice={setTotalPrice}
+              />
+              {isSignedIn && isLoaded && (
+                <CheckoutPaymentModal
+                  addressId={addressId}
+                  userId={user.id}
+                  totalPrice={totalPrice}
+                />
+              )}
             </div>
           </div>
         )}

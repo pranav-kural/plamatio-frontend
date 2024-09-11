@@ -3,7 +3,7 @@ import {DetailedOrder} from '@/app/types/backend-types';
 import {OrderAddress} from './OrderAddress';
 import {OrderItemTile} from './OrderItemTile';
 import {FC, useMemo} from 'react';
-import {BadgeCheckIcon, RabbitIcon} from 'lucide-react';
+import {BadgeCheckIcon, CarIcon, RabbitIcon} from 'lucide-react';
 import {formatAmountForDisplay} from '@/app/lib/stripe/utils';
 import {DetailedOrderAPIResponse} from '@/app/lib/plamatio-backend/types';
 
@@ -64,19 +64,22 @@ export const OrderDetailsTile: FC<OrderDetailsTileProps> = ({
         <div className="w-full flex flex-col gap-3 md:flex-row justify-between">
           <div className="flex flex-col">
             <span className="text-gray-500 text-lg">Status</span>
-            <span>
-              {detailedOrder.order.status === 'succeeded' && (
-                <>
-                  <div className="flex flex-row items-center gap-1">
-                    <span>Delivered</span>
-                    <BadgeCheckIcon
-                      className="inline text-green-500"
-                      size={20}
-                    />
-                  </div>
-                </>
-              )}
-            </span>
+            {detailedOrder.order.status === 'succeeded' && (
+              <>
+                <div className="flex flex-row items-center gap-1">
+                  <span>Delivered</span>
+                  <BadgeCheckIcon className="inline text-green-500" size={20} />
+                </div>
+              </>
+            )}
+            {detailedOrder.order.status === 'pending' && (
+              <>
+                <div className="flex flex-row items-center gap-1">
+                  <span>On its way</span>
+                  <CarIcon className="inline text-blue-500" size={20} />
+                </div>
+              </>
+            )}
           </div>
           <div className="flex flex-col">
             <span className="text-gray-500 text-lg">Total</span>{' '}

@@ -1,12 +1,11 @@
-import {
-  CartItem,
-  NewDetailedOrderItem,
-  NewOrder,
-  Product,
-} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/types/backend-types';
 import Stripe from 'stripe';
 import {CURRENCY} from './config';
-import {NewDetailedOrder} from '@/app/lib/plamatio-backend/types';
+import {
+  NewOrder,
+  NewDetailedOrder,
+  NewDetailedOrderItem,
+} from '@/app/lib/plamatio-backend/types';
 import {OrderDetailsProduct} from '@/app/types/types';
 
 export function formatAmountForDisplay(
@@ -137,12 +136,10 @@ export function getNewOrder(
     throw new Error('Client secret not found');
   }
   return {
-    userId,
-    addressId: parseInt(data.metadata.addressId),
-    totalPrice: data.amount_total,
+    user_id: userId,
+    address_id: parseInt(data.metadata.addressId),
+    total_price: data.amount_total,
     status: data.status,
-    paymentStatus: data.payment_status,
-    clientSecret: paymentInent.client_secret,
   };
 }
 
@@ -175,7 +172,7 @@ export function getNewOrderItems(
     }
 
     return {
-      productId: parseInt(lineItem.price.metadata.productId),
+      product_id: parseInt(lineItem.price.metadata.productId),
       quantity: lineItem.quantity,
     };
   });
@@ -188,6 +185,6 @@ export function getNewDetailedOrder(
 ): NewDetailedOrder {
   return {
     order: getNewOrder(userId, data),
-    orderItems: getNewOrderItems(data),
+    items: getNewOrderItems(data),
   };
 }

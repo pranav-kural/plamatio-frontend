@@ -2,6 +2,7 @@
 import type {Stripe} from 'stripe';
 import {headers} from 'next/headers';
 import {stripe} from '@/app/lib/stripe/config';
+import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 
 /**
  * Method to get the return URL for the checkout session.
@@ -19,10 +20,12 @@ export const getReturnUrl = (origin: string) => {
  */
 export async function createCheckoutSession({
   lineItems,
-  addressId,
+  newOrder,
+  newOrderItems,
 }: {
   lineItems: Stripe.Checkout.SessionCreateParams.LineItem[];
-  addressId: number;
+  newOrder: NewOrder;
+  newOrderItems: NewDetailedOrderItem[];
 }): Promise<{client_secret: string | null; url: string | null}> {
   const origin: string = headers().get('origin') as string;
 
@@ -33,7 +36,8 @@ export async function createCheckoutSession({
       return_url: `${origin}/checkout/result?session_id={CHECKOUT_SESSION_ID}`,
       ui_mode: 'embedded',
       metadata: {
-        addressId,
+        order: JSON.stringify(newOrder),
+        items: JSON.stringify(newOrderItems),
       },
     });
 

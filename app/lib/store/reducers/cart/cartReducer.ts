@@ -125,6 +125,12 @@ export const cartSlice = createSlice({
     disableCartChanges: (state) => {
       state.allowCartChanges = false;
     },
+    clearCart: (state) => {
+      state.cartItems = [];
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('cartItems');
+      }
+    },
   },
 });
 
@@ -140,6 +146,7 @@ export const {
   incrementQuantity,
   decrementQuantity,
   loadItemsFromLocalStorage,
+  clearCart,
   enableCartChanges,
   disableCartChanges,
 } = cartSlice.actions;

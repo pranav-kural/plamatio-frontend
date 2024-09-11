@@ -6,6 +6,7 @@ import {
 } from '../plamatio-backend/plamatio-api';
 import {
   DetailedOrdersCollection,
+  NewDetailedOrder,
   OrdersCollection,
 } from '../plamatio-backend/types';
 
@@ -89,7 +90,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    addDetailedOrder: builder.mutation<DetailedOrder, DetailedOrder>({
+    addDetailedOrder: builder.mutation<DetailedOrder, NewDetailedOrder>({
       query: (newOrder) => ({
         url: PBE.ORDERS.ADD_DETAILED(),
         method: 'POST',

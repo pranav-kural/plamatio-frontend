@@ -5,9 +5,14 @@ import {FC, useMemo} from 'react';
 type OrderSectionProps = {
   cartItems: CartItem[];
   products: Product[];
+  setTotalPrice: (price: number) => void;
 };
 
-export const OrderSection: FC<OrderSectionProps> = ({cartItems, products}) => {
+export const OrderSection: FC<OrderSectionProps> = ({
+  cartItems,
+  products,
+  setTotalPrice,
+}) => {
   const [orderTotal, numberOfItems, taxes] = useMemo(() => {
     // calculate order total
     const orderTotal = cartItems.reduce((acc, item) => {
@@ -31,8 +36,12 @@ export const OrderSection: FC<OrderSectionProps> = ({cartItems, products}) => {
     // round to 2 decimal places
     const roundedTaxes = Math.round(taxes * 100) / 100;
 
-    return [orderTotal, numberOfItems, roundedTaxes];
-  }, [cartItems, products]);
+    // set total price for parent component
+    // will be passed on in metadata to stripe, so it can be retrieved later
+    setTotalPrice(orderTotal + roundedTaxes);
+
+    return [orderTotal, numberOfItems, roundedTaxes, setTotalPrice];
+  }, [cartItems, products, setTotalPrice]);
 
   return (
     <div className="flex flex-col gap-5 p-5 bg-teal-800 text-white rounded-lg shadow-lg">

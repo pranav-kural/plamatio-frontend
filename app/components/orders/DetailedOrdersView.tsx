@@ -52,7 +52,7 @@ export const DetailedOrdersView: FC<DetailedOrdersViewProps> = ({userId}) => {
       {/* If data is fetched */}
       {detailedOrdersFetch.isSuccess && (
         <div
-          className={`w-full h-full flex flex-col items-center justify-start ${!detailedOrdersFetch ? 'justify-center' : ''}`}>
+          className={`w-full h-full flex flex-col gap-5 items-center justify-start ${!detailedOrdersFetch ? 'justify-center' : ''}`}>
           {detailedOrdersFetch?.data?.data &&
             detailedOrdersFetch.data.data.map((detailedOrder) => (
               <OrderDetailsTile

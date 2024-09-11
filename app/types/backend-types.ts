@@ -53,29 +53,9 @@ export type Order = {
   status: string;
 };
 
-export type NewOrder = {
-  userId: string;
-  addressId: number;
-  totalPrice: number;
-  status: string;
-  paymentStatus: string;
-  clientSecret: string;
-};
-
 export type OrderItem = {
   id: number;
   orderId: number;
-  productId: number;
-  quantity: number;
-};
-
-export type NewOrderItem = {
-  orderId: number;
-  productId: number;
-  quantity: number;
-};
-
-export type NewDetailedOrderItem = {
   productId: number;
   quantity: number;
 };

@@ -1,6 +1,12 @@
 import type {Stripe} from 'stripe';
 
+import {Raleway} from 'next/font/google';
 import {stripe} from '@/app/lib/stripe/config';
+import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
+import AddNewOrder from '@/app/components/checkout/AddNewOrder';
+import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
+
+const raleway = Raleway({weight: '500', subsets: ['latin']});
 
 export default async function ResultPage({
   searchParams,
@@ -15,12 +21,40 @@ export default async function ResultPage({
       expand: ['line_items', 'payment_intent'],
     });
 
-  const paymentIntent = checkoutSession.payment_intent as Stripe.PaymentIntent;
+  let orderObj: NewOrder | undefined;
+  let orderItemsObj: NewDetailedOrderItem[] | undefined;
+  if (checkoutSession.metadata) {
+    try {
+      orderObj = JSON.parse(checkoutSession.metadata.order);
+      if (orderObj) {
+        orderObj.status = 'succeeded';
+      }
+      orderItemsObj = JSON.parse(checkoutSession.metadata.items);
+      console.log('metadataObject:', orderObj);
+    } catch (error) {
+      console.error('Error parsing metadata:', error);
+    }
+  } else {
+    console.error(
+      'checkoutSession.metadata is not a string:',
+      checkoutSession.metadata
+    );
+  }
 
   return (
     <>
-      <h2>Status: {paymentIntent.status}</h2>
-      <h3>Checkout Session response:</h3>
+      <div className="w-full max-w-[1720px] h-full flex flex-col gap-5 items-start justify-start px-5 md:px-20 pt-5">
+        <h1 className={`text-3xl text-violet-800 ${raleway.className}`}>
+          Checkout
+        </h1>
+        {(!orderObj || !orderItemsObj) && (
+          <LoadingSpinner label="Loading order details..." />
+        )}
+
+        {orderObj && orderItemsObj && (
+          <AddNewOrder order={orderObj} items={orderItemsObj} />
+        )}
+      </div>
     </>
   );
 }
