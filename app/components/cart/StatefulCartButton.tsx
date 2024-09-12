@@ -1,20 +1,21 @@
 'use client';
 
-import {CartItem, Product} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {FC, useEffect, useMemo, useState} from 'react';
-import {MutateCartButton} from './mutateCartButton';
-import {AddToCartButton} from './addToCartButton';
+import {MutateCartButton} from './MutateCartButton';
+import {AddToCartButton} from './AddToCartButton';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 
-type NoUserCartButtonProps = {
+type StatefulCartButtonProps = {
   product: Product;
+  userId?: string;
   showLabel?: boolean;
   className?: string;
   labelClassName?: string;
 };
 
-export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
+export const StatefulCartButton: FC<StatefulCartButtonProps> = (props) => {
   // state to store cart items
   const [cartItem, setCartItem] = useState<CartItem | undefined>(undefined);
   // use selector to get cart items from redux store
@@ -30,9 +31,8 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
       if (cartItems) {
         // get the cart item matching the product id or the product provided in props
         const cartItem = cartItems.find(
-          (item: CartItem) => item.productId === props.product.id
+          (item: CartItem) => item.product_id === props.product.id
         );
-        console.log(`NoUserCartButton: cart item: ${cartItem}`);
         // if valid cart item available, set the cart item
         if (cartItem) {
           setCartItem(cartItem);
@@ -47,7 +47,7 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
     if (cartItems) {
       // get the cart item matching the product id or the product provided in props
       const cartItem = cartItems.find(
-        (item: CartItem) => item.productId === props.product.id
+        (item: CartItem) => item.product_id === props.product.id
       );
       // if valid cart item available, set the cart item
       if (cartItem) {
@@ -66,6 +66,7 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
     />
   ) : (
     <AddToCartButton
+      userId={props.userId}
       product={props.product}
       showLabel={props.showLabel}
       className={props.className}
@@ -74,4 +75,4 @@ export const NoUserCartButton: FC<NoUserCartButtonProps> = (props) => {
   );
 };
 
-export default NoUserCartButton;
+export default StatefulCartButton;

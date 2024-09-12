@@ -1,26 +1,7 @@
-import {DeleteAddressRequestParams} from './types';
-
-/**
- * Plamatio Backend API URL
- */
-export const getPlamatioBackendAPIURL = () => {
-  const url = process.env.NEXT_PUBLIC_PLAMATIO_BACKEND_API_URL;
-  if (!url) {
-    throw new Error('Plamatio Backend API URL not found');
-  }
-  return url;
-};
-
-/**
- * Plamatio Backend API Key
- */
-export const getPlamatioBackendAPIKey = () => {
-  const apiKey = process.env.NEXT_PUBLIC_PLAMATIO_BACKEND_API_KEY;
-  if (!apiKey) {
-    throw new Error('Plamatio Backend API Key not found');
-  }
-  return apiKey;
-};
+import type {
+  CartItemDeleteParams,
+  DeleteAddressParams,
+} from '@/app/lib/plamatio-backend/types';
 
 /**
  * Plamatio Backend Endpoints
@@ -52,8 +33,10 @@ export const PLAMATIO_BACKEND_ENDPOINTS = {
     GET: (id: number) => `/cart/get/${id}`,
     GET_ALL: (userId: string) => `/cart/all/${userId}`,
     ADD: () => '/cart/add',
+    ADD_ALL: () => '/cart/add/all',
     UPDATE: () => '/cart/update',
-    DELETE: (id: number) => `/cart/delete/${id}`,
+    DELETE: (params: CartItemDeleteParams) =>
+      `/cart/delete/${params.cartItemId}/user/${params.userId}`,
   },
   USERS: {
     GET: (id: string) => `/users/get/${id}`,
@@ -64,7 +47,7 @@ export const PLAMATIO_BACKEND_ENDPOINTS = {
     UPDATE_USER: () => '/users/update',
     UPDATE_ADDRESS: () => '/users/addresses/update',
     DELETE: (id: string) => `/users/delete/${id}`,
-    DELETE_ADDRESS: (params: DeleteAddressRequestParams) =>
+    DELETE_ADDRESS: (params: DeleteAddressParams) =>
       `/users/addresses/delete/${params.addressId}/user/${params.userId}`,
   },
   ORDERS: {

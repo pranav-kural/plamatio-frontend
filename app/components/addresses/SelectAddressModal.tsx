@@ -1,7 +1,7 @@
 import React, {FC, useMemo} from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {TrashIcon, XIcon} from 'lucide-react';
-import {Address} from '@/app/types/backend-types';
+import {Address} from '@/app/lib/plamatio-backend/types';
 import {useDeleteUserAddressMutation} from '@/app/lib/api/users-slice';
 import {LoadingSpinner} from '../ui/loading-spinner';
 

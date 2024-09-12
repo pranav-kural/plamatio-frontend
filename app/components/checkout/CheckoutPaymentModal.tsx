@@ -5,12 +5,15 @@ import {ChevronRight, XIcon} from 'lucide-react';
 import {CheckoutPaymentProvider} from './CheckoutPaymentProvider';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
-import {Product} from '@/app/types/backend-types';
+import {
+  Product,
+  NewDetailedOrderItem,
+  NewOrder,
+} from '@/app/lib/plamatio-backend/types';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {createCheckoutSession} from '@/app/lib/stripe/actions';
 import {getCartLineItems} from '@/app/lib/stripe/utils';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 
 type CheckoutPaymentModalProps = {
   label?: string;
@@ -47,7 +50,7 @@ const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
   useEffect(() => {
     if (productsFetch.isSuccess) {
       const products = productsFetch.data?.data.filter((product) =>
-        cartItems.map((item) => item.productId).includes(product.id)
+        cartItems.map((item) => item.product_id).includes(product.id)
       );
       if (products) {
         setProductsInCart(products);
@@ -67,7 +70,7 @@ const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
     // prepare data for new order items
     const orderItems: NewDetailedOrderItem[] = cartItems.map((item) => {
       return {
-        product_id: item.productId,
+        product_id: item.product_id,
         quantity: item.quantity,
       };
     });

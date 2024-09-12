@@ -5,7 +5,7 @@ import {Raleway} from 'next/font/google';
 import Link from 'next/link';
 import {RabbitIcon} from 'lucide-react';
 import {useGetDetailedOrdersQuery} from '@/app/lib/api/orders-slice';
-import ErrorFetchingData from '../error/errorFetchingData';
+import ErrorFetchingData from '../error/ErrorFetchingData';
 import {LoadingSpinner} from '../ui/loading-spinner';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});

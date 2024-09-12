@@ -1,5 +1,5 @@
 'use client';
-import {Address} from '@/app/types/backend-types';
+import {Address} from '@/app/lib/plamatio-backend/types';
 import {FC, useMemo, useState} from 'react';
 
 import NewAddressModal from '../addresses/NewAddressModel';

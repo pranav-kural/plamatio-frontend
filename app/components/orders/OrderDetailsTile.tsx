@@ -1,11 +1,13 @@
 'use client';
-import {DetailedOrder} from '@/app/types/backend-types';
+import {
+  DetailedOrder,
+  DetailedOrderAPIResponse,
+} from '@/app/lib/plamatio-backend/types';
 import {OrderAddress} from './OrderAddress';
 import {OrderItemTile} from './OrderItemTile';
 import {FC, useMemo} from 'react';
 import {BadgeCheckIcon, CarIcon, RabbitIcon} from 'lucide-react';
 import {formatAmountForDisplay} from '@/app/lib/stripe/utils';
-import {DetailedOrderAPIResponse} from '@/app/lib/plamatio-backend/types';
 
 function getDetailedOrder(response: DetailedOrderAPIResponse): DetailedOrder {
   return {

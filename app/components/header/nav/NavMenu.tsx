@@ -1,6 +1,6 @@
 import React from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import {NavMenuItem, NavMenuSubItem} from './nav-menu-item';
+import {NavMenuItem, NavMenuSubItem} from './NavMenuItem';
 import {
   CategoriesCollection,
   SubCategoriesCollection,

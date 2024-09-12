@@ -1,7 +1,7 @@
 'use client';
 
-import ErrorFetchingData from '@/app/components/error/errorFetchingData';
-import {ProductPreview} from '@/app/components/products/productPreview';
+import ErrorFetchingData from '@/app/components/error/ErrorFetchingData';
+import {ProductPreview} from '@/app/components/products/ProductPreview';
 import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
 import {useGetProductQuery} from '@/app/lib/api/products-api-slice';
 import {FetchBaseQueryError} from '@reduxjs/toolkit/query';

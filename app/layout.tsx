@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 import {Work_Sans} from 'next/font/google';
 import './globals.css';
 import {ClerkProvider} from '@clerk/nextjs';
-import {Header} from './components/header/header';
+import {Header} from './components/header/Header';
 import {ReduxProvider} from './ReduxProvider';
 import LoadCartItems from './components/auxiliary/LoadCartItems';
 import LoadProducts from './components/auxiliary/LoadProducts';

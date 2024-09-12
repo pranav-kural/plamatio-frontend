@@ -1,6 +1,6 @@
 'use client';
-import ErrorFetchingData from '@/app/components/error/errorFetchingData';
-import ProductsShowcase from '@/app/components/products/productsShowcase';
+import ErrorFetchingData from '@/app/components/error/ErrorFetchingData';
+import ProductsShowcase from '@/app/components/products/ProductsShowcase';
 import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
 import {useGetHeroProductsByCategoryQuery} from '@/app/lib/api/products-api-slice';
 import {useMemo} from 'react';

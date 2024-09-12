@@ -1,5 +1,5 @@
 'use client';
-import {CartItem, Product} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {FC, useMemo} from 'react';
 
 type OrderSectionProps = {
@@ -16,7 +16,7 @@ export const OrderSection: FC<OrderSectionProps> = ({
   const [orderTotal, numberOfItems, taxes] = useMemo(() => {
     // calculate order total
     const orderTotal = cartItems.reduce((acc, item) => {
-      const product = products.find((p) => p.id === item.productId);
+      const product = products.find((p) => p.id === item.product_id);
       return (
         Math.round(
           (product ? acc + product.price * item.quantity : acc) * 100

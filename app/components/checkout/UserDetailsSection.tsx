@@ -1,5 +1,5 @@
 'use client';
-import {User} from '@/app/types/backend-types';
+import {User} from '@/app/lib/plamatio-backend/types';
 import {FC} from 'react';
 
 type UserDetailsSectionProps = {

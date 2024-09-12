@@ -65,6 +65,8 @@ const DefaultLoadingSpinner = ({
   );
 };
 
+export default LoadingSpinner;
+
 const ButtonStyleLoadingSpinner = ({
   label,
   h,

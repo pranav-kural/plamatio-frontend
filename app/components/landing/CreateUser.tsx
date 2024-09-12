@@ -1,6 +1,6 @@
 import {useAddCartItemMutation} from '@/app/lib/api/cart-items-slice';
 import {useAddUserMutation, useGetUserQuery} from '@/app/lib/api/users-slice';
-import {User} from '@/app/types/backend-types';
+import {User} from '@/app/lib/plamatio-backend/types';
 import {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import {FC, useMemo} from 'react';
 
@@ -68,8 +68,8 @@ export const CreateUser: FC<CreateUserProps> = ({user}) => {
           console.log('CreateUser: Adding cart item', cartItem);
           // add cart item with user id
           addCartItem({
-            userId: user.id,
-            productId: cartItem.productId,
+            user_id: user.id,
+            product_id: cartItem.productId,
             quantity: cartItem.quantity,
           });
         }

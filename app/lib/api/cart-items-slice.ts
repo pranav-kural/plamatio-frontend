@@ -1,10 +1,14 @@
-import {CartItem, NewCartItem} from '@/app/types/backend-types';
 import {apiSlice} from './api-slice';
+import {PLAMATIO_BACKEND_ENDPOINTS as PBE} from '@/app/lib/plamatio-backend/endpoints';
 import {
-  getPlamatioBackendAPIKey,
-  PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../plamatio-backend/plamatio-api';
-import {CartItemsCollection} from '../plamatio-backend/types';
+  CartItem,
+  CartItemAPIStruct,
+  CartItemDeleteParams,
+  CartItemsCollection,
+  NewCartItem,
+  NewCartItemsCollection,
+} from '@/app/lib/plamatio-backend/types';
+import {getPlamatioBackendAPIKey} from '../plamatio-backend/utils';
 
 export const cartItemsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,7 +21,7 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         },
       }),
       providesTags: (result) => {
-        if (result) {
+        if (result && result.data) {
           return [
             'CartItems',
             ...result.data.map(({id}) => ({type: 'CartItem', id}) as const),
@@ -50,7 +54,20 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         return result ? [{type: 'CartItem', id: result.id}] : ['CartItems'];
       },
     }),
-    updateCartItem: builder.mutation<string, CartItem>({
+    addCartItems: builder.mutation<CartItemsCollection, NewCartItemsCollection>(
+      {
+        query: (newCartItems) => ({
+          url: PBE.CART.ADD_ALL(),
+          method: 'POST',
+          body: newCartItems,
+          headers: {
+            Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
+          },
+        }),
+        invalidatesTags: ['CartItems'],
+      }
+    ),
+    updateCartItem: builder.mutation<string, CartItemAPIStruct>({
       query: (updatedCart) => ({
         url: PBE.CART.UPDATE(),
         method: 'PUT',
@@ -63,16 +80,16 @@ export const cartItemsApiSlice = apiSlice.injectEndpoints({
         return result ? [{type: 'CartItem', id: args.id}] : ['CartItems'];
       },
     }),
-    deleteCartItem: builder.mutation<string, number>({
-      query: (cartItemId) => ({
-        url: PBE.CART.DELETE(cartItemId),
+    deleteCartItem: builder.mutation<number, CartItemDeleteParams>({
+      query: (cartItemDeleteParams) => ({
+        url: PBE.CART.DELETE(cartItemDeleteParams),
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${getPlamatioBackendAPIKey()}`,
         },
       }),
-      invalidatesTags: (result, _, args) => {
-        return result ? [{type: 'CartItem', id: args}] : ['CartItems'];
+      invalidatesTags: (result) => {
+        return result ? [{type: 'CartItem', id: result}] : ['CartItems'];
       },
     }),
   }),
@@ -82,6 +99,7 @@ export const {
   useGetCartItemsQuery,
   useGetCartItemQuery,
   useAddCartItemMutation,
+  useAddCartItemsMutation,
   useUpdateCartItemMutation,
   useDeleteCartItemMutation,
 } = cartItemsApiSlice;

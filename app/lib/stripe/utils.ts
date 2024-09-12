@@ -1,12 +1,13 @@
-import {CartItem, Product} from '@/app/types/backend-types';
 import Stripe from 'stripe';
 import {CURRENCY} from './config';
 import {
+  CartItem,
+  Product,
   NewOrder,
   NewDetailedOrder,
   NewDetailedOrderItem,
+  OrderDetailsProduct,
 } from '@/app/lib/plamatio-backend/types';
-import {OrderDetailsProduct} from '@/app/types/types';
 
 export function formatAmountForDisplay(
   amount: number,
@@ -95,7 +96,7 @@ export function getCartLineItems(
   products: Product[]
 ): Stripe.Checkout.SessionCreateParams.LineItem[] {
   return cartItems.map((cartItem) => {
-    const product = getProductData(products, cartItem.productId);
+    const product = getProductData(products, cartItem.product_id);
     return {
       price_data: product,
       quantity: cartItem.quantity,

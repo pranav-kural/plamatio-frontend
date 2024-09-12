@@ -3,9 +3,9 @@
 import {useAddDetailedOrderMutation} from '@/app/lib/api/orders-slice';
 import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 import {useAppDispatch, useAppSelector} from '@/app/lib/store/storeHooks';
-import {FC, useMemo, useState} from 'react';
+import {FC, useMemo, useRef} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import ErrorFetchingData from '../error/errorFetchingData';
+import ErrorFetchingData from '../error/ErrorFetchingData';
 import {
   clearCart,
   selectCartItems,
@@ -19,8 +19,8 @@ type AddNewOrderProps = {
 };
 
 export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
-  // track if order has been submitted
-  const [orderSubmitted, setOrderSubmitted] = useState<boolean>(false);
+  // state to store order submitted status
+  const orderSubmitted = useRef<boolean>(false);
   // dispatch to clear cart
   const dispatch = useAppDispatch();
   // select cart items
@@ -31,7 +31,7 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
 
   useMemo(() => {
     if (
-      !orderSubmitted &&
+      !orderSubmitted.current &&
       order &&
       items &&
       cartItems &&
@@ -41,17 +41,22 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
       // dispatch action to add new order
       addOrder({order, items});
     }
-  }, [order, items, orderSubmitted, cartItems, addOrder]);
+  }, [order, items, cartItems, addOrder]);
 
   useMemo(() => {
-    if (isSuccess && !orderSubmitted && cartItems && cartItems.length > 0) {
+    if (
+      isSuccess &&
+      !orderSubmitted.current &&
+      cartItems &&
+      cartItems.length > 0
+    ) {
       console.log(`Order added`);
+      // set order submitted
+      orderSubmitted.current = true;
       // clear cart
       dispatch(clearCart());
-      // set order submitted
-      setOrderSubmitted(true);
     }
-  }, [isSuccess, orderSubmitted, cartItems, dispatch]);
+  }, [isSuccess, cartItems, dispatch]);
 
   // log error if any
   useMemo(() => {
