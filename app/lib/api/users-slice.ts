@@ -1,13 +1,13 @@
-import {Address, NewAddress, User} from '@/app/types/backend-types';
-import {apiSlice} from './api-slice';
 import {
-  getPlamatioBackendAPIKey,
-  PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../plamatio-backend/plamatio-api';
-import {
+  Address,
+  NewAddress,
+  User,
   AddressesCollection,
-  DeleteAddressRequestParams,
-} from '../plamatio-backend/types';
+  DeleteAddressParams,
+} from '@/app/lib/plamatio-backend/types';
+import {apiSlice} from './api-slice';
+import {PLAMATIO_BACKEND_ENDPOINTS as PBE} from '@/app/lib/plamatio-backend/endpoints';
+import {getPlamatioBackendAPIKey} from '@/app/lib/plamatio-backend/utils';
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -101,7 +101,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Addresses'],
     }),
-    deleteUserAddress: builder.mutation<string, DeleteAddressRequestParams>({
+    deleteUserAddress: builder.mutation<string, DeleteAddressParams>({
       query: (deleteAddressRequestParams) => ({
         url: PBE.USERS.DELETE_ADDRESS(deleteAddressRequestParams),
         method: 'DELETE',

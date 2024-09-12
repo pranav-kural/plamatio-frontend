@@ -1,5 +1,5 @@
 import {RootState} from '@/app/lib/store';
-import {CartItem} from '@/app/types/backend-types';
+import {CartItem} from '@/app/lib/plamatio-backend/types';
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 // cart state schema

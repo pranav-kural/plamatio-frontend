@@ -2,7 +2,7 @@
 import {useGetAddressQuery} from '@/app/lib/api/users-slice';
 import {FC, useMemo} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import ErrorFetchingData from '../error/errorFetchingData';
+import ErrorFetchingData from '../error/ErrorFetchingData';
 
 type OrderAddressProps = {
   addressId: number;

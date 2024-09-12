@@ -1,5 +1,5 @@
 'use client';
-import {CartItem, Product} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {FC, useMemo} from 'react';
 
 type OrderSectionProps = {

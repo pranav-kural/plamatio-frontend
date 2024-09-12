@@ -10,7 +10,7 @@ import {
   setNewCartItems,
 } from '@/app/lib/store/reducers/cart/cartReducer';
 import {useAppDispatch, useAppSelector} from '@/app/lib/store/storeHooks';
-import {CartItem} from '@/app/types/backend-types';
+import {CartItem} from '@/app/lib/plamatio-backend/types';
 import {FC, useEffect, useMemo, useRef, useState} from 'react';
 
 /*
@@ -174,7 +174,7 @@ export const MergeCartItems: FC<MergeCartItemsProps> = ({userId}) => {
         updateCartItem(item);
       });
     }
-  }, [itemsToUpdate]);
+  }, [itemsToUpdate, updateCartItem]);
 
   // log any error in updating cart items on database
   useMemo(() => {

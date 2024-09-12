@@ -3,7 +3,7 @@ import {
   SubCategory,
   Product,
   CategoryHeroProduct,
-} from '../types/backend-types';
+} from '@/app/lib/plamatio-backend/types';
 
 const categories: Category[] = [
   {

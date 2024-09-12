@@ -1,14 +1,13 @@
-import {DetailedOrder, Order} from '@/app/types/backend-types';
-import {apiSlice} from './api-slice';
 import {
-  getPlamatioBackendAPIKey,
-  PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../plamatio-backend/plamatio-api';
-import {
+  DetailedOrder,
+  Order,
   DetailedOrdersCollection,
   NewDetailedOrder,
   OrdersCollection,
-} from '../plamatio-backend/types';
+} from '@/app/lib/plamatio-backend/types';
+import {apiSlice} from './api-slice';
+import {PLAMATIO_BACKEND_ENDPOINTS as PBE} from '@/app/lib/plamatio-backend/endpoints';
+import {getPlamatioBackendAPIKey} from '@/app/lib/plamatio-backend/utils';
 
 export const ordersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

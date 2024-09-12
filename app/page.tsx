@@ -1,4 +1,4 @@
-import LandingPageShowcase from './components/landing/showcase';
+import LandingPageShowcase from './components/landing/Showcase';
 
 export default function Home() {
   return (

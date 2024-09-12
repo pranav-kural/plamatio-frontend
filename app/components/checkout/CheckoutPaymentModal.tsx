@@ -5,12 +5,15 @@ import {ChevronRight, XIcon} from 'lucide-react';
 import {CheckoutPaymentProvider} from './CheckoutPaymentProvider';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
-import {Product} from '@/app/types/backend-types';
+import {
+  Product,
+  NewDetailedOrderItem,
+  NewOrder,
+} from '@/app/lib/plamatio-backend/types';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {createCheckoutSession} from '@/app/lib/stripe/actions';
 import {getCartLineItems} from '@/app/lib/stripe/utils';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 
 type CheckoutPaymentModalProps = {
   label?: string;

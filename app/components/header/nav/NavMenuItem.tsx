@@ -1,6 +1,6 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import {ChevronDown} from 'lucide-react';
-import NavListItem from './list-item';
+import NavListItem from './ListItem';
 import Link from 'next/link';
 import {FC} from 'react';
 

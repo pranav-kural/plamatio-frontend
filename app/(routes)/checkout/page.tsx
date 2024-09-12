@@ -2,15 +2,15 @@
 import {useEffect, useMemo, useState} from 'react';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
-import {CheckoutCartItems} from '@/app/components/cart/checkoutCartItems';
+import {CheckoutCartItems} from '@/app/components/cart/CheckoutCartItems';
 import {Raleway} from 'next/font/google';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
-import {Product, User} from '@/app/types/backend-types';
+import {Product, User} from '@/app/lib/plamatio-backend/types';
 import {LoadingSpinner} from '../../components/ui/loading-spinner';
 import UserDetailsSection from '../../components/checkout/UserDetailsSection';
 import AddressesSection from '../../components/checkout/AddressesSection';
 import {useUser} from '@clerk/nextjs';
-import SignInSignUpButtons from '../../components/auth/sigInSignUpButtons';
+import SignInSignUpButtons from '../../components/auth/SigInSignUpButtons';
 import CheckoutPaymentModal from '../../components/checkout/CheckoutPaymentModal';
 import OrderSection from '../../components/checkout/OrderSection';
 

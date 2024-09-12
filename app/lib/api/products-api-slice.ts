@@ -1,10 +1,7 @@
-import {Product} from '@/app/types/backend-types';
+import {Product, ProductsCollection} from '@/app/lib/plamatio-backend/types';
 import {apiSlice} from './api-slice';
-import {
-  getPlamatioBackendAPIKey,
-  PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../plamatio-backend/plamatio-api';
-import {ProductsCollection} from '../plamatio-backend/types';
+import {PLAMATIO_BACKEND_ENDPOINTS as PBE} from '@/app/lib/plamatio-backend/endpoints';
+import {getPlamatioBackendAPIKey} from '@/app/lib/plamatio-backend/utils';
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

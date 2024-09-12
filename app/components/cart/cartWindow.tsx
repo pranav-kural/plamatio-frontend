@@ -3,12 +3,12 @@ import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import Image from 'next/image';
 import {useMemo} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import MutateCartButton from './mutateCartButton';
+import MutateCartButton from './MutateCartButton';
 import Link from 'next/link';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {SmileIcon} from 'lucide-react';
-import {CartItem} from '@/app/types/backend-types';
+import {CartItem} from '@/app/lib/plamatio-backend/types';
 
 export const CartWindow = () => {
   // const userId: string | undefined = undefined;

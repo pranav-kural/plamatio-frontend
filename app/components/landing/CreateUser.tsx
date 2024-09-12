@@ -1,6 +1,6 @@
 import {useAddCartItemMutation} from '@/app/lib/api/cart-items-slice';
 import {useAddUserMutation, useGetUserQuery} from '@/app/lib/api/users-slice';
-import {User} from '@/app/types/backend-types';
+import {User} from '@/app/lib/plamatio-backend/types';
 import {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import {FC, useMemo} from 'react';
 

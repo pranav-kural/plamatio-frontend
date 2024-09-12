@@ -2,7 +2,7 @@
 import {MinusCircleIcon, PlusCircleIcon, ShoppingCartIcon} from 'lucide-react';
 import classNames from 'classnames';
 import {FC, useMemo} from 'react';
-import {CartItem} from '@/app/types/backend-types';
+import {CartItem} from '@/app/lib/plamatio-backend/types';
 import {useAppDispatch, useAppSelector} from '@/app/lib/store/storeHooks';
 import {
   decrementQuantity,

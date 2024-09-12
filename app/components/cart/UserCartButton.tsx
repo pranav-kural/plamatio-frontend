@@ -1,8 +1,8 @@
 'use client';
-import {CartItem, Product} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {FC, useMemo} from 'react';
-import {MutateCartButton} from './mutateCartButton';
-import {AddToCartButton} from './addToCartButton';
+import {MutateCartButton} from './MutateCartButton';
+import {AddToCartButton} from './AddToCartButton';
 import {useGetCartItemsQuery} from '@/app/lib/api/cart-items-slice';
 
 type UserCartButtonProps = {

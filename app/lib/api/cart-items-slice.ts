@@ -1,16 +1,14 @@
-import {CartItem} from '@/app/types/backend-types';
 import {apiSlice} from './api-slice';
+import {PLAMATIO_BACKEND_ENDPOINTS as PBE} from '@/app/lib/plamatio-backend/endpoints';
 import {
-  getPlamatioBackendAPIKey,
-  PLAMATIO_BACKEND_ENDPOINTS as PBE,
-} from '../plamatio-backend/plamatio-api';
-import {
+  CartItem,
   CartItemAPIStruct,
   CartItemDeleteParams,
   CartItemsCollection,
   NewCartItem,
   NewCartItemsCollection,
-} from '../plamatio-backend/types';
+} from '@/app/lib/plamatio-backend/types';
+import {getPlamatioBackendAPIKey} from '../plamatio-backend/utils';
 
 export const cartItemsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

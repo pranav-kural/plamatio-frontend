@@ -1,8 +1,5 @@
-import {
-  getPlamatioBackendAPIKey,
-  getPlamatioBackendAPIURL,
-  PLAMATIO_BACKEND_ENDPOINTS as ENDPOINTS,
-} from './plamatio-api';
+import {PLAMATIO_BACKEND_ENDPOINTS as ENDPOINTS} from './endpoints';
+import {getPlamatioBackendAPIKey, getPlamatioBackendAPIURL} from './utils';
 
 export const getRequestOptions = () => ({
   headers: {

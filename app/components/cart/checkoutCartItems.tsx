@@ -1,9 +1,9 @@
 'use client';
-import {CartItem, Product} from '@/app/types/backend-types';
+import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {FC} from 'react';
 import {SmileIcon} from 'lucide-react';
 import Link from 'next/link';
-import ProductCheckoutPreview from '../products/productCheckoutPreview';
+import ProductCheckoutPreview from '../products/ProductCheckoutPreview';
 
 type CheckoutCartItemsProps = {
   cartItems: CartItem[];

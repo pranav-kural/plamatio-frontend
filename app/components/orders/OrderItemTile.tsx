@@ -1,11 +1,11 @@
 'use client';
 import {useGetProductQuery} from '@/app/lib/api/products-api-slice';
-import {OrderItem} from '@/app/types/backend-types';
+import {OrderItem} from '@/app/lib/plamatio-backend/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import ErrorFetchingData from '../error/errorFetchingData';
+import ErrorFetchingData from '../error/ErrorFetchingData';
 
 type OrderItemTileProps = {
   orderItem: OrderItem;

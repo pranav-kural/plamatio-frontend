@@ -2,8 +2,8 @@
 import {PlusIcon, ShoppingCartIcon} from 'lucide-react';
 import classNames from 'classnames';
 import {FC, useEffect, useMemo, useState} from 'react';
-import {Toast} from '../toast/toast';
-import {CartItem, Product} from '@/app/types/backend-types';
+import {Toast} from '../toast/Toast';
+import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {useAppDispatch} from '@/app/lib/store/storeHooks';
 import {addCartItem} from '@/app/lib/store/reducers/cart/cartReducer';
 import {useAddCartItemMutation} from '@/app/lib/api/cart-items-slice';

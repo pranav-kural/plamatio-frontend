@@ -5,7 +5,7 @@ import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 import {useAppDispatch, useAppSelector} from '@/app/lib/store/storeHooks';
 import {FC, useMemo, useRef} from 'react';
 import {LoadingSpinner} from '../ui/loading-spinner';
-import ErrorFetchingData from '../error/errorFetchingData';
+import ErrorFetchingData from '../error/ErrorFetchingData';
 import {
   clearCart,
   selectCartItems,
@@ -41,7 +41,7 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
       // dispatch action to add new order
       addOrder({order, items});
     }
-  }, [order, items, orderSubmitted.current, cartItems, addOrder]);
+  }, [order, items, cartItems, addOrder]);
 
   useMemo(() => {
     if (
@@ -56,7 +56,7 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
       // clear cart
       dispatch(clearCart());
     }
-  }, [isSuccess, orderSubmitted.current, cartItems, dispatch]);
+  }, [isSuccess, cartItems, dispatch]);
 
   // log error if any
   useMemo(() => {
