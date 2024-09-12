@@ -13,7 +13,7 @@ import {
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {createCheckoutSession} from '@/app/lib/stripe/actions';
 import {getCartLineItems} from '@/app/lib/stripe/utils';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 
 type CheckoutPaymentModalProps = {
   label?: string;

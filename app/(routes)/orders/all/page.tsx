@@ -1,6 +1,6 @@
 'use client';
 import DetailedOrdersView from '@/app/components/orders/DetailedOrdersView';
-import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
+import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
 import {useUser} from '@clerk/nextjs';
 
 export default function AllOrdersPage() {

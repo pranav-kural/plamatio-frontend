@@ -6,7 +6,7 @@ import Link from 'next/link';
 import {RabbitIcon} from 'lucide-react';
 import {useGetDetailedOrdersQuery} from '@/app/lib/api/orders-slice';
 import ErrorFetchingData from '../error/ErrorFetchingData';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 

@@ -1,7 +1,7 @@
 'use client';
 import {useGetAddressQuery} from '@/app/lib/api/users-slice';
 import {FC, useMemo} from 'react';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 import ErrorFetchingData from '../error/ErrorFetchingData';
 
 type OrderAddressProps = {

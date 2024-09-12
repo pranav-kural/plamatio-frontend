@@ -3,7 +3,7 @@ import {FC} from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {ChevronRight, XIcon} from 'lucide-react';
 import {CheckoutPaymentProvider} from './CheckoutPaymentProvider';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 
 type PaymentRetryModalProps = {
   label?: string;

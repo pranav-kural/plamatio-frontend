@@ -4,7 +4,7 @@ import {FC, useMemo, useState} from 'react';
 
 import NewAddressModal from '../addresses/NewAddressModel';
 import {useGetUserAddressesQuery} from '@/app/lib/api/users-slice';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 import SelectAddressModal from '../addresses/SelectAddressModal';
 
 type AddressesSectionProps = {

@@ -4,7 +4,7 @@ import {Raleway} from 'next/font/google';
 import {stripe} from '@/app/lib/stripe/config';
 import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 import AddNewOrder from '@/app/components/checkout/AddNewOrder';
-import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
+import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 

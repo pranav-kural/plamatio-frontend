@@ -2,7 +2,7 @@
 
 import ErrorFetchingData from '@/app/components/error/ErrorFetchingData';
 import ProductsShowcase from '@/app/components/products/ProductsShowcase';
-import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
+import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
 import {useGetProductsBySubCategoryQuery} from '@/app/lib/api/products-api-slice';
 import {useMemo} from 'react';
 

@@ -1,7 +1,7 @@
 import {useAddUserAddressMutation} from '@/app/lib/api/users-slice';
 import {FC, useMemo} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 
 type NewAddress = {
   street: string;

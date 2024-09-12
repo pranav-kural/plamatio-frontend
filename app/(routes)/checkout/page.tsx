@@ -6,7 +6,7 @@ import {CheckoutCartItems} from '@/app/components/cart/CheckoutCartItems';
 import {Raleway} from 'next/font/google';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import {Product, User} from '@/app/lib/plamatio-backend/types';
-import {LoadingSpinner} from '../../components/ui/loading-spinner';
+import {LoadingSpinner} from '../../components/ui/LoadingSpinner';
 import UserDetailsSection from '../../components/checkout/UserDetailsSection';
 import AddressesSection from '../../components/checkout/AddressesSection';
 import {useUser} from '@clerk/nextjs';

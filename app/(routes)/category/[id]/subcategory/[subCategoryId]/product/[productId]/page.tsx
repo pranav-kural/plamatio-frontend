@@ -2,7 +2,7 @@
 
 import ErrorFetchingData from '@/app/components/error/ErrorFetchingData';
 import {ProductPreview} from '@/app/components/products/ProductPreview';
-import {LoadingSpinner} from '@/app/components/ui/loading-spinner';
+import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
 import {useGetProductQuery} from '@/app/lib/api/products-api-slice';
 import {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import Link from 'next/link';

@@ -3,7 +3,7 @@ import {Product} from '@/app/lib/plamatio-backend/types';
 import {FC} from 'react';
 import StatefulCartButton from '@/app/components/cart/StatefulCartButton';
 import {useUser} from '@clerk/nextjs';
-import LoadingSpinner from '../ui/loading-spinner';
+import LoadingSpinner from '../ui/LoadingSpinner';
 import MergeCartItems from './MergeCartItems';
 
 type CartButtonProps = {

@@ -4,7 +4,7 @@ import {useAddDetailedOrderMutation} from '@/app/lib/api/orders-slice';
 import {NewDetailedOrderItem, NewOrder} from '@/app/lib/plamatio-backend/types';
 import {useAppDispatch, useAppSelector} from '@/app/lib/store/storeHooks';
 import {FC, useMemo, useRef} from 'react';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 import ErrorFetchingData from '../error/ErrorFetchingData';
 import {
   clearCart,

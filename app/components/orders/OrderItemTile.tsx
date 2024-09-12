@@ -4,7 +4,7 @@ import {OrderItem} from '@/app/lib/plamatio-backend/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 import ErrorFetchingData from '../error/ErrorFetchingData';
 
 type OrderItemTileProps = {

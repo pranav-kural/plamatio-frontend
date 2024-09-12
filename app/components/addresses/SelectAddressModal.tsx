@@ -3,7 +3,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import {TrashIcon, XIcon} from 'lucide-react';
 import {Address} from '@/app/lib/plamatio-backend/types';
 import {useDeleteUserAddressMutation} from '@/app/lib/api/users-slice';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 
 type SelectAddressModalProps = {
   userId: string;

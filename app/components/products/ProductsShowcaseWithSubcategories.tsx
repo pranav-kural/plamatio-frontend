@@ -5,7 +5,7 @@ import {FC, useMemo} from 'react';
 import Link from 'next/link';
 import {Gayathri} from 'next/font/google';
 import {useGetSubCategoriesByCategoryQuery} from '@/app/lib/api/categories-slice';
-import {LoadingSpinner} from '../ui/loading-spinner';
+import {LoadingSpinner} from '../ui/LoadingSpinner';
 import ErrorFetchingData from '../error/ErrorFetchingData';
 
 const gayathri = Gayathri({weight: '400', subsets: ['latin']});
