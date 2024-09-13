@@ -4,7 +4,10 @@ This project demonstrates a production-quality intuitive and responsive web fron
 
 This project also serves as one of the frontends for the [Plamatio Backend](https://github.com/pranav-kural/plamatio-backend), which is a highly performant, scalable, and resilient distributed backend built using Go-lang and PostgreSQL.
 
-![Plamatio Frontend](https://github.com/user-attachments/assets/7eca3bf6-e88e-4d49-961a-78c1a47f6d1a)
+| Environment | Deployment Status                                                                                                  | URL                                                                           | Branch                                                                  |
+|-------------|--------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Preview     | <img src="https://img.shields.io/github/deployments/pranav-kural/plamatio-frontend/preview?label=preview"/>        | https://plamatio-frontend.vercel.app | [`preview`](https://github.com/pranav-kural/plamatio-frontend/tree/stage) |
+| Production  | <img src="https://img.shields.io/github/deployments/pranav-kural/plamatio-frontend/production?label=production" /> | https://plamatio.pkural.ca                   | [`main`](https://github.com/pranav-kural/plamatio-frontend/tree/main)   |
 
 ## Key Features
 
