@@ -2,15 +2,15 @@
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import Image from 'next/image';
 import {useMemo} from 'react';
-import {LoadingSpinner} from '../ui/LoadingSpinner';
-import MutateCartButton from './MutateCartButton';
+import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
+import MutateCartButton from '@/app/components/cart/MutateCartButton';
 import Link from 'next/link';
 import {useAppSelector} from '@/app/lib/store/storeHooks';
 import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {SmileIcon} from 'lucide-react';
 import {CartItem} from '@/app/lib/plamatio-backend/types';
 
-export const CartWindow = () => {
+export const CartDropdownItems = () => {
   // const userId: string | undefined = undefined;
   const cartItems = useAppSelector(selectCartItems);
 
@@ -60,14 +60,16 @@ export const CartWindow = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col gap-5 bg-white shadow-lg shadow-mauve8 p-5 rounded-md border">
-        <span className="font-semibold text-lg text-center">Cart Items</span>
+      <div className="w-full flex flex-col gap-5 bg-white p-5 rounded-md border">
+        <span className="font-[500] text-lg text-violet-950 text-center mb-2">
+          Cart Items
+        </span>
         {productsFetch.isLoading && (
           <div className="w-full h-full flex flex-col items-center justify-center">
             <LoadingSpinner label="Loading products..." />
           </div>
         )}
-        <div className="w-full flex flex-col gap-5 max-h-[350px] min-w-[300px] overflow-y-scroll scroll-smooth">
+        <div className="w-full flex flex-col gap-5 max-h-[350px] min-w-[300px] overflow-y-auto scroll-smooth">
           {productsFetch.isSuccess &&
             cartItems?.map((item) => (
               <div
@@ -80,8 +82,8 @@ export const CartWindow = () => {
                   alt="product image"
                   className="rounded-lg"
                 />
-                <div className="w-full flex flex-col gap-2">
-                  <span className="font-semibold">
+                <div className="w-full flex flex-col gap-4">
+                  <span className="font-[500]">
                     {getProductName(item.product_id)}
                   </span>
                   <div className="flex flex-row justify-between">
@@ -90,7 +92,7 @@ export const CartWindow = () => {
                     </span>
                     <MutateCartButton
                       cartItem={item}
-                      className="max-w-[100px]"
+                      className="max-w-[120px]"
                       setShowMutateCartButton={() => {}}
                     />
                   </div>
@@ -108,12 +110,12 @@ export const CartWindow = () => {
           )}
         </div>
         <button
-          className="w-full text-center"
+          className="w-full text-center my-3"
           hidden={!cartItems || cartItems.length <= 0}>
           <Link
             href="/checkout"
-            className="p-3 rounded-lg bg-violet-700 text-white hover:bg-violet-800">
-            Go to Checkout
+            className="p-3 rounded-lg text-violet-800 font-[500] hover:text-violet-900 hover:bg-violet-50">
+            Checkout
           </Link>
         </button>
       </div>

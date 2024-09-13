@@ -6,13 +6,13 @@ import {CheckoutCartItems} from '@/app/components/cart/CheckoutCartItems';
 import {Raleway} from 'next/font/google';
 import {useGetProductsQuery} from '@/app/lib/api/products-api-slice';
 import {Product, User} from '@/app/lib/plamatio-backend/types';
-import {LoadingSpinner} from '../../components/ui/LoadingSpinner';
-import UserDetailsSection from '../../components/checkout/UserDetailsSection';
-import AddressesSection from '../../components/checkout/AddressesSection';
+import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
+import UserDetailsSection from '@/app/components/checkout/UserDetailsSection';
+import AddressesSection from '@/app/components/checkout/AddressesSection';
 import {useUser} from '@clerk/nextjs';
-import SignInSignUpButtons from '../../components/auth/SigInSignUpButtons';
-import CheckoutPaymentModal from '../../components/checkout/CheckoutPaymentModal';
-import OrderSection from '../../components/checkout/OrderSection';
+import SignInSignUpButtons from '@/app/components/auth/SigInSignUpButtons';
+import CheckoutPaymentModal from '@/app/components/checkout/CheckoutPaymentModal';
+import OrderSection from '@/app/components/checkout/OrderSection';
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 
