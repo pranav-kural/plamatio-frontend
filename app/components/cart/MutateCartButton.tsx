@@ -115,7 +115,7 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
     <>
       <div
         className={classNames(
-          'flex flex-row align-middle justify-center p-2 rounded-md bg-violet-100 cursor-pointer hover:text-violet-100 hover:bg-violet-800',
+          'flex flex-row items-center justify-center p-2 rounded-md bg-violet-100 cursor-pointer hover:text-violet-100 hover:bg-violet-800',
           !allowCartChanges &&
             'opacity-50 hover:bg-violet-100 hover:text-black hover:cursor-not-allowed',
           className

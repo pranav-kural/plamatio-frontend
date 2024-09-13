@@ -86,7 +86,7 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
               Order submitted successfully 🎉
             </div>
             <Link
-              href="/orders/all"
+              href="/orders"
               title="View all orders"
               className="text-xl text-white bg-violet-700 font-[500] hover:bg-violet-800 p-5 rounded-lg">
               View all orders

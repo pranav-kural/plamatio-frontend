@@ -2,8 +2,8 @@ import {Great_Vibes} from 'next/font/google';
 import NavMenu from './nav/NavMenu';
 import Link from 'next/link';
 import {Breadcrumb} from './breadcrumb/Breadcrumb';
-import CartIcon from '../cart/CartIcon';
-import SignInSignUpButtons from '../auth/SigInSignUpButtons';
+import UserButtons from './user/UserButtons';
+import CartDropdownMenu from './cart/CartDropdownMenu';
 
 const greatVibes = Great_Vibes({weight: '400', subsets: ['latin']});
 
@@ -18,11 +18,11 @@ export const Header = () => {
         </Link>
         <NavMenu />
       </div>
-      <div className="absolute top-[80px] right-[10px] md:right-[30px]">
-        <CartIcon />
-      </div>
       <div className="absolute top-[20px] right-[10px] md:right-[30px]">
-        <SignInSignUpButtons />
+        <div className="w-full h-full flex flex-row gap-2 md:gap-4 items-center justify-center">
+          <UserButtons />
+          <CartDropdownMenu />
+        </div>
       </div>
       <Breadcrumb />
     </div>
