@@ -4,6 +4,7 @@ import {FC} from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import CartButton from '../cart/CartButton';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
 
 type ProductPreviewProps = {
   product: Product;
@@ -53,7 +54,19 @@ export const ProductCheckoutPreview: FC<ProductPreviewProps> = ({
         </div>
         <Link
           href={`/category/${product.category}/subcategory/${product.subCategory}`}
-          className="hover:underline">
+          className="hover:underline"
+          onClick={() => {
+            dispatchUserEvent({
+              event_type: 'click',
+              core_component: 'products',
+              description: `Clicked on view more products from checkout for product ${product.id}`,
+              metadata: {
+                product_id: product.id,
+                category_id: product.category,
+                sub_category_id: product.subCategory,
+              },
+            });
+          }}>
           <span>View more products like this.</span>
         </Link>
       </div>
