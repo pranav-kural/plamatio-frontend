@@ -1,11 +1,11 @@
 /**
- * List of Kafka topics
+ * Schema for NewUserEventsMessage
  */
-export const topics = {
-  USER_EVENTS: 'user-events',
-  CART_UPDATES: 'cart-updates',
-  ORDERS_UPDATES: 'orders-updates',
-  USERS_UPDATES: 'users-updates',
+export type NewUserEventsMessage = {
+  event_type: string;
+  core_component: string;
+  description: string;
+  metadata: object;
 };
 
 /**
@@ -17,7 +17,7 @@ export type UserEventsMessage = {
   event_type: string;
   core_component: string;
   description: string;
-  metadata: string;
+  metadata: object;
   timestamp: string;
 };
 
