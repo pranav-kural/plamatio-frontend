@@ -2,9 +2,23 @@
 import DetailedOrdersView from '@/app/components/orders/DetailedOrdersView';
 import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
 import {useUser} from '@clerk/nextjs';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {useEffect} from 'react';
 
 export default function AllOrdersPage() {
   const {isLoaded, user} = useUser();
+
+  // Record all orders page load event
+  useEffect(() => {
+    if (user) {
+      dispatchUserEvent({
+        user_id: user.id,
+        event_type: 'page_load',
+        core_component: 'all_orders_page',
+        description: `Loaded all orders page for user ${user.id}`,
+      });
+    }
+  }, [user]);
 
   return (
     <>

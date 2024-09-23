@@ -6,7 +6,13 @@ import {LoadingSpinner} from '@/app/components/ui/LoadingSpinner';
 import {useGetProductQuery} from '@/app/lib/api/products-api-slice';
 import {FetchBaseQueryError} from '@reduxjs/toolkit/query';
 import Link from 'next/link';
-import {useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {Logger} from '@/app/utils/logger/Logger';
+import {useUser} from '@clerk/nextjs';
+
+// logger
+const logger = new Logger({context: 'ProductPage'});
 
 export default function ProductPage({params}: {params: {productId: string}}) {
   // parse the product ID from the URL
@@ -16,19 +22,48 @@ export default function ProductPage({params}: {params: {productId: string}}) {
   const {isLoading, isSuccess, isError, error, refetch, data} =
     useGetProductQuery(productId);
 
+  // get user if signed in
+  const {user} = useUser();
+
   // Log error if any occurs during fetching data
   useMemo(() => {
     if (isError) {
-      console.error(
+      logger.error(
         `${Date.now()} ProductPage: Error fetching product for id: ${productId}`,
-        error
+        JSON.stringify(error)
       );
     }
   }, [isError, error, productId]);
 
+  // dispatch user event when product page is loaded to record product page load
+  useEffect(() => {
+    if (user) {
+      dispatchUserEvent({
+        user_id: user.id,
+        event_type: 'page_load',
+        core_component: 'product_page',
+        description: `Loaded product page for product ${productId}`,
+        metadata: {product_id: productId},
+      });
+    }
+  }, [productId, user]);
+
   const buttonToHomePage: React.ReactNode = (
     <div className="w-1/3 h-12 mx-auto bg-fuchsia-700 hover:bg-fuchsia-800 cursor-pointer text-white rounded-md">
-      <Link href="/" className="w-full h-full flex items-center justify-center">
+      <Link
+        href="/"
+        className="w-full h-full flex items-center justify-center"
+        onClick={() => {
+          if (user) {
+            dispatchUserEvent({
+              user_id: user.id,
+              event_type: 'click',
+              core_component: 'product_page',
+              description: `User clicked button to view other products. Likely product not found for id: ${productId}`,
+              metadata: {product_id: productId},
+            });
+          }
+        }}>
         <span className="text-lg">Check Other Products</span>
       </Link>
     </div>

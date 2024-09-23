@@ -17,12 +17,11 @@ export async function dispatchUserEvent(newMsg: NewUserEventsMessage) {
   logger.debug('Producing to topic', topic);
   const message: UserEventsMessage = {
     ...newMsg,
-    ref_id: crypto.randomUUID(),
     client_id: CLIENT_ID,
     timestamp: new Date().toISOString(),
   };
   const value = Buffer.from(JSON.stringify(message));
-  const key = Buffer.from(message.ref_id);
+  const key = Buffer.from(message.timestamp);
   logger.dir({topic, key, value}, 'DEBUG', 'Producing message');
   // Produce the message
   produce({topic, key, value});

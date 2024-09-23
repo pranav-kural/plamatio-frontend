@@ -2,22 +2,23 @@
  * Schema for NewUserEventsMessage
  */
 export type NewUserEventsMessage = {
+  user_id: string;
   event_type: string;
   core_component: string;
   description: string;
-  metadata: object;
+  metadata?: object;
 };
 
 /**
  * Schema for UserEventsMessage
  */
 export type UserEventsMessage = {
-  ref_id: string;
+  user_id: string;
   client_id: string;
   event_type: string;
   core_component: string;
   description: string;
-  metadata: object;
+  metadata?: object;
   timestamp: string;
 };
 
