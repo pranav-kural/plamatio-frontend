@@ -6,15 +6,28 @@ import {FC} from 'react';
 import {Logger} from '@/app/utils/logger/Logger';
 import Image from 'next/image';
 import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import classNames from 'classnames';
 
 // logger
 const logger = new Logger({context: 'ProductTileImage'});
 
 type ProductTileImageProps = {
   product: Product;
+  imgHeight?: number;
+  imgWidth?: number;
+  imgClassName?: string;
+  priority?: boolean;
+  eventDescription?: string;
 };
 
-export const ProductTileImage: FC<ProductTileImageProps> = ({product}) => {
+export const ProductTileImage: FC<ProductTileImageProps> = ({
+  product,
+  imgHeight,
+  imgWidth,
+  imgClassName,
+  priority,
+  eventDescription,
+}) => {
   return (
     <Link
       href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
@@ -26,17 +39,19 @@ export const ProductTileImage: FC<ProductTileImageProps> = ({product}) => {
         dispatchUserEvent({
           event_type: 'click',
           core_component: 'product_tile',
-          description: `Clicked on product tile for product ${product.id}`,
+          description:
+            eventDescription ??
+            `Clicked on product tile for product ${product.id}`,
           metadata: {product_id: product.id},
         });
       }}>
       <Image
         src={product.imageUrl}
         alt={product.name}
-        width={400}
-        height={600}
-        priority={false}
-        className="rounded-lg w-full"
+        width={imgWidth ?? 400}
+        height={imgHeight ?? 600}
+        priority={priority}
+        className={classNames('rounded-lg w-full', imgClassName)}
       />
     </Link>
   );

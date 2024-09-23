@@ -1,18 +1,17 @@
 'use client';
 import {useGetProductQuery} from '@/app/lib/api/products-api-slice';
 import {OrderItem} from '@/app/lib/plamatio-backend/types';
-import Image from 'next/image';
-import Link from 'next/link';
 import {FC, useMemo} from 'react';
 import {LoadingSpinner} from '../ui/LoadingSpinner';
 import ErrorFetchingData from '../error/ErrorFetchingData';
+import ProductTileImage from '../products/ProductTileImage';
 
 type OrderItemTileProps = {
   orderItem: OrderItem;
 };
 
 export const OrderItemTile: FC<OrderItemTileProps> = ({orderItem}) => {
-  // Ideally, we would fetch the product details from the backend
+  // Fetch the product details from the backend
   const productFetch = useGetProductQuery(orderItem.productId);
 
   // Log error if any occurs during fetching data
@@ -50,18 +49,14 @@ export const OrderItemTile: FC<OrderItemTileProps> = ({orderItem}) => {
       {productFetch.isSuccess && productFetch.data && (
         <div className="w-full h-full flex flex-col md:flex-row gap-4 p-2 max-w-[500px] md:max-w-[700px]">
           <div className="xs:w-full md:w-[150x] md:h-[150px]">
-            <Link
-              href={`/category/${productFetch.data.category}/subcategory/${productFetch.data.subCategory}/product/${productFetch.data.id}`}
-              className="p-0 m-0">
-              <Image
-                src={productFetch.data.imageUrl}
-                alt={productFetch.data.name}
-                width={100}
-                height={100}
-                priority={false}
-                className="w-full h-full rounded-lg opacity-80 hover:opacity-100"
-              />
-            </Link>
+            {/* w-full h-full rounded-lg opacity-80 hover:opacity-100 */}
+            <ProductTileImage
+              product={productFetch.data}
+              imgHeight={100}
+              imgWidth={100}
+              imgClassName="w-full h-full rounded-lg opacity-80 hover:opacity-100 hover:shadow-lg"
+              eventDescription={`From order items of order id ${orderItem.id}, Clicked on product tile for product ${productFetch.data.id}`}
+            />
           </div>
           <div className="h-full flex flex-col justify-between gap-1">
             <div className="flex flex-col gap-2">
