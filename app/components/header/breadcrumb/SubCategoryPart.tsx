@@ -49,7 +49,7 @@ export const BreadcrumbSubCategortPart: FC<BreadcrumbSubCategortPartProps> = ({
     }
 
     return null;
-  }, [subCategoryFetch, categoryId, subCategoryId]);
+  }, [subCategoryFetch, categoryId, subCategoryId, user]);
 
   // Log error if any occurs during fetching data
   useMemo(() => {
