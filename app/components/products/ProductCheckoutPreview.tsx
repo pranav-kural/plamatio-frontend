@@ -1,9 +1,12 @@
+'use client';
 import {Product} from '@/app/lib/plamatio-backend/types';
 import Image from 'next/image';
 import {FC} from 'react';
 import Link from 'next/link';
 import classNames from 'classnames';
 import CartButton from '../cart/CartButton';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {useUser} from '@clerk/nextjs';
 
 type ProductPreviewProps = {
   product: Product;
@@ -16,6 +19,9 @@ export const ProductCheckoutPreview: FC<ProductPreviewProps> = ({
   className,
   labelClassName,
 }) => {
+  // get user for recording user events
+  const {user} = useUser();
+
   return (
     <div
       className={classNames(
@@ -53,7 +59,23 @@ export const ProductCheckoutPreview: FC<ProductPreviewProps> = ({
         </div>
         <Link
           href={`/category/${product.category}/subcategory/${product.subCategory}`}
-          className="hover:underline">
+          className="hover:underline"
+          onClick={() => {
+            // if user available, record user event
+            if (user) {
+              dispatchUserEvent({
+                user_id: user.id,
+                event_type: 'click',
+                core_component: 'products',
+                description: `Clicked on view more products from checkout for product ${product.id}`,
+                metadata: {
+                  product_id: product.id,
+                  category_id: product.category,
+                  sub_category_id: product.subCategory,
+                },
+              });
+            }
+          }}>
           <span>View more products like this.</span>
         </Link>
       </div>

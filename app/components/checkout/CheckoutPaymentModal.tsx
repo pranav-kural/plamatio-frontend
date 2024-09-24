@@ -14,6 +14,7 @@ import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 import {createCheckoutSession} from '@/app/lib/stripe/actions';
 import {getCartLineItems} from '@/app/lib/stripe/utils';
 import {LoadingSpinner} from '../ui/LoadingSpinner';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
 
 type CheckoutPaymentModalProps = {
   label?: string;
@@ -59,6 +60,15 @@ const CheckoutPaymentModal: FC<CheckoutPaymentModalProps> = ({
   }, [productsFetch.isSuccess, cartItems, productsFetch.data?.data]);
 
   async function initiateCheckout() {
+    // record user event
+    dispatchUserEvent({
+      user_id: userId,
+      event_type: 'pay_button_click',
+      core_component: 'checkout_payment_modal',
+      description: `Initiated checkout for user ${userId}`,
+      metadata: {address_id: addressId, total_price: totalPrice},
+    });
+    // disable button and show loading spinner
     setIsLoading(true);
     // prepare data for new order
     const newOrder: NewOrder = {

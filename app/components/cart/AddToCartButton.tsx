@@ -7,6 +7,7 @@ import {CartItem, Product} from '@/app/lib/plamatio-backend/types';
 import {useAppDispatch} from '@/app/lib/store/storeHooks';
 import {addCartItem} from '@/app/lib/store/reducers/cart/cartReducer';
 import {useAddCartItemMutation} from '@/app/lib/api/cart-items-slice';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
 
 type AddToCartButtonProps = {
   product: Product;
@@ -61,6 +62,15 @@ export const AddToCartButton: FC<AddToCartButtonProps> = (
       });
       if (r.data) {
         cartItemToAdd.id = r.data.id;
+
+        // dispatch event to record event of adding product to cart
+        dispatchUserEvent({
+          user_id: props.userId,
+          event_type: 'cart_item_added',
+          core_component: 'cart',
+          description: `Added product (id: ${props.product.id}) to cart`,
+          metadata: {cart_item: cartItemToAdd},
+        });
       } else {
         console.error(`AddToCartButton: error adding cart item: ${r.error}`);
       }
