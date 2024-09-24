@@ -8,6 +8,7 @@ import LoadCartItems from './components/auxiliary/LoadCartItems';
 import LoadProducts from './components/auxiliary/LoadProducts';
 import {CreateUserBridge} from './components/landing/CreateUserBridge';
 import {Analytics} from '@vercel/analytics/react';
+import DemoHeadline from './components/header/DemoHeadline';
 
 const workSans = Work_Sans({subsets: ['latin']});
 
@@ -34,6 +35,7 @@ export default function RootLayout({
           <body
             className={`${workSans.className} w-full h-full flex flex-row align-middle justify-center bg-fuchsia-50/15`}>
             <div className="max-w-[1620px]">
+              <DemoHeadline />
               <Header />
               {children}
             </div>

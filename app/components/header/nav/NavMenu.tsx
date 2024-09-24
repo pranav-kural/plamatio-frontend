@@ -59,7 +59,7 @@ const NavMenus = async () => {
   return (
     <>
       <NavigationMenu.Root className="relative z-[1] flex w-screen justify-center">
-        <NavigationMenu.List className="center m-0 flex list-none rounded-[6px] p-1">
+        <NavigationMenu.List className="center m-0 flex list-none rounded-[6px]">
           {menuItems &&
             menuItems.map((item) => <NavMenuItem key={item.id} item={item} />)}
 

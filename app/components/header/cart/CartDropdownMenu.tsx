@@ -1,15 +1,32 @@
+'use client';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import {ShoppingBagIcon} from 'lucide-react';
 import {CartDropdownItems} from './CartDropdownItems';
+import {useAppSelector} from '@/app/lib/store/storeHooks';
+import {selectCartItems} from '@/app/lib/store/reducers/cart/cartReducer';
 
 const CartDropdownMenu = () => {
+  // const userId: string | undefined = undefined;
+  const cartItems = useAppSelector(selectCartItems);
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
           className="rounded-full w-[35px] h-[35px] inline-flex items-center justify-center text-violet-800 bg-white outline-none hover:bg-violet3"
           aria-label="Cart Items">
-          <ShoppingBagIcon size={35} strokeWidth={1} />
+          <div className="relative">
+            <ShoppingBagIcon
+              size={35}
+              strokeWidth={1}
+              className="mt-1 relative"
+            />
+            {cartItems.length > 0 && (
+              <span className="absolute -bottom-1 right-0 bg-violet-700 text-white text-xs font-bold rounded-full px-1">
+                {cartItems.length}
+              </span>
+            )}
+          </div>
         </button>
       </DropdownMenu.Trigger>
 
