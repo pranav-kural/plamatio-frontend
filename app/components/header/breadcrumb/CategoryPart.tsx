@@ -1,5 +1,7 @@
 'use client';
 import {useGetCategoryQuery} from '@/app/lib/api/categories-slice';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {useUser} from '@clerk/nextjs';
 import {HomeIcon} from 'lucide-react';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';
@@ -13,6 +15,8 @@ export const BreadcrumbCategoryPart: FC<BreadcrumbCategoryPartProps> = ({
 }) => {
   // fetch data
   const categoryFetch = useGetCategoryQuery(categoryId);
+  // user data for recording events
+  const {user} = useUser();
 
   // Method to get the categories part of the breadcrumb
   const getCategoriesPart = useMemo(() => {
@@ -28,7 +32,19 @@ export const BreadcrumbCategoryPart: FC<BreadcrumbCategoryPartProps> = ({
           <Link
             key="category"
             href={`/category/${categoryId}`}
-            className="cursor-pointer">
+            className="cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              if (user) {
+                dispatchUserEvent({
+                  user_id: user.id,
+                  event_type: 'click',
+                  core_component: 'breadcrumb',
+                  description: `Clicked on category in breadcrumb for category ${categoryFetch.data?.name}`,
+                  metadata: {category_id: categoryId},
+                });
+              }
+            }}>
             {categoryFetch.data.name}
           </Link>
         </>

@@ -135,13 +135,19 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
           className
         )}>
         <PlusCircleIcon
-          onClick={incrementProductQuantity}
+          onClick={(e) => {
+            e.stopPropagation();
+            incrementProductQuantity();
+          }}
           size={iconConfig?.plusIconSize}
           strokeWidth={iconConfig?.plusIconStrokeWidth}
         />
         <span className="ml-2 mr-2">{cartItem.quantity}</span>
         <MinusCircleIcon
-          onClick={decrementProductQuantity}
+          onClick={(e) => {
+            e.stopPropagation();
+            decrementProductQuantity();
+          }}
           size={iconConfig?.minusIconSize}
           strokeWidth={iconConfig?.minusIconStrokeWidth}
         />
