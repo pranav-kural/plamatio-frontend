@@ -17,7 +17,7 @@ export class Logger {
     this.enabled = enabled ?? process.env.LOGGER_ENABLED === 'true';
   }
 
-  info(...message: string[]) {
+  info(...message: unknown[]) {
     console.info(
       Logger.logFormat.transform({
         level: 'INFO',
@@ -26,7 +26,7 @@ export class Logger {
     );
   }
 
-  warn(...message: string[]) {
+  warn(...message: unknown[]) {
     console.warn(
       Logger.logFormat.transform({
         level: 'WARN',
@@ -35,7 +35,7 @@ export class Logger {
     );
   }
 
-  error(...message: string[]) {
+  error(...message: unknown[]) {
     console.error(
       Logger.logFormat.transform({
         level: 'ERROR',
@@ -45,7 +45,7 @@ export class Logger {
     );
   }
 
-  debug(...message: string[]) {
+  debug(...message: unknown[]) {
     console.log(
       Logger.logFormat.transform({
         level: 'DEBUG',
@@ -54,7 +54,7 @@ export class Logger {
     );
   }
 
-  dir(obj: unknown, level: LogLevel, ...message: string[]) {
+  dir(obj: unknown, level: LogLevel, ...message: unknown[]) {
     console.log(
       Logger.logFormat.transform({
         level: level,
