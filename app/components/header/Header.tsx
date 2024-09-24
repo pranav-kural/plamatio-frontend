@@ -10,7 +10,7 @@ const greatVibes = Great_Vibes({weight: '400', subsets: ['latin']});
 export const Header = () => {
   return (
     <div className="flex flex-col align-middle justify-center w-full my-5">
-      <div className="w-full flex flex-col items-center justify-center mt-5 xs:mt-0">
+      <div className="w-full flex flex-col items-center justify-center mt-2 xs:mt-0">
         <Link
           href="/"
           className={`${greatVibes.className} text-violet-900 text-[3.5rem]`}>
