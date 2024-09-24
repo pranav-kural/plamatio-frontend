@@ -13,6 +13,7 @@ import {
   useDeleteCartItemMutation,
   useUpdateCartItemMutation,
 } from '@/app/lib/api/cart-items-slice';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
 
 type MutateCartButtonIconsProps = {
   plusIconSize?: number;
@@ -51,17 +52,22 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
     if (allowCartChanges) {
       // increment quantity
       dispatch(incrementQuantity(cartItem));
-      console.dir(cartItem);
       // if cart item has a valid user id
       if (cartItem.user_id && cartItem.user_id.length > 0) {
-        console.log(`Updating cart item`);
-        console.dir(cartItem);
         // update cart item in database
         updateCartItem({
           id: cartItem.id,
           product_id: cartItem.product_id,
           user_id: cartItem.user_id,
           quantity: cartItem.quantity + 1,
+        });
+        // dispatch event to record cart update by user
+        dispatchUserEvent({
+          user_id: cartItem.user_id,
+          event_type: 'cart_item_updated',
+          core_component: 'cart',
+          description: 'Incremented cart item quantity',
+          metadata: {cart_item: cartItem},
         });
       }
     }
@@ -87,6 +93,14 @@ export const MutateCartButton: FC<MutateCartButtonProps> = ({
             product_id: cartItem.product_id,
             user_id: cartItem.user_id,
             quantity: cartItem.quantity - 1,
+          });
+          // dispatch event to record cart update by user
+          dispatchUserEvent({
+            user_id: cartItem.user_id,
+            event_type: 'cart_item_updated',
+            core_component: 'cart',
+            description: 'Decremented cart item quantity',
+            metadata: {cart_item: cartItem},
           });
         }
       }
