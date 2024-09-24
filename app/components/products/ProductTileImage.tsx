@@ -2,14 +2,10 @@
 import {Product} from '@/app/lib/plamatio-backend/types';
 import Link from 'next/link';
 import {FC} from 'react';
-// import {dispatchUserEvent} from '@/app/lib/kafka/helpers';
-import {Logger} from '@/app/utils/logger/Logger';
 import Image from 'next/image';
 import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
 import classNames from 'classnames';
-
-// logger
-const logger = new Logger({context: 'ProductTileImage'});
+import {useUser} from '@clerk/nextjs';
 
 type ProductTileImageProps = {
   product: Product;
@@ -28,22 +24,25 @@ export const ProductTileImage: FC<ProductTileImageProps> = ({
   priority,
   eventDescription,
 }) => {
+  // get user if signed in
+  const {user} = useUser();
+
   return (
     <Link
       href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
       className="p-0 m-0"
       onClick={() => {
-        logger.info(
-          `Dispatching user event for product tile click for product ${product.id}`
-        );
-        dispatchUserEvent({
-          event_type: 'click',
-          core_component: 'product_tile',
-          description:
-            eventDescription ??
-            `Clicked on product tile for product ${product.id}`,
-          metadata: {product_id: product.id},
-        });
+        if (user) {
+          dispatchUserEvent({
+            user_id: user.id,
+            event_type: 'click',
+            core_component: 'product_tile',
+            description:
+              eventDescription ??
+              `Clicked on product tile for product ${product.id}`,
+            metadata: {product_id: product.id},
+          });
+        }
       }}>
       <Image
         src={product.imageUrl}

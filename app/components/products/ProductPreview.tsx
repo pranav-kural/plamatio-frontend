@@ -1,3 +1,4 @@
+'use client';
 import {Product} from '@/app/lib/plamatio-backend/types';
 import Image from 'next/image';
 import {FC} from 'react';
@@ -5,6 +6,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import CartButton from '../cart/CartButton';
 import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {useUser} from '@clerk/nextjs';
 
 type ProductStyleConfig = {
   nameClassName?: string;
@@ -41,6 +43,9 @@ export const ProductPreview: FC<ProductPreviewProps> = ({
   imageStyleConfig,
   productStyleConfig,
 }) => {
+  // get user if signed in
+  const {user} = useUser();
+
   return (
     <div
       className={classNames(
@@ -111,16 +116,19 @@ export const ProductPreview: FC<ProductPreviewProps> = ({
             productStyleConfig?.viewMoreClassName
           )}
           onClick={() => {
-            dispatchUserEvent({
-              event_type: 'click',
-              core_component: 'products',
-              description: `Clicked on view more products for product ${product.id}`,
-              metadata: {
-                product_id: product.id,
-                category_id: product.category,
-                sub_category_id: product.subCategory,
-              },
-            });
+            if (user) {
+              dispatchUserEvent({
+                user_id: user.id,
+                event_type: 'click',
+                core_component: 'products',
+                description: `Clicked on view more products for product ${product.id}`,
+                metadata: {
+                  product_id: product.id,
+                  category_id: product.category,
+                  sub_category_id: product.subCategory,
+                },
+              });
+            }
           }}>
           <span>View more products like this.</span>
         </Link>
