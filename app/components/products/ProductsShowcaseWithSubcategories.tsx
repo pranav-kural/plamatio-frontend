@@ -1,3 +1,4 @@
+'use client';
 import {Product} from '@/app/lib/plamatio-backend/types';
 import {ProductTile} from './ProductTile';
 import classNames from 'classnames';
@@ -7,6 +8,8 @@ import {Gayathri} from 'next/font/google';
 import {useGetSubCategoriesByCategoryQuery} from '@/app/lib/api/categories-slice';
 import {LoadingSpinner} from '../ui/LoadingSpinner';
 import ErrorFetchingData from '../error/ErrorFetchingData';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {useUser} from '@clerk/nextjs';
 
 const gayathri = Gayathri({weight: '400', subsets: ['latin']});
 
@@ -21,6 +24,9 @@ export const ProductsShowcaseWithSubcategories: FC<ProductsShowcaseProps> = (
   props: ProductsShowcaseProps
 ) => {
   const categoryId = props.categoryId;
+
+  // get user if signed in
+  const {user} = useUser();
 
   // if showing subcategories
   if (!categoryId || categoryId <= 0) {
@@ -73,7 +79,18 @@ export const ProductsShowcaseWithSubcategories: FC<ProductsShowcaseProps> = (
             <div key={product.id} className="flex flex-col mt-5 md:mt-0">
               <Link
                 href={`/category/${product.category}/subcategory/${product.subCategory}`}
-                className="text-center mb-5">
+                className="text-center mb-5"
+                onClick={() => {
+                  if (user) {
+                    dispatchUserEvent({
+                      user_id: user.id,
+                      event_type: 'click',
+                      core_component: 'subcategories',
+                      description: `Clicked on sub-category ${product.subCategory}`,
+                      metadata: {sub_category_id: product.subCategory},
+                    });
+                  }
+                }}>
                 <span
                   className={`text-center text-3xl text-violet-900 hover:underline ${gayathri.className}`}>
                   Shop {getSubCategoryName(product.subCategory) || 'All'}

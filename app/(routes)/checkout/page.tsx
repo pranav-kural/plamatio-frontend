@@ -13,6 +13,11 @@ import {useUser} from '@clerk/nextjs';
 import SignInSignUpButtons from '@/app/components/auth/SigInSignUpButtons';
 import CheckoutPaymentModal from '@/app/components/checkout/CheckoutPaymentModal';
 import OrderSection from '@/app/components/checkout/OrderSection';
+import {Logger} from '@/app/utils/logger/Logger';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+
+// logger
+const logger = new Logger({context: 'CheckoutPage'});
 
 const raleway = Raleway({weight: '500', subsets: ['latin']});
 
@@ -34,9 +39,9 @@ export default function CheckoutPage() {
   // Log error if any occurs during fetching data
   useMemo(() => {
     if (productsFetch.isError) {
-      console.error(
+      logger.error(
         `${Date.now()} CartWindow: Error fetching products for cart items`,
-        productsFetch.error
+        JSON.stringify(productsFetch.error)
       );
     }
   }, [productsFetch.isError, productsFetch.error]);
@@ -51,6 +56,18 @@ export default function CheckoutPage() {
       }
     }
   }, [productsFetch.isSuccess, cartItems, productsFetch.data?.data]);
+
+  // Record checkout page load event for user
+  useEffect(() => {
+    if (user) {
+      dispatchUserEvent({
+        user_id: user.id,
+        event_type: 'page_load',
+        core_component: 'checkout_page',
+        description: `Loaded checkout page for user ${user.id}`,
+      });
+    }
+  }, [user]);
 
   const userObj = useMemo(() => {
     if (user) {

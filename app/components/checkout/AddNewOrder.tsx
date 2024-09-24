@@ -12,6 +12,11 @@ import {
 } from '@/app/lib/store/reducers/cart/cartReducer';
 import Link from 'next/link';
 import Image from 'next/image';
+import {useUser} from '@clerk/nextjs';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {Logger} from '@/app/utils/logger/Logger';
+
+const logger = new Logger({context: 'AddNewOrder'});
 
 type AddNewOrderProps = {
   order: NewOrder;
@@ -28,6 +33,8 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
   // mutation to add new order
   const [addOrder, {isError, isLoading, isSuccess, error}] =
     useAddDetailedOrderMutation();
+  // get user
+  const {user} = useUser();
 
   useMemo(() => {
     if (
@@ -37,7 +44,6 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
       cartItems &&
       cartItems.length > 0
     ) {
-      console.log(`Adding new order`);
       // dispatch action to add new order
       addOrder({order, items});
     }
@@ -50,18 +56,27 @@ export const AddNewOrder: FC<AddNewOrderProps> = ({order, items}) => {
       cartItems &&
       cartItems.length > 0
     ) {
-      console.log(`Order added`);
       // set order submitted
       orderSubmitted.current = true;
+      // record user event of adding new order
+      if (user) {
+        dispatchUserEvent({
+          user_id: user.id,
+          event_type: 'order_added',
+          core_component: 'order',
+          description: `New order submitted by user ${user.id}`,
+          metadata: {cartItems: cartItems},
+        });
+      }
       // clear cart
       dispatch(clearCart());
     }
-  }, [isSuccess, cartItems, dispatch]);
+  }, [isSuccess, cartItems, dispatch, user]);
 
   // log error if any
   useMemo(() => {
     if (isError) {
-      console.error(`${Date.now()} AddNewOrder: Error adding new order`, error);
+      logger.error(`${Date.now()} AddNewOrder: Error adding new order`, error);
     }
   }, [isError, error]);
 

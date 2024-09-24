@@ -1,9 +1,15 @@
-import React, {FC, useMemo} from 'react';
+'use client';
+import React, {FC, useMemo, useState} from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
 import {TrashIcon, XIcon} from 'lucide-react';
 import {Address} from '@/app/lib/plamatio-backend/types';
 import {useDeleteUserAddressMutation} from '@/app/lib/api/users-slice';
 import {LoadingSpinner} from '../ui/LoadingSpinner';
+import {Logger} from '@/app/utils/logger/Logger';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+
+// logger
+const logger = new Logger({context: 'SelectAddressModal'});
 
 type SelectAddressModalProps = {
   userId: string;
@@ -20,9 +26,15 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
 }) => {
   const [removeAddress, {isError, error, isLoading, isSuccess}] =
     useDeleteUserAddressMutation();
+  const [addressToDelete, setAddressToDelete] = useState<Address | undefined>();
 
   function deleteAddress(id: number) {
-    console.log('SelectAddressModal: Deleting address', id);
+    logger.debug(
+      'SelectAddressModal: Deleting address id:',
+      id,
+      `, for User id: ${userId}`
+    );
+    setAddressToDelete(addresses.find((address) => address.id === id));
     removeAddress({addressId: id, userId});
     updatePrimarySelectedAddress();
   }
@@ -30,19 +42,29 @@ const SelectAddressModal: FC<SelectAddressModalProps> = ({
   // Log success if any occurs during fetching hero products
   useMemo(() => {
     if (isSuccess) {
-      console.log(`${Date.now()} SelectAddressModal: Address deleted`);
+      logger.debug(
+        `${Date.now()} SelectAddressModal: Address deleted for user ${userId}`
+      );
+      // dispatch user event
+      dispatchUserEvent({
+        user_id: userId,
+        event_type: 'address_delete',
+        core_component: 'select_address_modal',
+        description: `Deleted address for user ${userId}`,
+        metadata: {address: addressToDelete},
+      });
     }
-  }, [isSuccess]);
+  }, [isSuccess, addressToDelete, userId]);
 
   // Log error if any occurs during fetching hero products
   useMemo(() => {
     if (isError) {
-      console.error(
-        `${Date.now()} SelectAddressModal: Error deleting address`,
+      logger.debug(
+        `${Date.now()} SelectAddressModal: Error deleting address for user ${userId}`,
         error
       );
     }
-  }, [isError, error]);
+  }, [isError, error, userId]);
 
   return (
     <>

@@ -2,6 +2,11 @@ import {useAddUserAddressMutation} from '@/app/lib/api/users-slice';
 import {FC, useMemo} from 'react';
 import {useForm, SubmitHandler} from 'react-hook-form';
 import {LoadingSpinner} from '../ui/LoadingSpinner';
+import {Logger} from '@/app/utils/logger/Logger';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+
+// logger
+const logger = new Logger({context: 'NewAddressForm'});
 
 type NewAddress = {
   street: string;
@@ -34,15 +39,18 @@ export const NewAddressForm: FC<NewAddressFormProps> = ({
   // Log error if any occurs during adding address to database
   useMemo(() => {
     if (isError) {
-      console.error(
+      logger.error(
         `${Date.now()} NewAddressForm: Error adding address for user ${userId}`,
-        error
+        JSON.stringify(error)
       );
     }
   }, [isError, error, userId]);
 
   const onSubmit: SubmitHandler<NewAddress> = (data) => {
-    console.log('NewAddressForm: Submitting new address', data);
+    logger.debug(
+      `NewAddressForm: Submitting new address for user ${userId}`,
+      JSON.stringify(data)
+    );
     // confirm user ID available
     if (!userId) {
       throw new Error('NewAddressForm: User ID is required');
@@ -55,18 +63,25 @@ export const NewAddressForm: FC<NewAddressFormProps> = ({
   };
 
   const onSubmitError = (error: unknown) => {
-    console.error(
+    logger.error(
       `${Date.now()} NewAddressForm: Error adding address for user ${userId}`,
-      error
+      JSON.stringify(error)
     );
   };
 
   // if address is added successfully, call onSubmitSuccess
   useMemo(() => {
     if (isSuccess) {
+      // dispatch user event when address is added
+      dispatchUserEvent({
+        user_id: userId,
+        event_type: 'address_added',
+        core_component: 'new_address_form',
+        description: `User added new address`,
+      });
       onSubmitSuccess();
     }
-  }, [isSuccess, onSubmitSuccess]);
+  }, [isSuccess, onSubmitSuccess, userId]);
 
   return (
     <>

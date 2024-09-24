@@ -1,8 +1,7 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import classNames from 'classnames';
 import {Product} from '@/app/lib/plamatio-backend/types';
 import CartButton from '../cart/CartButton';
+import ProductTileImage from './ProductTileImage';
 
 type ProductTileProps = {
   product: Product;
@@ -23,18 +22,7 @@ export const ProductTile = ({
         className,
         tileWidth
       )}>
-      <Link
-        href={`/category/${product.category}/subcategory/${product.subCategory}/product/${product.id}`}
-        className="p-0 m-0">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
-          width={400}
-          height={600}
-          priority={false}
-          className="rounded-lg w-full"
-        />
-      </Link>
+      <ProductTileImage product={product} />
       <div className="flex flex-col h-full min-h-[180px] justify-between gap-2">
         <div className="flex flex-col gap-2">
           <span className={`text-xl font-semibold`}>{product.name}</span>
