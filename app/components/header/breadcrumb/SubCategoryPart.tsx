@@ -1,5 +1,7 @@
 'use client';
 import {useGetSubCategoryQuery} from '@/app/lib/api/categories-slice';
+import {dispatchUserEvent} from '@/app/lib/kafka/dispatch/user-events';
+import {useUser} from '@clerk/nextjs';
 import Link from 'next/link';
 import {FC, useMemo} from 'react';
 
@@ -13,6 +15,8 @@ export const BreadcrumbSubCategortPart: FC<BreadcrumbSubCategortPartProps> = ({
   subCategoryId,
 }) => {
   const subCategoryFetch = useGetSubCategoryQuery(subCategoryId);
+  // user data for recording events
+  const {user} = useUser();
 
   // Method to get the subcategories part of the breadcrumb
   const getSubCategoriesPart = useMemo(() => {
@@ -25,7 +29,19 @@ export const BreadcrumbSubCategortPart: FC<BreadcrumbSubCategortPartProps> = ({
           <Link
             key="subcategory"
             href={`/category/${categoryId}/subcategory/${subCategoryId}`}
-            className="cursor-pointer">
+            className="cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              if (user) {
+                dispatchUserEvent({
+                  user_id: user.id,
+                  event_type: 'click',
+                  core_component: 'breadcrumb',
+                  description: `Clicked on subcategory in breadcrumb for subcategory ${subCategoryFetch.data?.name}`,
+                  metadata: {subcategory_id: subCategoryId},
+                });
+              }
+            }}>
             {subCategoryFetch.data.name}
           </Link>
         </>
