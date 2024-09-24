@@ -52,7 +52,7 @@ export const BreadcrumbCategoryPart: FC<BreadcrumbCategoryPartProps> = ({
     }
 
     return null;
-  }, [categoryFetch, categoryId]);
+  }, [categoryFetch, categoryId, user]);
 
   // Log error if any occurs during fetching data
   useMemo(() => {

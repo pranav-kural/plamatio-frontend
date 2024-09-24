@@ -52,7 +52,7 @@ export const BreadcrumbProductPart: FC<BreadcrumbProductPartProps> = ({
     }
 
     return null;
-  }, [productFetch, categoryId, subCategoryId, productId]);
+  }, [productFetch, categoryId, subCategoryId, productId, user]);
 
   // Log error if any occurs during fetching data
   useMemo(() => {

@@ -18,7 +18,7 @@ export const Header = () => {
         </Link>
         <NavMenu />
       </div>
-      <div className="absolute top-[40px] sm:top-[30px] md:top-[20px] right-[10px] md:right-[30px]">
+      <div className="absolute top-[40px] sm:top-[30px] md:top-[40px] right-[10px] md:right-[30px]">
         <div className="w-full h-full flex flex-row gap-2 md:gap-4 items-center justify-center">
           <UserButtons />
           <CartDropdownMenu />
