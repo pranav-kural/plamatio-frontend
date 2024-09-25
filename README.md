@@ -4,10 +4,17 @@ This project demonstrates a production-quality intuitive and responsive web fron
 
 This project also serves as one of the frontends for the [Plamatio Backend](https://github.com/pranav-kural/plamatio-backend), which is a highly performant, scalable, and resilient distributed backend built using Go-lang and PostgreSQL.
 
+To learn more about Plamatio frontend, backend, and data streaming pipeline, check the blog post on [Introduction to Plamatio](http://www.pkural.ca/blog/posts/plamatio-intro/).
+
 | Environment | Deployment Status                                                                                                  | URL                                  | Branch                                                                    |
 | ----------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------ | ------------------------------------------------------------------------- |
 | Preview     | <img src="https://img.shields.io/github/deployments/pranav-kural/plamatio-frontend/preview?label=preview"/>        | https://plamatio-frontend.vercel.app | [`preview`](https://github.com/pranav-kural/plamatio-frontend/tree/stage) |
 | Production  | <img src="https://img.shields.io/github/deployments/pranav-kural/plamatio-frontend/production?label=production" /> | https://plamatio.pkural.ca           | [`main`](https://github.com/pranav-kural/plamatio-frontend/tree/main)     |
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fdd5e7f2-3234-4c79-be7c-0d345d4bdac7" alt="Plamatio home page" />
+</p>
+
 
 ## Key Features
 
@@ -30,7 +37,7 @@ It is possible to completely switch the products data, branding data, company na
 The image below displays a simplified view of the overall architecture and the components involves in the functioning of the Plamatio Frontend.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f0977b3e-d121-447e-9d3a-6f73e6519727" alt="Plamatio frontend overall architecture" width="800px" />
+  <img src="https://github.com/user-attachments/assets/f6142f7a-0be5-4abc-9826-0cf38818387c" alt="Plamatio frontend overall architecture" width="800px" />
 </p>
 
 ## Developing Locally
